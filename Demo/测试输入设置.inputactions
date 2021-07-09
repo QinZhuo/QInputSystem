@@ -1,0 +1,52 @@
+{
+    "name": "测试输入设置",
+    "maps": [
+        {
+            "name": "测试",
+            "id": "66e6c2d9-1d88-4ccc-a9f4-b5fd2049f30d",
+            "actions": [
+                {
+                    "name": "回车",
+                    "type": "Button",
+                    "id": "7fead196-2bfb-4083-887e-4438eb2ff057",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "退出",
+                    "type": "Button",
+                    "id": "5a7acee9-fb85-4e04-95c5-7c1c7d6184e2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "49ef4cb8-05ad-4584-bde4-4be7632a09cc",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "回车",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d9c169c-d63b-4cb3-8c39-5afbc5a88367",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "退出",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
