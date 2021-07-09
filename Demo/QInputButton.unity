@@ -560,7 +560,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1178134312}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1178134314}
+        m_TargetAssemblyTypeName: QTool.InputSystem.QInputKeySet, QInputSystem
+        m_MethodName: StartChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1178134312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -608,11 +620,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1178134308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ebd50ec3569cae4386750fe59b6116d, type: 3}
+  m_Script: {fileID: 11500000, guid: 315e19a5d190268408435f24460d8a11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   action: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
-  tipInfo: "\u70B9\u51FB[Key]"
+  tipInfo: "\u6309\u4E0B[Key]"
   OnValueChange:
     m_PersistentCalls:
       m_Calls:
