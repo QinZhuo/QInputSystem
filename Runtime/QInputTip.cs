@@ -5,13 +5,13 @@ using QTool;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace QTool.InputSystem {
+namespace QTool.QInputSystem {
     [System.Serializable]
     public class StringEvent : UnityEvent<string>
     {
 
     }
-    public class QInputKeyTip : MonoBehaviour
+    public class QInputTip : MonoBehaviour
     {
         public InputActionReference action;
         [SerializeField]
@@ -87,13 +87,13 @@ namespace QTool.InputSystem {
         protected virtual void OnEnable()
         {
             OnChange();
-            QInputKeySet.OnChangeKey += OnChangeKey;
+            QInputSet.OnChangeKey += OnChangeKey;
         }
         protected virtual void OnDisable()
         {
-            QInputKeySet.OnChangeKey -= OnChangeKey;
+            QInputSet.OnChangeKey -= OnChangeKey;
         }
-        void OnChangeKey(QInputKeySet keySetting, bool start)
+        void OnChangeKey(QInputSet keySetting, bool start)
         {
             if (!start)
             {

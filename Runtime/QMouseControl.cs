@@ -7,10 +7,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using System;
 
-namespace QTool.InputSystem {
+namespace QTool.QInputSystem {
    
-    using InputSystem = UnityEngine.InputSystem.InputSystem;
-    public class MouseControl : MonoBehaviour
+    public class QMouseControl : MonoBehaviour
     { 
 
         //[Header("Cursor")]

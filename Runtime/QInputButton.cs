@@ -5,8 +5,9 @@ using UnityEngine.EventSystems;
 using static UnityEngine.UI.Button;
 using static UnityEngine.UI.Selectable;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using System;
-namespace QTool.InputSystem
+namespace QTool.QInputSystem
 {
     abstract class TempHandlerList<T> where T:class
     {
@@ -131,80 +132,39 @@ namespace QTool.InputSystem
     [RequireComponent(typeof(Selectable))]
     public class QInputButton : MonoBehaviour
     {
-        //[UnityEngine.Serialization.FormerlySerializedAs("inputAction")]
-        //public string actionKey="";
-        //QEventTrigger trigger = new QEventTrigger();
-        //public bool defualtSelect = false;
-        //public Selectable Selectable;
-        //private void Reset()
-        //{
-        //    Selectable = GetComponent<Selectable>();
-        //}
-        //private void Awake()
-        //{
-        //    if (Selectable==null)
-        //    {
-        //        Selectable = GetComponent<Selectable>();
-        //    }
-        //    trigger.Init(this);
-        //}
-        //public bool IsSelect
-        //{
-        //    get
-        //    {
-        //        return EventSystem.current.currentSelectedGameObject == gameObject;
-        //    }
-        //}
-        ////private void OnEnable()
-        ////{
-        ////    if (defualtSelect)
-        ////    {
-        ////        Select();
-        ////    }
-        ////}
-        ////public void Select()
-        ////{
-        ////    Selectable.Select();
-        ////  //  trigger.select.Invoke();
-        ////}
-        //public void Click()
-        //{
-        //  //  var lastObj = EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>();
-        //    trigger.click.Invoke();
-        //   // lastObj?.Select();
-        //}
-        //void Update()
-        //{
-        //    if (Application.isPlaying)
-        //    {
-        //        if (string.IsNullOrWhiteSpace(actionKey)) return;
-        //        if (Selectable.IsInteractable())
-        //        {
-        //            if (QInput.Actions[actionKey].Down)
-        //            {
-        //                trigger.enter.Invoke();
-        //                trigger.donw.Invoke();
-        //            }
-        //            if (QInput.Actions[actionKey].Click)
-        //            {
-        //                Click();
-        //            }
-        //            if (!QInput.MouseControl && IsSelect && QInputModule.Instance != null)
-        //            {
-        //                if (QInput.Actions[QInputModule.Instance.ConfirmAction].Click)
-        //                {
-        //                    // trigger.select.Invoke();
-        //                    Click();
-        //                }
-        //            }
-        //        }
-        //        if (QInput.Actions[actionKey].Up)
-        //        {
-        //            trigger.up.Invoke();
-        //            trigger.exit.Invoke();
-        //        }
-        //    }
-        //}
-
+        public InputActionProperty inputAction;
+        QEventTrigger trigger = new QEventTrigger();
+        public Selectable Selectable;
+        private void Reset()
+        {
+            Selectable = GetComponent<Selectable>();
+        }
+        private void Awake()
+        {
+            if (Selectable == null)
+            {
+                Selectable = GetComponent<Selectable>();
+            }
+            trigger.Init(this);
+            if (inputAction.action != null)
+            {
+                inputAction.action.Enable();
+                inputAction.action.started += content =>
+                {
+                    Debug.LogError("start");
+                    trigger.enter.Invoke();
+                    trigger.donw.Invoke();
+                };
+                inputAction.action.performed += content =>
+                {
+                    trigger.click.Invoke();
+                };
+                inputAction.action.canceled += content =>
+                {
+                    trigger.up.Invoke();
+                    trigger.exit.Invoke();
+                };
+            }
+        }
     }
 }

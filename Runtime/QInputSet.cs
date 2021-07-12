@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace QTool.InputSystem
+namespace QTool.QInputSystem
 {
     using InputSystem = UnityEngine.InputSystem.InputSystem;
-    public class QInputKeySet : QInputKeyTip
+    public class QInputSet : QInputTip
     {
-        public static Action<QInputKeySet, bool> OnChangeKey;
+        public static Action<QInputSet, bool> OnChangeKey;
         private InputActionRebindingExtensions.RebindingOperation ChangeOperation;
         void CleanUp()
         {
@@ -31,16 +31,17 @@ namespace QTool.InputSystem
                         OnChangeKey?.Invoke(this, false);
                         OnChange();
                         CleanUp();
+                        action?.Enable();
                     })
                 .OnComplete(
                     operation =>
                     {
-                        Debug.LogError(operation.action.GetBindingDisplayString()+":"+action.GetBindingDisplayString());
 
                         OnChangeKey?.Invoke(this, false);
                         OnChange();
                         CleanUp();
-                      
+                        action?.Enable();
+
                     });
 
 
@@ -50,6 +51,7 @@ namespace QTool.InputSystem
         public void StartChange()
         {
             if (!Active) return;
+            action.action.Disable();
             PerformInteractiveRebind(action);
         }
         protected override  void OnDisable()

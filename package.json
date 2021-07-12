@@ -1,11 +1,11 @@
 {
-  "name": "com.qtool.input",
-  "version": "1.1.6",
-  "displayName": "QInput",
-  "description": "QInput",
+  "name": "com.qtool.qinputsystem",
+  "version": "1.0.0",
+  "displayName": "QInputSystem",
+  "description": "QInputSystem",
   "unity": "2019.1",
     "dependencies": {
-    "com.qtool.qtool": "1.0.0"
+    "com.unity.inputsystem": "1.0.2"
  },
  "keywords": [
     "unity",

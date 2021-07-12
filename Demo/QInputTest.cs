@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using QTool.InputSystem;
+using QTool.QInputSystem;
 
 public class QInputTest : MonoBehaviour
 {
