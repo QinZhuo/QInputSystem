@@ -26,7 +26,6 @@ namespace QTool.QInputSystem
             {
                 InputSystem.AddDevice(joyStick);
             }
-           
         }
         private void OnDisable()
         {

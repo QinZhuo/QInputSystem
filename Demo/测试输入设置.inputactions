@@ -20,6 +20,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "鼠标位置",
+                    "type": "Value",
+                    "id": "86e86eb8-3926-4309-8fe4-5274694229d9",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -42,6 +50,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "退出",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "940516d7-68d0-41de-8144-37e647ebc246",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "鼠标位置",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6495abe0-b5b4-4b3f-8171-f58734c70a0d",
+                    "path": "<Mouse>/position",
+                    "interactions": "QScreenRange(up=0.5,right=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "鼠标位置",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
