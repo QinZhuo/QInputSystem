@@ -151,7 +151,6 @@ namespace QTool.QInputSystem
                 inputAction.action.Enable();
                 inputAction.action.started += content =>
                 {
-                    Debug.LogError("start");
                     trigger.enter.Invoke();
                     trigger.donw.Invoke();
                 };
