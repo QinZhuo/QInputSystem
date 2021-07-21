@@ -48,7 +48,7 @@ namespace QTool.QInputSystem
             //  Debug.LogError(pos + " : " +lastPos.Value);
             if (InRange(pos))
             {
-                if(!context.isStarted)
+                if(context.phase== InputActionPhase.Started)
                 {
                     context.Started();
                     context.Performed();
@@ -56,7 +56,7 @@ namespace QTool.QInputSystem
             }
             else
             {
-                if(context.isStarted)
+                if(context.phase == InputActionPhase.Started)
                 {
                     context.Canceled();
                 }
