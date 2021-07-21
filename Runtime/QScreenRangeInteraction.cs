@@ -39,17 +39,16 @@ namespace QTool.QInputSystem
             }
             return false;
         }
-        InputControl control = null;
+        //Vector2? lastPos = null;
         public void Process(ref InputInteractionContext context)
         {
-            if (control != context.control) return;
-             control = context.control;
+            var control= context.control;
           
             var pos = context.ReadValue<Vector2>()/new Vector2(Screen.width,Screen.height);
             //  Debug.LogError(pos + " : " +lastPos.Value);
             if (InRange(pos))
             {
-                if(context.phase!= InputActionPhase.Started)
+                if(!context.isStarted)
                 {
                     context.Started();
                     context.Performed();
@@ -57,7 +56,7 @@ namespace QTool.QInputSystem
             }
             else
             {
-                if(context.phase == InputActionPhase.Started)
+                if(context.isStarted)
                 {
                     context.Canceled();
                 }
