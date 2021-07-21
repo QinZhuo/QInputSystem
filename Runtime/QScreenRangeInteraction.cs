@@ -53,6 +53,10 @@ namespace QTool.QInputSystem
                     context.Started();
                     context.Performed();
                 }
+                else
+                {
+                    context.Started();
+                }
             }
             else
             {
