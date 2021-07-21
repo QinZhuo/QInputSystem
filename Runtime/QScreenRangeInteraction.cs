@@ -50,9 +50,9 @@ namespace QTool.QInputSystem
             {
                 if(!context.isStarted)
                 {
+                    context.Started();
                     context.Performed();
                 }
-                context.Started();
             }
             else
             {
