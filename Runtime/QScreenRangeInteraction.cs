@@ -50,13 +50,12 @@ namespace QTool.QInputSystem
             {
                 if(!context.isStarted)
                 {
-                    context.Performed();
                     context.PerformedAndStayStarted();
                 }
             }
             else
             {
-                if(!context.isStarted)
+                if(context.isStarted)
                 {
                     context.Canceled();
                 }
