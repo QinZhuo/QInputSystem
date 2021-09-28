@@ -17,17 +17,21 @@ namespace QTool.QInputSystem
         public float donw = 0;
         public float left = 0;
         public float right = 0;
+#if UNITY_EDITOR
+        static QScreenRangeInteraction() =>InputSystem.RegisterInteraction<QScreenRangeInteraction>();
+        // static RepeatInteraction() => InputSystem.RegisterInteraction<RepeatInteraction>();
+#else
+        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void OnQScreenRangeInteraction() => InputSystem.RegisterInteraction<QScreenRangeInteraction>();
+#endif
 
-        static QScreenRangeInteraction()
-        {
-             InputSystem.RegisterInteraction<QScreenRangeInteraction>();
-        }
+
         //[RuntimeInitializeOnLoadMethod]
         //private static void Initialize()
         //{
 
         //}
-      
+
         bool InRange(Vector2 pos)
         {
             if (pos.x >= left && pos.x <= right)
