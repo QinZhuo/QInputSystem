@@ -151,17 +151,26 @@ namespace QTool.QInputSystem
                 inputAction.action.Enable();
                 inputAction.action.started += content =>
                 {
-                    trigger.enter.Invoke();
-                    trigger.donw.Invoke();
+                    if (Selectable.IsInteractable())
+                    {
+                        trigger.enter.Invoke();
+                        trigger.donw.Invoke();
+                    }
                 };
                 inputAction.action.performed += content =>
                 {
-                    trigger.click.Invoke();
+                    if (Selectable.IsInteractable())
+                    {
+                        trigger.click.Invoke();
+                    }
                 };
                 inputAction.action.canceled += content =>
                 {
-                    trigger.up.Invoke();
-                    trigger.exit.Invoke();
+                    if (Selectable.IsInteractable())
+                    {
+                        trigger.up.Invoke();
+                        trigger.exit.Invoke();
+                    }
                 };
             }
         }
