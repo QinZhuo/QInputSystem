@@ -140,7 +140,8 @@ namespace QTool.QInputSystem
         {
             Selectable = GetComponent<Selectable>();
         }
-        
+
+        public bool KeyActive => string.IsNullOrWhiteSpace(onlyInput) || name.Equals(onlyInput);
         private void Awake()
         {
             if (Selectable == null)
@@ -153,7 +154,7 @@ namespace QTool.QInputSystem
                 inputAction.action.Enable();
                 inputAction.action.started += content =>
                 {
-                    if (Selectable.IsInteractable()&&name.Equals(onlyInput))
+                    if (Selectable.IsInteractable()&& KeyActive)
                     {
                         trigger.enter.Invoke();
                         trigger.donw.Invoke();
@@ -161,14 +162,14 @@ namespace QTool.QInputSystem
                 };
                 inputAction.action.performed += content =>
                 {
-                    if (Selectable.IsInteractable()&& name.Equals(onlyInput))
+                    if (Selectable.IsInteractable()&& KeyActive)
                     {
                         trigger.click.Invoke();
                     }
                 };
                 inputAction.action.canceled += content =>
                 {
-                    if (Selectable.IsInteractable()&& name.Equals(onlyInput))
+                    if (Selectable.IsInteractable()&& KeyActive)
                     {
                         trigger.up.Invoke();
                         trigger.exit.Invoke();
