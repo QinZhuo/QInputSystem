@@ -135,10 +135,12 @@ namespace QTool.QInputSystem
         public InputActionProperty inputAction;
         QEventTrigger trigger = new QEventTrigger();
         public Selectable Selectable;
+        public static string onlyInput = "";
         private void Reset()
         {
             Selectable = GetComponent<Selectable>();
         }
+        
         private void Awake()
         {
             if (Selectable == null)
@@ -151,7 +153,7 @@ namespace QTool.QInputSystem
                 inputAction.action.Enable();
                 inputAction.action.started += content =>
                 {
-                    if (Selectable.IsInteractable())
+                    if (Selectable.IsInteractable()&&name.Equals(onlyInput))
                     {
                         trigger.enter.Invoke();
                         trigger.donw.Invoke();
@@ -159,14 +161,14 @@ namespace QTool.QInputSystem
                 };
                 inputAction.action.performed += content =>
                 {
-                    if (Selectable.IsInteractable())
+                    if (Selectable.IsInteractable()&& name.Equals(onlyInput))
                     {
                         trigger.click.Invoke();
                     }
                 };
                 inputAction.action.canceled += content =>
                 {
-                    if (Selectable.IsInteractable())
+                    if (Selectable.IsInteractable()&& name.Equals(onlyInput))
                     {
                         trigger.up.Invoke();
                         trigger.exit.Invoke();
