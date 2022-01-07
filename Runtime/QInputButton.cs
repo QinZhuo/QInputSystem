@@ -144,16 +144,7 @@ namespace QTool.QInputSystem
         }
         float time=0;
         bool press=false;
-        private void OnBecameInvisible()
-        {
-            Up();
-        }
-        void Up()
-        {
-            press = false;
-            trigger.up.Invoke();
-            trigger.exit.Invoke();
-        }
+         
         public bool KeyActive => (string.IsNullOrWhiteSpace(onlyInput) || name.Equals(onlyInput));
         private void Awake()
         {
@@ -184,9 +175,11 @@ namespace QTool.QInputSystem
                 };
                 inputAction.action.canceled += content =>
                 {
-                    if (Selectable.IsInteractable()&& KeyActive&& press)
+                    if ( KeyActive&& press)
                     {
-                        Up();
+                        press = false;
+                        trigger.up.Invoke();
+                        trigger.exit.Invoke();
                     }
                 };
             }
