@@ -176,6 +176,7 @@ namespace QTool.QInputSystem
                 {
                     if (Selectable.IsInteractable()&& KeyActive&& press)
                     {
+                        press = false;
                         trigger.up.Invoke();
                         trigger.exit.Invoke();
                     }
