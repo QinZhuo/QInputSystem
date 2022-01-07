@@ -143,7 +143,7 @@ namespace QTool.QInputSystem
             Selectable = GetComponent<Selectable>();
         }
         float time=0;
-        public bool KeyActive => (string.IsNullOrWhiteSpace(onlyInput) || name.Equals(onlyInput))&&(Time.time-time)>minInterval;
+        public bool KeyActive => (string.IsNullOrWhiteSpace(onlyInput) || name.Equals(onlyInput));
         private void Awake()
         {
             if (Selectable == null)
@@ -164,7 +164,7 @@ namespace QTool.QInputSystem
                 };
                 inputAction.action.performed += content =>
                 {
-                    if (Selectable.IsInteractable()&& KeyActive)
+                    if (Selectable.IsInteractable()&& KeyActive&& (Time.time - time) > minInterval)
                     {
                         trigger.click.Invoke();
                         time = Time.time;
@@ -176,7 +176,6 @@ namespace QTool.QInputSystem
                     {
                         trigger.up.Invoke();
                         trigger.exit.Invoke();
-                        time = Time.time;
                     }
                 };
             }
