@@ -164,10 +164,10 @@ namespace QTool.QInputSystem
                 };
                 inputAction.action.performed += content =>
                 {
-                    if (Selectable.IsInteractable()&& KeyActive&& (Time.time - time) > minInterval)
+                    if (Selectable.IsInteractable()&& KeyActive&& (Time.unscaledTime - time) > minInterval)
                     {
                         trigger.click.Invoke();
-                        time = Time.time;
+                        time = Time.unscaledTime;
                     }
                 };
                 inputAction.action.canceled += content =>
