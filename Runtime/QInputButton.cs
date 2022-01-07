@@ -133,15 +133,17 @@ namespace QTool.QInputSystem
     public class QInputButton : MonoBehaviour
     {
         public InputActionProperty inputAction;
+ 
         QEventTrigger trigger = new QEventTrigger();
         public Selectable Selectable;
         public static string onlyInput = "";
+        public float minInterval =0;
         private void Reset()
         {
             Selectable = GetComponent<Selectable>();
         }
-
-        public bool KeyActive => string.IsNullOrWhiteSpace(onlyInput) || name.Equals(onlyInput);
+        float time=0;
+        public bool KeyActive => (string.IsNullOrWhiteSpace(onlyInput) || name.Equals(onlyInput))&&(Time.time-time)>minInterval;
         private void Awake()
         {
             if (Selectable == null)
@@ -165,6 +167,7 @@ namespace QTool.QInputSystem
                     if (Selectable.IsInteractable()&& KeyActive)
                     {
                         trigger.click.Invoke();
+                        time = Time.time;
                     }
                 };
                 inputAction.action.canceled += content =>
@@ -173,6 +176,7 @@ namespace QTool.QInputSystem
                     {
                         trigger.up.Invoke();
                         trigger.exit.Invoke();
+                        time = Time.time;
                     }
                 };
             }
