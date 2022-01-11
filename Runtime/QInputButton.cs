@@ -160,21 +160,24 @@ namespace QTool.QInputSystem
                 {
                     if (Selectable.IsInteractable()&& KeyActive&&!press)
                     {
+                        Debug.LogError("Donw" + name);
                         press = true;
                         trigger.enter.Invoke();
                         trigger.donw.Invoke();
                     }
                 };
-                inputAction.action.performed += content =>
+                //inputAction.action.performed += content =>
+                //{
+                   
+                //};
+                inputAction.action.canceled += content =>
                 {
-                    if (Selectable.IsInteractable()&& KeyActive&& (Time.unscaledTime - time) > minInterval)
+                    if (press && Selectable.IsInteractable() && KeyActive && (Time.unscaledTime - time) > minInterval)
                     {
+                        Debug.LogError("Click" + name);
                         trigger.click.Invoke();
                         time = Time.unscaledTime;
                     }
-                };
-                inputAction.action.canceled += content =>
-                {
                     if ( KeyActive&& press)
                     {
                         press = false;
