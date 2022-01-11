@@ -133,51 +133,59 @@ namespace QTool.QInputSystem
     public class QInputButton : MonoBehaviour
     {
         public InputActionProperty inputAction;
- 
+
         QEventTrigger trigger = new QEventTrigger();
         public Selectable Selectable;
         public static string onlyInput = "";
-        public float minInterval =0;
+        public float minInterval = 0;
         private void Reset()
         {
             Selectable = GetComponent<Selectable>();
         }
-        float time=0;
-        bool press=false;
-         
+        float time = 0;
+        bool press = false;
+
         public bool KeyActive => (string.IsNullOrWhiteSpace(onlyInput) || name.Equals(onlyInput));
+        public bool ActiveAndInteractable
+        {
+            get
+            {
+                return Selectable.IsInteractable()&&Selectable.IsActive() &&(parenGroup==null?true:parenGroup.interactable);
+            }
+        }
+        CanvasGroup parenGroup;
         private void Awake()
         {
             if (Selectable == null)
             {
                 Selectable = GetComponent<Selectable>();
             }
+            parenGroup = GetComponentInParent<CanvasGroup>();
             trigger.Init(this);
             if (inputAction.action != null)
             {
                 inputAction.action.Enable();
                 inputAction.action.started += content =>
                 {
-                    if (Selectable.IsInteractable()&& KeyActive&&!press)
+                    if (ActiveAndInteractable && KeyActive && !press)
                     {
-                        Debug.LogError("Donw" + name);
                         press = true;
                         trigger.enter.Invoke();
                         trigger.donw.Invoke();
                     }
                 };
-                //inputAction.action.performed += content =>
-                //{
-                   
-                //};
-                inputAction.action.canceled += content =>
+                inputAction.action.performed += content =>
                 {
-                    if (press && Selectable.IsInteractable() && KeyActive && (Time.unscaledTime - time) > minInterval)
+
+                    if (press && ActiveAndInteractable && KeyActive && (Time.unscaledTime - time) > minInterval)
                     {
-                        Debug.LogError("Click" + name);
                         trigger.click.Invoke();
                         time = Time.unscaledTime;
                     }
+                };
+                inputAction.action.canceled += content =>
+                {
+                 
                     if ( KeyActive&& press)
                     {
                         press = false;
