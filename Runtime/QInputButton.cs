@@ -141,6 +141,10 @@ namespace QTool.QInputSystem
         private void Reset()
         {
             Selectable = GetComponent<Selectable>();
+            Selectable.navigation = new Navigation
+            {
+                mode = Navigation.Mode.None
+            };
         }
         float time = 0;
         bool press = false;
