@@ -12,15 +12,15 @@ public class QInputTest : MonoBehaviour
         input.action.Enable();
         input.action.started += (info) =>
         {
-            Debug.Log("start");
+            QDebug.Log("start");
         };
         input.action.performed += (info) =>
         {
-            Debug.Log("performed");
+            QDebug.Log("performed");
         };
         input.action.canceled += (info) =>
         {
-            Debug.Log("canceled");
+            QDebug.Log("canceled");
         };
     }
 
