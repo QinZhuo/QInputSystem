@@ -37,7 +37,7 @@ namespace QTool.QInputSystem
             }
         }
     }
-    class QEventTrigger
+    class UIEventTrigger
     {
         public ClickList click = new ClickList();
         public DonwList donw = new DonwList();
@@ -134,7 +134,7 @@ namespace QTool.QInputSystem
     {
         public InputActionProperty inputAction;
 
-        QEventTrigger trigger = new QEventTrigger();
+        UIEventTrigger trigger = new UIEventTrigger();
         public Selectable Selectable;
         public static string onlyInput = "";
         public float minInterval = 0;
