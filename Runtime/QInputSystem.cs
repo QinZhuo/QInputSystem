@@ -9,18 +9,18 @@ namespace QTool.InputSystem
     public static class QInputSystem
     {
         static InputActionAsset _inputSetting;
-        public static InputActionAsset QInputSetting
+        public static InputActionAsset InputSetting
         {
             get
             {
                 if (_inputSetting == null)
                 {
-                    _inputSetting = Resources.Load<InputActionAsset>(nameof(QInputSetting));
+                    _inputSetting = Resources.Load<InputActionAsset>(nameof(InputSetting));
 #if UNITY_EDITOR
                     if (_inputSetting == null)
                     {
                         _inputSetting = ScriptableObject.CreateInstance<InputActionAsset>();
-                        UnityEditor.AssetDatabase.CreateAsset(_inputSetting, ("Assets/Resources/" + nameof(QInputSetting) + ".inputactions").CheckFolder());
+                        UnityEditor.AssetDatabase.CreateAsset(_inputSetting, ("Assets/Resources/" + nameof(InputSetting) + ".inputactions").CheckFolder());
                         if (!Application.isPlaying)
                         {
                             UnityEditor.AssetDatabase.Refresh();
