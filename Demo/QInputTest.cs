@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using QTool.QInputSystem;
+using QTool.InputSystem;
 using UnityEngine.InputSystem;
 namespace QTool
 {

@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
-namespace QTool.QInputSystem
+namespace QTool.InputSystem
 {
 
     public class QJoystick : MonoBehaviour,IDragHandler,IEndDragHandler
@@ -19,17 +19,17 @@ namespace QTool.QInputSystem
         {
             if (joyStick == null)
             {
-                joyStick = InputSystem.AddDevice<Pointer>(joyStickName);
-                InputSystem.SetDeviceUsage(joyStick, joyStickName);
+                joyStick = UnityEngine.InputSystem.InputSystem.AddDevice<Pointer>(joyStickName);
+                UnityEngine.InputSystem.InputSystem.SetDeviceUsage(joyStick, joyStickName);
             }
             else
             {
-                InputSystem.AddDevice(joyStick);
+                UnityEngine.InputSystem.InputSystem.AddDevice(joyStick);
             }
         }
         private void OnDisable()
         {
-            InputSystem.RemoveDevice(joyStick);
+            UnityEngine.InputSystem.InputSystem.RemoveDevice(joyStick);
         }
         private void Awake()
         {

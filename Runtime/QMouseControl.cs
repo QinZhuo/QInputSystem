@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using System;
 
-namespace QTool.QInputSystem {
+namespace QTool.InputSystem {
    
     public class QMouseControl : MonoBehaviour
     { 
@@ -19,7 +19,7 @@ namespace QTool.QInputSystem {
         private void OnEnable()
         {
             InitCursor();
-            InputSystem.onAfterUpdate += OnAfterInputUpdate;
+            UnityEngine.InputSystem.InputSystem.onAfterUpdate += OnAfterInputUpdate;
             StickAction.action?.Enable();
             SetActionCallback(LeftButtonAction,OnLeftButton);
         }
@@ -93,7 +93,7 @@ namespace QTool.QInputSystem {
         Mouse SystemMouse;
         void InitCursor()
         {
-            var devices =InputSystem.devices;
+            var devices = UnityEngine.InputSystem.InputSystem.devices;
             for (var i = 0; i < devices.Count; ++i)
             {
                 var device = devices[i];

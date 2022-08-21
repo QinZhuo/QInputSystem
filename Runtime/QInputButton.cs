@@ -7,7 +7,7 @@ using static UnityEngine.UI.Selectable;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
-namespace QTool.QInputSystem
+namespace QTool.InputSystem
 {
    
     [RequireComponent(typeof(Selectable))]

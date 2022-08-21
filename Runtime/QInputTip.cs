@@ -5,7 +5,7 @@ using QTool;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace QTool.QInputSystem {
+namespace QTool.InputSystem {
   
     /// <summary>
     /// 快捷键提示脚本

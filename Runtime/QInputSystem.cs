@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
-namespace QTool.QInputSystem
+namespace QTool.InputSystem
 {
     public static class QInputSystem
     {

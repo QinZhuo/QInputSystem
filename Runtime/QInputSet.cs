@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-namespace QTool.QInputSystem
+namespace QTool.InputSystem
 {
     using InputSystem = UnityEngine.InputSystem.InputSystem;
     public class QInputSet : QInputTip

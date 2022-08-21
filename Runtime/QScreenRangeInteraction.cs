@@ -6,7 +6,7 @@ using UnityEngine.InputSystem.Editor;
 #endif
 using UnityEngine;
 using UnityEngine.InputSystem;
-namespace QTool.QInputSystem
+namespace QTool.InputSystem
 {
     /// <summary>
     /// Êó±êÆÁÄ»Î»ÖÃ´¥·¢Âß¼­
@@ -21,10 +21,10 @@ namespace QTool.QInputSystem
         public float left = 0;
         public float right = 0;
 #if UNITY_EDITOR
-        static QScreenRangeInteraction() =>InputSystem.RegisterInteraction<QScreenRangeInteraction>();
+        static QScreenRangeInteraction() => UnityEngine.InputSystem.InputSystem.RegisterInteraction<QScreenRangeInteraction>();
 #else
         [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void OnQScreenRangeInteraction() => InputSystem.RegisterInteraction<QScreenRangeInteraction>();
+        static void OnQScreenRangeInteraction() => UnityEngine.InputSystem.InputSystem.RegisterInteraction<QScreenRangeInteraction>();
 #endif
 
         bool InRange(Vector2 pos)
