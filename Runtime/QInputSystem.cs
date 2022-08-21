@@ -39,6 +39,8 @@ namespace QTool.QInputSystem
             }
             set
             {
+                Debug.LogError("不可更改鼠标位置");
+                return;
                 var delta = value - MousePosition;
                 InputState.Change(Mouse.current.position, value);
                 InputState.Change(Mouse.current.delta, delta);
