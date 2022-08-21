@@ -19,12 +19,7 @@ namespace QTool.InputSystem
 #if UNITY_EDITOR
                     if (_inputSetting == null)
                     {
-                        _inputSetting = ScriptableObject.CreateInstance<InputActionAsset>();
-                        QFileManager.Save(_inputSetting.ToJson(), ("Assets/Resources/" + nameof(InputSetting) + ".inputactions").CheckFolder());
-                        if (!Application.isPlaying)
-                        {
-                            UnityEditor.AssetDatabase.Refresh();
-                        }
+                        Debug.LogError(nameof(Resources) + "下不存在 " + nameof(InputSetting) + " 输入设置");
                     }
 #endif
                 }
