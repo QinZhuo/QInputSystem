@@ -8,6 +8,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 namespace QTool.QInputSystem
 {
+    /// <summary>
+    /// Êó±êÆÁÄ»Î»ÖÃ´¥·¢Âß¼­
+    /// </summary>
 #if UNITY_EDITOR
     [InitializeOnLoad]
 #endif
@@ -19,18 +22,10 @@ namespace QTool.QInputSystem
         public float right = 0;
 #if UNITY_EDITOR
         static QScreenRangeInteraction() =>InputSystem.RegisterInteraction<QScreenRangeInteraction>();
-        // static RepeatInteraction() => InputSystem.RegisterInteraction<RepeatInteraction>();
 #else
         [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
         static void OnQScreenRangeInteraction() => InputSystem.RegisterInteraction<QScreenRangeInteraction>();
 #endif
-
-
-        //[RuntimeInitializeOnLoadMethod]
-        //private static void Initialize()
-        //{
-
-        //}
 
         bool InRange(Vector2 pos)
         {
@@ -43,13 +38,11 @@ namespace QTool.QInputSystem
             }
             return false;
         }
-        //Vector2? lastPos = null;
         public void Process(ref InputInteractionContext context)
         {
             var control= context.control;
           
             var pos = context.ReadValue<Vector2>()/new Vector2(Screen.width,Screen.height);
-            //  Debug.LogError(pos + " : " +lastPos.Value);
             if (InRange(pos))
             {
                 if(!context.isStarted)
@@ -65,11 +58,8 @@ namespace QTool.QInputSystem
                 }
             }
         }
-       // InputControl m_Control;
         public void Reset()
         {
-           // lastPos = null;
-          //  m_Control = null;
         }
     }
 }

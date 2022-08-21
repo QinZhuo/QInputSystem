@@ -2,7 +2,8 @@
     "name": "QInputSystem",
     "rootNamespace": "",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c"
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:8c4295a259d9a934784fb95a11fa9e58"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

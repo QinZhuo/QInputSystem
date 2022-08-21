@@ -6,11 +6,10 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace QTool.QInputSystem {
-    [System.Serializable]
-    public class StringEvent : UnityEvent<string>
-    {
-
-    }
+  
+    /// <summary>
+    /// 快捷键提示脚本
+    /// </summary>
     public class QInputTip : MonoBehaviour
     {
         public InputActionReference action;
