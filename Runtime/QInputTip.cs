@@ -14,7 +14,7 @@ namespace QTool.InputSystem {
     {
         public InputActionReference action;
         [SerializeField]
-        private string tipInfo = "按下[Key]移动";
+        private string tipInfo = "按下{Key}移动";
         protected string ViewKey
         {
             get
@@ -72,7 +72,7 @@ namespace QTool.InputSystem {
         {
             if (!Active) return;
             string tip = "";
-            tip = tipInfo.Replace("[Key]", TipKeyReplce(ViewKey));
+            tip = tipInfo.Replace("{Key}", TipKeyReplce(ViewKey));
             OnValueChange?.Invoke(tip);
         }
 
