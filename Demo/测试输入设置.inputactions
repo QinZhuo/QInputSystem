@@ -11,7 +11,8 @@
                     "id": "7fead196-2bfb-4083-887e-4438eb2ff057",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "退出",
@@ -19,7 +20,8 @@
                     "id": "5a7acee9-fb85-4e04-95c5-7c1c7d6184e2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "鼠标位置",
@@ -27,7 +29,8 @@
                     "id": "86e86eb8-3926-4309-8fe4-5274694229d9",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -35,6 +38,17 @@
                     "name": "",
                     "id": "49ef4cb8-05ad-4584-bde4-4be7632a09cc",
                     "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "回车",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb6ee00c-3c7a-46ac-8cdd-d8a1d4052400",
+                    "path": "<XInputController>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -55,12 +69,12 @@
                 },
                 {
                     "name": "",
-                    "id": "940516d7-68d0-41de-8144-37e647ebc246",
-                    "path": "<Keyboard>/b",
+                    "id": "f72cc696-c36d-4672-9ec2-6d2493e97090",
+                    "path": "<XInputController>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "鼠标位置",
+                    "action": "退出",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

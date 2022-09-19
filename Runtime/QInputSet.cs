@@ -19,27 +19,24 @@ namespace QTool.InputSystem
         }
         private void PerformInteractiveRebind(InputAction action)
         {
-            ChangeOperation?.Cancel(); // Will null out m_RebindOperation.
+            ChangeOperation?.Cancel(); 
 
-          
-
-            // Configure the rebind.
-            ChangeOperation = action.PerformInteractiveRebinding()
+            ChangeOperation = action.PerformInteractiveRebinding(action.GetDeviceIndex())
                 .OnCancel(
                     operation =>
                     {
-                        OnChangeKey?.Invoke(this, false);
                         OnChange();
                         CleanUp();
+                        OnChangeKey?.Invoke(this, false);
                         action?.Enable();
                     })
                 .OnComplete(
                     operation =>
                     {
 
-                        OnChangeKey?.Invoke(this, false);
                         OnChange();
                         CleanUp();
+                        OnChangeKey?.Invoke(this, false);
                         action?.Enable();
 
                     });

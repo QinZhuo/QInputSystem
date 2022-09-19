@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 990115936}
   - component: {fileID: 990115940}
   - component: {fileID: 990115941}
+  - component: {fileID: 990115942}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -359,17 +360,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
-      m_Name: 
+      m_Name: Input
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 
+      m_Id: 37208c6e-b4e7-4e3e-be04-92adab462df6
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
-    m_Reference: {fileID: 0}
-  Selectable: {fileID: 0}
+      m_Flags: 0
+    m_Reference: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
+  Selectable: {fileID: 990115937}
+  minInterval: 0
 --- !u!114 &990115937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,6 +467,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202baf7b91b533540b266841d5649be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playOnAwake: 0
+  hideTimeScale: 2
+  OnShow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHide:
+    m_PersistentCalls:
+      m_Calls: []
+  curve: 5
+  animTime: 0.4
+  StartValue: {x: 1, y: 1}
+  EndValue: {x: 0.9, y: 0.9}
 --- !u!114 &990115941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,6 +491,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a62deb76b332d440925d74225f4c627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectable: {fileID: 990115937}
+  enterAnim: {fileID: 0}
+  downAnim: {fileID: 990115940}
+  selectAnim: {fileID: 0}
+  onAnim: {fileID: 0}
+--- !u!114 &990115942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990115934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ebd50ec3569cae4386750fe59b6116d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
+  tipInfo: "\u6309\u4E0B{Key}\u89E6\u53D1"
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2085343896}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1178134308
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,8 +537,9 @@ GameObject:
   - component: {fileID: 1178134313}
   - component: {fileID: 1178134312}
   - component: {fileID: 1178134311}
-  - component: {fileID: 1178134310}
   - component: {fileID: 1178134314}
+  - component: {fileID: 1178134310}
+  - component: {fileID: 1178134315}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -514,7 +564,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: 0}
+  m_AnchoredPosition: {x: 370, y: 0}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178134310
@@ -535,12 +585,14 @@ MonoBehaviour:
       m_Name: Input
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 1bc90922-c83a-4240-a017-7da91da09267
+      m_Id: 17d58e8c-7abc-447a-b153-b88676e0c4e7
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
+      m_Flags: 0
     m_Reference: {fileID: 5685856034849171797, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
   Selectable: {fileID: 1178134311}
+  minInterval: 0
 --- !u!114 &1178134311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,7 +658,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: "\uFF1F\uFF1F\uFF1F\uFF1F"
+          m_StringArgument: "\uFF1F\uFF1F\uFF1F"
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1178134312
@@ -660,7 +712,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
-  tipInfo: "\u6309\u4E0B[Key]"
+  tipInfo: "\u6539\u952E{Key}"
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1178134315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178134308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ebd50ec3569cae4386750fe59b6116d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: 5685856034849171797, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
+  tipInfo: "{Key}\u6539\u952E"
   OnValueChange:
     m_PersistentCalls:
       m_Calls:
@@ -792,7 +861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -235}
+  m_AnchoredPosition: {x: 370, y: -226}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1491555828
@@ -808,7 +877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   action: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
-  tipInfo: '[Key]'
+  tipInfo: '{Key}'
   OnValueChange:
     m_PersistentCalls:
       m_Calls:
@@ -837,7 +906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1021,6 +1090,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}

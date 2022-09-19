@@ -14,12 +14,12 @@ namespace QTool.InputSystem {
     {
         public InputActionReference action;
         [SerializeField]
-        private string tipInfo = "按下{Key}移动";
+        private string tipInfo = "按下{Key}触发";
         protected string ViewKey
         {
             get
             {
-                return action.action?.GetBindingDisplayString();
+                return action.action?.GetBindingDisplayString(action.action.GetDeviceIndex(),InputBinding.DisplayStringOptions.DontUseShortDisplayNames);
             }
         }
         public string TipInfo
@@ -87,10 +87,12 @@ namespace QTool.InputSystem {
         {
             OnChange();
             QInputSet.OnChangeKey += OnChangeKey;
+            QInputSystem.OnDeviceTypeChange += OnChange;
         }
         protected virtual void OnDisable()
         {
             QInputSet.OnChangeKey -= OnChangeKey;
+            QInputSystem.OnDeviceTypeChange -= OnChange;
         }
         void OnChangeKey(QInputSet keySetting, bool start)
         {
