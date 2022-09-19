@@ -26,14 +26,23 @@ namespace QTool.InputSystem
                 return _inputSetting;
             }
         }
+
         public static Vector2 MousePosition
         {
             get
             {
+                if (Mouse.current == null)
+                {
+                    return Vector2.zero;
+                }
                 return Mouse.current.position.ReadValue();
             }
             set
             {
+                if (Mouse.current == null)
+                {
+                    return;
+                }
                 var delta = value - MousePosition;
                 InputState.Change(Mouse.current.position, value);
                 InputState.Change(Mouse.current.delta, delta);
