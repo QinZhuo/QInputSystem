@@ -79,8 +79,8 @@ namespace QTool.InputSystem
                 case "Keyboard":
                     type = QDeviceType.MouseKeyboard;
                     break;
-                case "TouchScreen":
-                    type = QDeviceType.TouchScreen;
+                case "Touchscreen":
+                    type = QDeviceType.Touchscreen;
                     break;
                 default:
                     Debug.LogError("不支持设备检测[" + typeStr + "]");
@@ -104,7 +104,7 @@ namespace QTool.InputSystem
         {
             MouseKeyboard,
             XInputController,
-            TouchScreen,
+            Touchscreen,
         }
     }
 }
