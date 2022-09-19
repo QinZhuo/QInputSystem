@@ -538,8 +538,6 @@ GameObject:
   - component: {fileID: 1178134312}
   - component: {fileID: 1178134311}
   - component: {fileID: 1178134314}
-  - component: {fileID: 1178134310}
-  - component: {fileID: 1178134315}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -567,32 +565,6 @@ RectTransform:
   m_AnchoredPosition: {x: 370, y: 0}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1178134310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178134308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c616d043c2101754e8b0e23ed6013012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Input
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 17d58e8c-7abc-447a-b153-b88676e0c4e7
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 5685856034849171797, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
-  Selectable: {fileID: 1178134311}
-  minInterval: 0
 --- !u!114 &1178134311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,23 +685,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   action: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
   tipInfo: "\u6539\u952E{Key}"
-  OnValueChange:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1178134315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178134308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ebd50ec3569cae4386750fe59b6116d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action: {fileID: 5685856034849171797, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
-  tipInfo: "{Key}\u6539\u952E"
   OnValueChange:
     m_PersistentCalls:
       m_Calls:
