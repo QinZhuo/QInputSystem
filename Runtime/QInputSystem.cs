@@ -8,6 +8,21 @@ namespace QTool.InputSystem
 {
     public static class QInputSystem
     {
+        static QInputSystem()
+        {
+            var virtualMouse = UnityEngine.InputSystem.InputSystem.GetDevice("VirtualMouse") as Mouse;
+            if (virtualMouse == null)
+            {
+                virtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>("VirtualMouse");
+            }
+            if (UnityEngine.InputSystem.InputSystem.devices.Count > 0)
+            {
+                foreach (var device in UnityEngine.InputSystem.InputSystem.devices)
+                {
+                    SetDeviceType(device.displayName);
+                }
+            }
+        }
         static InputActionAsset _inputSetting;
         public static InputActionAsset InputSetting
         {
@@ -31,18 +46,10 @@ namespace QTool.InputSystem
         {
             get
             {
-                if (Mouse.current == null)
-                {
-                    return Vector2.zero;
-                }
                 return Mouse.current.position.ReadValue();
             }
             set
             {
-                if (Mouse.current == null)
-                {
-                    return;
-                }
                 var delta = value - MousePosition;
                 InputState.Change(Mouse.current.position, value);
                 InputState.Change(Mouse.current.delta, delta);
@@ -71,11 +78,16 @@ namespace QTool.InputSystem
             {
                 DeviceType = newDeviceType;
                 OnDeviceTypeChange?.Invoke();
+                QEventManager.Trigger("输入设备类型", DeviceType.ToString());
             }
         }
         public static QDeviceType ParseDeviceType(string key)
         {
             var typeStr = key.TrimStart('/').TrimStart('<').SplitStartString("/").TrimEnd('>');
+            if (typeStr.Length > 0 && char.IsNumber(typeStr[typeStr.Length - 1]))
+            {
+                typeStr = typeStr.Substring(0, typeStr.Length - 1);
+            }
             var type = QDeviceType.MouseKeyboard;
             switch (typeStr)
             {
@@ -90,6 +102,8 @@ namespace QTool.InputSystem
                     break;
                 case "Touchscreen":
                     type = QDeviceType.Touchscreen;
+                    break;
+                case "VirtualMouse":
                     break;
                 default:
                     Debug.LogError("不支持设备检测[" + typeStr + "]");
