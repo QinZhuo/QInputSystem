@@ -82,7 +82,7 @@ namespace QTool.InputSystem {
 
                 var deltaTime = (float)(currentTime - m_LastTime);
                 var delta = new Vector2(CursorSpeed * stickValue.x * deltaTime,CursorSpeed * stickValue.y * deltaTime);
-                QInputSystem.MousePosition += delta;
+                QInputSystem.PointerPosition += delta;
 
                 m_LastStickValue = stickValue;
                 m_LastTime = currentTime;

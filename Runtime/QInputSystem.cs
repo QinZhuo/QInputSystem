@@ -8,13 +8,24 @@ namespace QTool.InputSystem
 {
     public static class QInputSystem
     {
+        static Mouse _virtualMouse;
+        public static Mouse VirtualMouse
+        {
+            get
+            {
+                if (_virtualMouse == null)
+                {
+                    _virtualMouse = UnityEngine.InputSystem.InputSystem.GetDevice(nameof(VirtualMouse)) as Mouse;
+                    if (_virtualMouse == null)
+                    {
+                        _virtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>(nameof(VirtualMouse));
+                    }
+                }
+                return _virtualMouse;
+            }
+        }
         static QInputSystem()
         {
-            var virtualMouse = UnityEngine.InputSystem.InputSystem.GetDevice("VirtualMouse") as Mouse;
-            if (virtualMouse == null)
-            {
-                virtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>("VirtualMouse");
-            }
             if (UnityEngine.InputSystem.InputSystem.devices.Count > 0)
             {
                 foreach (var device in UnityEngine.InputSystem.InputSystem.devices)
@@ -42,17 +53,17 @@ namespace QTool.InputSystem
             }
         }
 
-        public static Vector2 MousePosition
+        public static Vector2 PointerPosition
         {
             get
             {
-                return Mouse.current.position.ReadValue();
+                return Pointer.current.position.ReadValue();
             }
             set
             {
-                var delta = value - MousePosition;
-                InputState.Change(Mouse.current.position, value);
-                InputState.Change(Mouse.current.delta, delta);
+                var delta = value - PointerPosition;
+                InputState.Change(Pointer.current.position, value);
+                InputState.Change(Pointer.current.delta, delta);
                 Mouse.current.WarpCursorPosition(value);
             }
         }
