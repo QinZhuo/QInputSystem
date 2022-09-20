@@ -94,7 +94,6 @@ namespace QTool.InputSystem
                 DeviceType = newDeviceType;
                 OnDeviceTypeChange?.Invoke();
                 QEventManager.Trigger("输入设备类型", DeviceType.ToString());
-                Debug.LogError("输入设备【" + DeviceType + "】["+device+"]");
             }
         }
 

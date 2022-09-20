@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "摇杆",
+                    "type": "Button",
+                    "id": "2075e9e0-0ce3-4133-8aac-c7dd0aa6167d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -97,6 +106,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "鼠标位置",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18e090db-e51e-4746-8eab-b97908458c89",
+                    "path": "<Pointer>/技能",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "摇杆",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

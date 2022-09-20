@@ -15,22 +15,22 @@ namespace QTool
             input.action.Enable();
             input.action.started += (info) =>
             {
-                QDebug.Log("start");
+                QDebug.Log("started " + info.ReadValue<Vector2>());
             };
             input.action.performed += (info) =>
             {
-                QDebug.Log("performed");
+                QDebug.Log("performed "+info.ReadValue<Vector2>());
             };
             input.action.canceled += (info) =>
             {
-                QDebug.Log("canceled");
+                QDebug.Log("canceled " + info.ReadValue<Vector2>());
             };
         }
 
         // Update is called once per frame
         void Update()
         {
-            Debug.LogError(input.action.phase);
+            Debug.LogError(input.action.ReadValue<Vector2>());
             //获取移动摇杆输入方向
             //var moveDir = QInput.Actions["移动"].Vector2 * 100 * Time.deltaTime;
             //transform.localPosition +=new Vector3(moveDir.x, moveDir.y,0);
