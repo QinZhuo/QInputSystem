@@ -8,25 +8,26 @@ namespace QTool.InputSystem
 {
     public static class QInputSystem
     {
-        //static Mouse _virtualMouse;
-        //public static Mouse VirtualMouse
-        //{
-        //    get
-        //    {
-        //        if (_virtualMouse == null)
-        //        {
-        //            _virtualMouse = UnityEngine.InputSystem.InputSystem.GetDevice(nameof(VirtualMouse)) as Mouse;
-        //            if (_virtualMouse == null)
-        //            {
-        //                _virtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>(nameof(VirtualMouse));
+        static Mouse _virtualMouse;
+        public static Mouse VirtualMouse
+        {
+            get
+            {
+                if (_virtualMouse == null)
+                {
+                    _virtualMouse = UnityEngine.InputSystem.InputSystem.GetDevice(nameof(VirtualMouse)) as Mouse;
+                    if (_virtualMouse == null)
+                    {
+                        _virtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>(nameof(VirtualMouse));
 
-        //            }
-        //        }
-        //        return _virtualMouse;
-        //    }
-        //}
+                    }
+                }
+                return _virtualMouse;
+            }
+        }
         static QInputSystem()
         {
+            _ = VirtualMouse;
             if (UnityEngine.InputSystem.InputSystem.devices.Count > 0)
             {
                 foreach (var device in UnityEngine.InputSystem.InputSystem.devices)
@@ -93,7 +94,7 @@ namespace QTool.InputSystem
                 DeviceType = newDeviceType;
                 OnDeviceTypeChange?.Invoke();
                 QEventManager.Trigger("输入设备类型", DeviceType.ToString());
-                Debug.LogError("输入设备【" + DeviceType + "】");
+                Debug.LogError("输入设备【" + DeviceType + "】["+device+"]");
             }
         }
 
