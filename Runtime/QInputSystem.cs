@@ -31,7 +31,7 @@ namespace QTool.InputSystem
             {
                 foreach (var device in UnityEngine.InputSystem.InputSystem.devices)
                 {
-                    SetDeviceType(device.displayName);
+                    SetDevice(device);
                 }
             }
         }
@@ -69,7 +69,6 @@ namespace QTool.InputSystem
             }
         }
         public static QDeviceType DeviceType { get; private set; } = QDeviceType.None;
-        public static InputControl ActiveControl { get; private set; } = null;
         public static event Action OnDeviceTypeChange;
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
@@ -78,22 +77,23 @@ namespace QTool.InputSystem
             {
                 if (obj is  InputAction action &&action.activeControl!=null)
                 {
-                    ActiveControl = action.activeControl;
-                    SetDeviceType(action.activeControl.path);
+                    SetDevice(action.activeControl.device);
                 }
             };
         }
-        private static void SetDeviceType(string key)
+        private static void SetDevice(InputDevice device)
         {
-            var newDeviceType = ParseDeviceType(key,DeviceType);
+            var newDeviceType = ParseDeviceType(device.displayName, device);
             if (newDeviceType != DeviceType)
             {
                 DeviceType = newDeviceType;
                 OnDeviceTypeChange?.Invoke();
                 QEventManager.Trigger("输入设备类型", DeviceType.ToString());
+                Debug.LogError("输入设备【" + DeviceType + "】");
             }
         }
-        public static QDeviceType ParseDeviceType(string key,QDeviceType lastType= QDeviceType.None)
+
+        public static QDeviceType ParseDeviceType(string key,InputDevice device=null)
         {
             var typeStr = key.TrimStart('/').TrimStart('<').SplitStartString("/").TrimEnd('>');
             if (typeStr.Length > 0 && char.IsNumber(typeStr[typeStr.Length - 1]))
@@ -119,14 +119,32 @@ namespace QTool.InputSystem
                 case "Touchscreen":
                     type = QDeviceType.Touchscreen;
                     break; 
-                case nameof(Gamepad):
-                    {
-                        type = ParseDeviceType(ActiveControl.displayName);
-                    }break;
                 case "VirtualMouse":
                     break;
                 default:
-                    Debug.LogError("不支持设备检测[" + typeStr + "]");
+                    if (device != null)
+                    {
+                        if (device is Gamepad)
+                        {
+                            type = QDeviceType.XInputController;
+                        }
+                        else if (device is Mouse || device is Keyboard)
+                        {
+                            type = QDeviceType.MouseKeyboard;
+                        }
+                        else if (device is Touchscreen)
+                        {
+                            type = QDeviceType.Touchscreen;
+                        }
+                        else
+                        {
+                            Debug.LogError("不支持设备检测[" + device + "]");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("不支持设备检测[" + typeStr + "]");
+                    }
                     break;
             }
             return type;
