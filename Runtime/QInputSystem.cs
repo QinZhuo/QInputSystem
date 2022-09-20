@@ -8,23 +8,23 @@ namespace QTool.InputSystem
 {
     public static class QInputSystem
     {
-        static Mouse _virtualMouse;
-        public static Mouse VirtualMouse
-        {
-            get
-            {
-                if (_virtualMouse == null)
-                {
-                    _virtualMouse = UnityEngine.InputSystem.InputSystem.GetDevice(nameof(VirtualMouse)) as Mouse;
-                    if (_virtualMouse == null)
-                    {
-                        _virtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>(nameof(VirtualMouse));
+        //static Mouse _virtualMouse;
+        //public static Mouse VirtualMouse
+        //{
+        //    get
+        //    {
+        //        if (_virtualMouse == null)
+        //        {
+        //            _virtualMouse = UnityEngine.InputSystem.InputSystem.GetDevice(nameof(VirtualMouse)) as Mouse;
+        //            if (_virtualMouse == null)
+        //            {
+        //                _virtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>(nameof(VirtualMouse));
 
-                    }
-                }
-                return _virtualMouse;
-            }
-        }
+        //            }
+        //        }
+        //        return _virtualMouse;
+        //    }
+        //}
         static QInputSystem()
         {
             if (UnityEngine.InputSystem.InputSystem.devices.Count > 0)
@@ -65,9 +65,13 @@ namespace QTool.InputSystem
                 var delta = value - PointerPosition;
                 InputState.Change(Pointer.current.position, value);
                 InputState.Change(Pointer.current.delta, delta);
-                Mouse.current.WarpCursorPosition(value);
+                if (Pointer.current is Mouse mouse)
+                {
+                    mouse.WarpCursorPosition(value);
+                }
             }
         }
+        public static bool IsGamepad => DeviceType == QDeviceType.XInputController || DeviceType == QDeviceType.DualShockGamepad;
         public static QDeviceType DeviceType { get; private set; } = QDeviceType.None;
         public static event Action OnDeviceTypeChange;
         [RuntimeInitializeOnLoadMethod]
