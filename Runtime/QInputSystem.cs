@@ -19,6 +19,7 @@ namespace QTool.InputSystem
                     if (_virtualMouse == null)
                     {
                         _virtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>(nameof(VirtualMouse));
+
                     }
                 }
                 return _virtualMouse;
@@ -67,8 +68,8 @@ namespace QTool.InputSystem
                 Mouse.current.WarpCursorPosition(value);
             }
         }
-        public static QDeviceType DeviceType { get; private set; } = QDeviceType.MouseKeyboard;
-        public static InputControl InputControl { get; private set; } = null;
+        public static QDeviceType DeviceType { get; private set; } = QDeviceType.None;
+        public static InputControl ActiveControl { get; private set; } = null;
         public static event Action OnDeviceTypeChange;
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
@@ -77,14 +78,14 @@ namespace QTool.InputSystem
             {
                 if (obj is  InputAction action &&action.activeControl!=null)
                 {
-                    InputControl = action.activeControl;
+                    ActiveControl = action.activeControl;
                     SetDeviceType(action.activeControl.path);
                 }
             };
         }
         private static void SetDeviceType(string key)
         {
-            var newDeviceType = ParseDeviceType(key);
+            var newDeviceType = ParseDeviceType(key,DeviceType);
             if (newDeviceType != DeviceType)
             {
                 DeviceType = newDeviceType;
@@ -92,7 +93,7 @@ namespace QTool.InputSystem
                 QEventManager.Trigger("输入设备类型", DeviceType.ToString());
             }
         }
-        public static QDeviceType ParseDeviceType(string key)
+        public static QDeviceType ParseDeviceType(string key,QDeviceType lastType= QDeviceType.None)
         {
             var typeStr = key.TrimStart('/').TrimStart('<').SplitStartString("/").TrimEnd('>');
             if (typeStr.Length > 0 && char.IsNumber(typeStr[typeStr.Length - 1]))
@@ -102,10 +103,14 @@ namespace QTool.InputSystem
             var type = QDeviceType.MouseKeyboard;
             switch (typeStr)
             {
-                case "Gamepad":
                 case "XInputController":
                 case "XInputControllerWindows":
                     type = QDeviceType.XInputController;
+                    break;
+                case "Wireless Controller":
+                case "DualShockGamepad":
+                case "DualSenseGamepadHID":
+                    type = QDeviceType.DualShockGamepad;
                     break;
                 case "Mouse":
                 case "Keyboard":
@@ -113,7 +118,11 @@ namespace QTool.InputSystem
                     break;
                 case "Touchscreen":
                     type = QDeviceType.Touchscreen;
-                    break;
+                    break; 
+                case nameof(Gamepad):
+                    {
+                        type = ParseDeviceType(ActiveControl.displayName);
+                    }break;
                 case "VirtualMouse":
                     break;
                 default:
@@ -136,8 +145,10 @@ namespace QTool.InputSystem
         }
         public enum QDeviceType
         {
+            None,
             MouseKeyboard,
             XInputController,
+            DualShockGamepad,
             Touchscreen,
         }
     }

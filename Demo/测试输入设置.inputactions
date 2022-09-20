@@ -58,6 +58,17 @@
                 },
                 {
                     "name": "",
+                    "id": "235ef5ad-71a4-447d-95ae-f9f01acdedf7",
+                    "path": "<DualShockGamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "回车",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9d9c169c-d63b-4cb3-8c39-5afbc5a88367",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
