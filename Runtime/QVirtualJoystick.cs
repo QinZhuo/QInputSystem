@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.LowLevel;
 namespace QTool.InputSystem
 {
 
-    public class QJoystick : MonoBehaviour,IDragHandler,IEndDragHandler
+    public class QVirtualJoystick : MonoBehaviour,IDragHandler,IEndDragHandler
     {
         public RectTransform back;
         public RectTransform JoystickButton;
