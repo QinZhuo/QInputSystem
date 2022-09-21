@@ -34,12 +34,12 @@
                 },
                 {
                     "name": "摇杆",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "2075e9e0-0ce3-4133-8aac-c7dd0aa6167d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -111,8 +111,8 @@
                 },
                 {
                     "name": "",
-                    "id": "18e090db-e51e-4746-8eab-b97908458c89",
-                    "path": "<Pointer>/技能",
+                    "id": "c6dcd277-d5e2-479e-b0eb-76ffe738a5ff",
+                    "path": "<QVirtualGamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
