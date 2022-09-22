@@ -82,13 +82,14 @@ namespace QTool.InputSystem
         [InputControl(name = "select", displayName = "Minus")]
         public new ButtonControl aButton =>base.bButton;
         public new ButtonControl bButton =>base.aButton;
+#if UNITY_SWITCH
 #if UNITY_EDITOR
         static QSwitchGamepad()
         {
             Initialize();
         }
 #endif
-#if UNITY_SWITCH
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         protected static void Initialize()
         {
