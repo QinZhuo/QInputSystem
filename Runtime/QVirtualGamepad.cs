@@ -30,7 +30,7 @@ namespace QTool.InputSystem
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         protected static void Initialize()
         {
-            UnityEngine.InputSystem.InputSystem.RegisterLayout<QVirtualGamepad>();
+            RegisterLayout();
         }
     }
     public abstract class QGamepad<T> : Gamepad where T : QGamepad<T>
@@ -38,7 +38,7 @@ namespace QTool.InputSystem
 
         protected static void RegisterLayout()
         {
-            UnityEngine.InputSystem.InputSystem.RegisterLayout<QSwitchGamepad>();
+            UnityEngine.InputSystem.InputSystem.RegisterLayout<T>();
         }
         private static T _instance;
         public static T Instance
@@ -58,7 +58,7 @@ namespace QTool.InputSystem
         }
     }
     #region Switch
-#if UNITY_SWITCH
+
 #if UNITY_EDITOR
     [InitializeOnLoad]
 #endif
@@ -84,6 +84,7 @@ namespace QTool.InputSystem
             Initialize();
         }
 #endif
+#if UNITY_SWITCH
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         protected static void Initialize()
         {
@@ -155,9 +156,9 @@ namespace QTool.InputSystem
                 gampadState.rightStick = new Vector2(npadState.analogStickR.fx, npadState.analogStickR.fy);
                 UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
             }
-          
+
         }
-    }
 #endif
+    }
     #endregion
 }
