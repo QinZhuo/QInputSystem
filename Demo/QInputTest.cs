@@ -32,21 +32,29 @@ namespace QTool
         // Update is called once per frame
         void Update()
         {
-            if (Gamepad.current.xButton.isPressed)
+            if (Gamepad.current.xButton.wasPressedThisFrame)
             {
                 Debug.LogError(Gamepad.current.xButton);
             }
-            if (Gamepad.current.aButton.isPressed)
+            if (Gamepad.current.aButton.wasPressedThisFrame)
             {
                 Debug.LogError(Gamepad.current.aButton);
             }
-            if (Gamepad.current.bButton.isPressed)
+            if (Gamepad.current.bButton.wasPressedThisFrame)
             {
                 Debug.LogError(Gamepad.current.bButton);
             }
-            if (Gamepad.current.yButton.isPressed)
+            if (Gamepad.current.yButton.wasPressedThisFrame)
             {
                 Debug.LogError(Gamepad.current.yButton);
+            }
+            if (Gamepad.current.leftTrigger.wasPressedThisFrame)
+            {
+                Debug.LogError(Gamepad.current.leftTrigger);
+            }
+            if (Gamepad.current.rightTrigger.wasPressedThisFrame)
+            {
+                Debug.LogError(Gamepad.current.rightTrigger);
             }
             //Debug.LogError(input.action.ReadValue<Vector2>());
             //获取移动摇杆输入方向
