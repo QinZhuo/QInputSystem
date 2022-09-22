@@ -17,15 +17,15 @@ namespace QTool
             input.action.Enable();
             input.action.started += (info) =>
             {
-                Debug.LogError("started " + info.ReadValue<Vector2>());
+                Debug.LogError("started " + info.ReadValue<float>());
             };
             input.action.performed += (info) =>
             {
-                Debug.LogError("performed "+info.ReadValue<Vector2>());
+                Debug.LogError("performed "+info.ReadValue<float>());
             };
             input.action.canceled += (info) =>
             {
-                Debug.LogError("canceled " + info.ReadValue<Vector2>());
+                Debug.LogError("canceled " + info.ReadValue<float>());
             };
         }
 
@@ -56,6 +56,7 @@ namespace QTool
             {
                 Debug.LogError(Gamepad.current.rightTrigger);
             }
+
             //Debug.LogError(input.action.ReadValue<Vector2>());
             //获取移动摇杆输入方向
             //var moveDir = QInput.Actions["移动"].Vector2 * 100 * Time.deltaTime;

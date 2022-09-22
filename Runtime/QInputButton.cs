@@ -10,7 +10,6 @@ using System;
 namespace QTool.InputSystem
 {
    
-    [RequireComponent(typeof(Selectable))]
     public class QInputButton : MonoBehaviour
     {
         public InputActionProperty inputAction;
@@ -18,7 +17,6 @@ namespace QTool.InputSystem
         UIEventTrigger trigger = new UIEventTrigger();
         public Selectable Selectable;
         public static string onlyInput = "";
-        public float minInterval = 0;
         private void Reset()
         {
             Selectable = GetComponent<Selectable>();
@@ -27,7 +25,6 @@ namespace QTool.InputSystem
                 mode = Navigation.Mode.None
             };
         }
-        float time = 0;
         bool press = false;
 
         public bool KeyActive => (string.IsNullOrWhiteSpace(onlyInput) || name.Equals(onlyInput));
@@ -62,10 +59,9 @@ namespace QTool.InputSystem
                 inputAction.action.performed += content =>
                 {
 
-                    if (press && ActiveAndInteractable && KeyActive && (Time.unscaledTime - time) > minInterval)
+                    if (press && ActiveAndInteractable && KeyActive )
                     {
                         trigger.click.Invoke();
-                        time = Time.unscaledTime;
                     }
                 };
                 inputAction.action.canceled += content =>
@@ -91,8 +87,6 @@ namespace QTool.InputSystem
         public ClickList click = new ClickList();
         public DonwList donw = new DonwList();
         public UpList up = new UpList();
-        // public SelectList select = new SelectList();
-        //  public DeselectList deselect = new DeselectList();
         public EnterList enter = new EnterList();
         public ExitList exit = new ExitList();
 
@@ -103,8 +97,6 @@ namespace QTool.InputSystem
             click.Init(monos);
             donw.Init(monos);
             up.Init(monos);
-            //select.Init(monos);
-            //deselect.Init(monos);
             enter.Init(monos);
             exit.Init(monos);
         }
@@ -173,6 +165,7 @@ namespace QTool.InputSystem
             handler.OnPointerClick(EventCreater.TempEventData);
         }
     }
+
     class DonwList : TempHandlerList<IPointerDownHandler>
     {
         protected override void Action(IPointerDownHandler handler)
