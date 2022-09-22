@@ -15,15 +15,15 @@ namespace QTool
             input.action.Enable();
             input.action.started += (info) =>
             {
-                QDebug.Log("started " + info.ReadValue<Vector2>());
+                Debug.LogError("started " + info.ReadValue<Vector2>());
             };
             input.action.performed += (info) =>
             {
-                QDebug.Log("performed "+info.ReadValue<Vector2>());
+                Debug.LogError("performed "+info.ReadValue<Vector2>());
             };
             input.action.canceled += (info) =>
             {
-                QDebug.Log("canceled " + info.ReadValue<Vector2>());
+                Debug.LogError("canceled " + info.ReadValue<Vector2>());
             };
         }
 

@@ -119,6 +119,17 @@
                     "action": "摇杆",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e24f2fbe-ec03-4fa1-bdce-724629478e3f",
+                    "path": "<QSwitchGamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "摇杆",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
