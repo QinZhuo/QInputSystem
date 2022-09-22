@@ -63,7 +63,11 @@ namespace QTool.InputSystem
     [InitializeOnLoad]
 #endif
     [InputControlLayout(displayName = "Switch Controller (on Switch)")]
-    public class QSwitchGamepad : QGamepad<QSwitchGamepad>,IInputUpdateCallbackReceiver
+    public class QSwitchGamepad : QGamepad<QSwitchGamepad>
+#if UNITY_SWITCH
+        , IInputUpdateCallbackReceiver
+#endif
+
     {
 
         [InputControl(name = "buttonNorth", displayName = "X", shortDisplayName = "X")]
