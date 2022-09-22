@@ -35,7 +35,6 @@ namespace QTool.InputSystem
     }
     public abstract class QGamepad<T> : Gamepad where T : QGamepad<T>
     {
-
         protected static void RegisterLayout()
         {
             UnityEngine.InputSystem.InputSystem.RegisterLayout<T>();
@@ -57,6 +56,7 @@ namespace QTool.InputSystem
             }
         }
     }
+
     #region Switch
 
 #if UNITY_EDITOR
@@ -107,58 +107,64 @@ namespace QTool.InputSystem
         {
             if(Application.platform== RuntimePlatform.Switch)
             {
-                Npad.GetState(ref npadState, NpadId.Handheld, Npad.GetStyleSet(NpadId.Handheld));
+                var style = Npad.GetStyleSet(NpadId.Handheld);
+                Npad.GetState(ref npadState, NpadId.Handheld, style);
+             
                 var gampadState = new GamepadState();
-                if (npadState.GetButton(NpadButton.A))
+                if (style != NpadStyle.Invalid)
                 {
-                    gampadState.buttons |= 1 << (int)GamepadButton.B;
+                    if (npadState.GetButton(NpadButton.A))
+                    {
+                        gampadState.WithButton(GamepadButton.B);
+                    }
+                    if (npadState.GetButton(NpadButton.B))
+                    {
+                        gampadState.WithButton(GamepadButton.A);
+                    }
+                    if (npadState.GetButton(NpadButton.X))
+                    {
+                        gampadState.WithButton(GamepadButton.X);
+                    }
+                    if (npadState.GetButton(NpadButton.Y))
+                    {
+                        gampadState.WithButton(GamepadButton.Y);
+                    }
+                    if (npadState.GetButton(NpadButton.StickL))
+                    {
+                        gampadState.WithButton(GamepadButton.LeftStick);
+                    }
+                    if (npadState.GetButton(NpadButton.StickR))
+                    {
+                        gampadState.WithButton(GamepadButton.RightStick);
+                    }
+                    if (npadState.GetButton(NpadButton.L))
+                    {
+                        gampadState.WithButton(GamepadButton.LeftShoulder);
+                    }
+                    if (npadState.GetButton(NpadButton.R))
+                    {
+                        gampadState.WithButton(GamepadButton.RightShoulder);
+                    }
+                    if (npadState.GetButton(NpadButton.ZL))
+                    {
+                        gampadState.WithButton(GamepadButton.LeftTrigger);
+                    }
+                    if (npadState.GetButton(NpadButton.ZR))
+                    {
+                        gampadState.WithButton(GamepadButton.RightTrigger);
+                    }
+                    if (npadState.GetButton(NpadButton.Plus))
+                    {
+                        gampadState.WithButton(GamepadButton.Start);
+                    }
+                    if (npadState.GetButton(NpadButton.Minus))
+                    {
+                        gampadState.WithButton(GamepadButton.Select);
+                    }
+                    gampadState.leftStick = new Vector2(npadState.analogStickL.fx, npadState.analogStickL.fy);
+                    gampadState.rightStick = new Vector2(npadState.analogStickR.fx, npadState.analogStickR.fy);
+                    MakeCurrent();
                 }
-                if (npadState.GetButton(NpadButton.B))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.A;
-                }
-                if (npadState.GetButton(NpadButton.X))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.X;
-                }
-                if (npadState.GetButton(NpadButton.Y))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.Y;
-                }
-                if (npadState.GetButton(NpadButton.StickL))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.LeftStick;
-                }
-                if (npadState.GetButton(NpadButton.StickR))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.RightStick;
-                }
-                if (npadState.GetButton(NpadButton.L))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.LeftShoulder;
-                }
-                if (npadState.GetButton(NpadButton.R))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.RightShoulder;
-                }
-                if (npadState.GetButton(NpadButton.ZL))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.LeftTrigger;
-                }
-                if (npadState.GetButton(NpadButton.ZR))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.RightTrigger;
-                }
-                if (npadState.GetButton(NpadButton.Plus))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.Start;
-                }
-                if (npadState.GetButton(NpadButton.Minus))
-                {
-                    gampadState.buttons |= 1 << (int)GamepadButton.Select;
-                }
-                gampadState.leftStick = new Vector2(npadState.analogStickL.fx, npadState.analogStickL.fy);
-                gampadState.rightStick = new Vector2(npadState.analogStickR.fx, npadState.analogStickR.fy);
                 UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
             }
 

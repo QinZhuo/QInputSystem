@@ -48,16 +48,19 @@ namespace QTool.InputSystem
         }
         public void OnPointerDown(PointerEventData eventData)
         {
+            QVirtualGamepad.Instance.MakeCurrent();
             OnDrag(eventData);
         }
         public void OnDrag(PointerEventData eventData)
         {
+            QVirtualGamepad.Instance.MakeCurrent();
             var offset = eventData.position - startPos;
             offset = Vector2.ClampMagnitude(offset, raudis);
             stick.position = startPos + offset;
         }
         public void OnPointerUp(PointerEventData eventData)
         {
+            QVirtualGamepad.Instance.MakeCurrent();
             stick.position = startPos;
         }
     }

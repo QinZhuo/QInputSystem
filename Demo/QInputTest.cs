@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using QTool.InputSystem;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+
 namespace QTool
 {
 
@@ -30,6 +32,22 @@ namespace QTool
         // Update is called once per frame
         void Update()
         {
+            if (Gamepad.current.xButton.isPressed)
+            {
+                Debug.LogError(Gamepad.current.xButton);
+            }
+            if (Gamepad.current.aButton.isPressed)
+            {
+                Debug.LogError(Gamepad.current.aButton);
+            }
+            if (Gamepad.current.bButton.isPressed)
+            {
+                Debug.LogError(Gamepad.current.bButton);
+            }
+            if (Gamepad.current.yButton.isPressed)
+            {
+                Debug.LogError(Gamepad.current.yButton);
+            }
             //Debug.LogError(input.action.ReadValue<Vector2>());
             //获取移动摇杆输入方向
             //var moveDir = QInput.Actions["移动"].Vector2 * 100 * Time.deltaTime;
