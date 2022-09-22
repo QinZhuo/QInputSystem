@@ -117,6 +117,38 @@ namespace QTool.InputSystem
             {
                 gampadState.buttons |= 1 << (int)GamepadButton.Y;
             }
+            if (npadState.GetButton(NpadButton.StickL))
+            {
+                gampadState.buttons |= 1 << (int)GamepadButton.LeftStick;
+            }
+            if (npadState.GetButton(NpadButton.StickR))
+            {
+                gampadState.buttons |= 1 << (int)GamepadButton.RightStick;
+            }
+            if (npadState.GetButton(NpadButton.L))
+            {
+                gampadState.buttons |= 1 << (int)GamepadButton.LeftShoulder;
+            }
+            if (npadState.GetButton(NpadButton.R))
+            {
+                gampadState.buttons |= 1 << (int)GamepadButton.RightShoulder;
+            }
+            if (npadState.GetButton(NpadButton.ZL))
+            {
+                gampadState.buttons |= 1 << (int)GamepadButton.LeftTrigger;
+            }
+            if (npadState.GetButton(NpadButton.ZR))
+            {
+                gampadState.buttons |= 1 << (int)GamepadButton.RightTrigger;
+            }
+            if (npadState.GetButton(NpadButton.Plus))
+            {
+                gampadState.buttons |= 1 << (int)GamepadButton.Start;
+            }
+            if (npadState.GetButton(NpadButton.Minus))
+            {
+                gampadState.buttons |= 1 << (int)GamepadButton.Select;
+            }
             gampadState.leftStick = new Vector2(npadState.analogStickL.fx, npadState.analogStickL.fy);
             gampadState.rightStick = new Vector2(npadState.analogStickR.fx, npadState.analogStickR.fy);
             UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
