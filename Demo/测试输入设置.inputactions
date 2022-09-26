@@ -46,10 +46,10 @@
                 {
                     "name": "",
                     "id": "49ef4cb8-05ad-4584-bde4-4be7632a09cc",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "MouseKeyboard",
+                    "groups": "KeyboardMouse",
                     "action": "回车",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -67,22 +67,11 @@
                 },
                 {
                     "name": "",
-                    "id": "02196ffd-1353-4e5d-ab05-dd9a835f728b",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "MouseKeyboard",
-                    "action": "回车",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9d9c169c-d63b-4cb3-8c39-5afbc5a88367",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "MouseKeyboard",
+                    "groups": "KeyboardMouse",
                     "action": "退出",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -104,26 +93,15 @@
                     "path": "<Mouse>/position",
                     "interactions": "QScreenRange(up=0.5,right=1)",
                     "processors": "",
-                    "groups": "MouseKeyboard",
+                    "groups": "KeyboardMouse",
                     "action": "鼠标位置",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c6dcd277-d5e2-479e-b0eb-76ffe738a5ff",
-                    "path": "<QVirtualGamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "摇杆",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e24f2fbe-ec03-4fa1-bdce-724629478e3f",
-                    "path": "<QSwitchGamepad>/leftStick",
+                    "id": "7a14dd1b-7c63-4dff-9a0a-4a717bcdfcf5",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -147,8 +125,8 @@
             ]
         },
         {
-            "name": "MouseKeyboard",
-            "bindingGroup": "MouseKeyboard",
+            "name": "KeyboardMouse",
+            "bindingGroup": "KeyboardMouse",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",

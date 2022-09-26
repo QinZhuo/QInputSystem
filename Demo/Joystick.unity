@@ -174,9 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91881289836a2b048b13fd7c082d8b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  back: {fileID: 0}
   stick: {fileID: 0}
-  gamepadStick: 1
 --- !u!114 &117433776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,8 +302,8 @@ GameObject:
   m_Component:
   - component: {fileID: 302047184}
   - component: {fileID: 302047186}
-  - component: {fileID: 302047187}
   - component: {fileID: 302047185}
+  - component: {fileID: 302047187}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -384,9 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91881289836a2b048b13fd7c082d8b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  back: {fileID: 1623061962}
-  stick: {fileID: 1515845709}
-  gamepadStick: 1
+  stick: {fileID: 1515845712}
 --- !u!1 &342258901
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,92 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01862483618c5a649bce794e3f448892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CursorSpeed: 400
-  ScrollSpeed: 45
-  StickAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Stick
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 7a721b2d-275d-4f36-80f2-58cb608b6041
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  LeftButtonAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Left Button
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 6979eca9-0c29-46ed-939b-e9a5eb569cd3
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  MiddleButtonAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Middle Button
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: dd173066-06ec-4bc9-b05d-e73d6bbddf0d
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  RightButtonAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Right Button
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: c08643cd-4698-4116-b66c-2fef0837140d
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  ForwardButtonAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Forward Button
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 3472a51e-4dbb-4821-9226-60270208afe4
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  BackButtonAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Back Button
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 6616d32a-0822-42b4-8a08-66c13f879598
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
-  ScrollWheelAction:
-    m_UseReference: 0
-    m_Action:
-      m_Name: Scroll Wheel
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 65538086-bf59-4450-b8b6-1e8084f943a8
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: 0}
 --- !u!1 &721346691
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,9 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91881289836a2b048b13fd7c082d8b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  back: {fileID: 0}
   stick: {fileID: 0}
-  gamepadStick: 1
 --- !u!114 &721346694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,6 +1096,7 @@ GameObject:
   - component: {fileID: 1515845709}
   - component: {fileID: 1515845711}
   - component: {fileID: 1515845710}
+  - component: {fileID: 1515845712}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1252,6 +1161,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515845708}
   m_CullTransparentMesh: 0
+--- !u!114 &1515845712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515845708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d677f1681015749b15c436eec6d880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MovementRange: 50
+  m_ControlPath: <Gamepad>/leftStick
 --- !u!1 &1623061961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,6 +1431,7 @@ GameObject:
   - component: {fileID: 2144366383}
   - component: {fileID: 2144366381}
   - component: {fileID: 2144366382}
+  - component: {fileID: 2144366385}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1560,7 +1484,6 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
   Selectable: {fileID: 2144366382}
-  minInterval: 0
 --- !u!114 &2144366382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1659,3 +1582,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144366379}
   m_CullTransparentMesh: 1
+--- !u!114 &2144366385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144366379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ebd50ec3569cae4386750fe59b6116d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
+  tipInfo: "\u6309\u4E0B{Key}\u89E6\u53D1"
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 299585247}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

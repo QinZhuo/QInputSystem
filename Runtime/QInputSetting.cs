@@ -8,9 +8,9 @@ using UnityEngine.InputSystem;
 namespace QTool.InputSystem
 {
     using InputSystem = UnityEngine.InputSystem.InputSystem;
-    public class QInputSet : QInputTip
+    public class QInputSetting : QInputTip
     {
-        public static Action<QInputSet, bool> OnChangeKey;
+        public static Action<QInputSetting, bool> OnChangeKey;
         private InputActionRebindingExtensions.RebindingOperation ChangeOperation;
         void CleanUp()
         {

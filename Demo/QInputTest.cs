@@ -17,15 +17,15 @@ namespace QTool
             input.action.Enable();
             input.action.started += (info) =>
             {
-                Debug.LogError("started " + info.ReadValue<float>());
+                Debug.LogError("started " + info.ReadValue<Vector2>());
             };
             input.action.performed += (info) =>
             {
-                Debug.LogError("performed "+info.ReadValue<float>());
+                Debug.LogError("performed "+info.ReadValue<Vector2>());
             };
             input.action.canceled += (info) =>
             {
-                Debug.LogError("canceled " + info.ReadValue<float>());
+                Debug.LogError("canceled " + info.ReadValue<Vector2>());
             };
         }
 

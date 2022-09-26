@@ -86,15 +86,15 @@ namespace QTool.InputSystem {
         protected virtual void OnEnable()
         {
             OnChange();
-            QInputSet.OnChangeKey += OnChangeKey;
+            QInputSetting.OnChangeKey += OnChangeKey;
             QInputSystem.OnControlSchemeChange += OnChange;
         }
         protected virtual void OnDisable()
         {
-            QInputSet.OnChangeKey -= OnChangeKey;
+            QInputSetting.OnChangeKey -= OnChangeKey;
             QInputSystem.OnControlSchemeChange -= OnChange;
         }
-        void OnChangeKey(QInputSet keySetting, bool start)
+        void OnChangeKey(QInputSetting keySetting, bool start)
         {
             if (!start)
             {

@@ -12,78 +12,73 @@ namespace QTool.InputSystem
 {
     public static class QInputSystem
     {
-      
-        static InputActionAsset _inputSetting;
-        public static InputActionAsset InputSetting
+        public static bool IsGamepad => ControlScheme == QControlScheme.Gamepad;
+        public static QControlScheme ControlScheme { get; private set; } = QControlScheme.KeyboardMouse;
+        public static event Action OnControlSchemeChange;
+        static bool ControlSchemeFresh = true;
+        static PlayerInput _playerInput=null;
+        public static PlayerInput Player
         {
             get
             {
-                if (_inputSetting == null)
+                if (_playerInput == null)
                 {
-                    _inputSetting = Resources.Load<InputActionAsset>(nameof(InputSetting));
-#if UNITY_EDITOR
-                    if (_inputSetting == null)
+                    if (PlayerInput.all.Count == 0)
                     {
-                        Debug.LogError(nameof(Resources) + "下不存在 " + nameof(InputSetting) + " 输入设置");
+                        _playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
                     }
-#endif
+                    else
+                    {
+                        _playerInput = PlayerInput.all[0];
+                    }
                 }
-                return _inputSetting;
+                return _playerInput;
             }
-         
         }
-
-        public static bool IsGamepad => ControlScheme.Value.bindingGroup=="";
-        public static InputControlScheme? ControlScheme { get; private set; } = null;
-        public static event Action OnControlSchemeChange;
-
-        
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
         {
             UnityEngine.InputSystem.InputSystem.onActionChange += (obj, change) =>
             {
-                if (change == InputActionChange.BoundControlsChanged || ControlScheme == null)
+                if (PlayerInput.all.Count == 0)
                 {
                     if (obj is InputAction action)
                     {
-                        if (action.activeControl != null)
+                        Player.actions = action.actionMap.asset;
+                    }
+                }
+             
+                if (change == InputActionChange.BoundControlsChanged || ControlSchemeFresh)
+                {
+                    if (obj is InputAction action)
+                    {
+                        if (action.activeControl != null&& action.actionMap.asset!=null)
                         {
-                            ControlScheme = FindControlSchemeForDevice(action.activeControl.device, action.actionMap.asset.controlSchemes);
-                            Debug.LogError(ControlScheme.Value.bindingGroup);
+                            var scheme =  FindControlSchemeForDevices(new ReadOnlyArray<InputDevice>(
+                                new InputDevice[] { action.activeControl.device }), action.actionMap.asset.controlSchemes, null, true).Value.name;
+                            if(Enum.TryParse<QControlScheme>(scheme.RemveChars('&'),out var newScheme))
+                            {
+                                if(newScheme != ControlScheme && !action.activeControl.device.description.empty)
+                                {
+                                    ControlScheme = newScheme;
+                                    OnControlSchemeChange?.Invoke();
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError("不支持环境 "+scheme);
+                            }
+                            ControlSchemeFresh = false;
                         }
                     }
                     else if(obj is InputActionAsset asset)
                     {
-                        ControlScheme = null;
+                        ControlSchemeFresh = true;
                     }
                 }
             };
         }
-        public static InputControlScheme? FindControlSchemeForDevice<TSchemes>(InputDevice device, TSchemes schemes)
-         where TSchemes : IEnumerable<InputControlScheme>
-        {
-            if (schemes == null)
-                throw new ArgumentNullException(nameof(schemes));
-            if (device == null)
-                throw new ArgumentNullException(nameof(device));
-
-            return FindControlSchemeForDevices( new ReadOnlyArray<InputDevice>(new InputDevice[] {device}), schemes,null,true);
-        }
-
-
-        private static void SetDevice(InputDevice device)
-        {
-            //var newControlScheme= InputControlScheme.FindControlSchemeForDevice(device, InputSetting.controlSchemes);
-            //if (!newControlScheme.Equals( ControlScheme))
-            //{
-            //    ControlScheme = newControlScheme;
-            //    OnControlSchemeChange?.Invoke();
-            //    Debug.LogError(ControlScheme.ToQData());
-            //    QEventManager.Trigger("输入设备类型", ControlScheme.ToString());
-            //}
-        }
-
+        
         public enum QControlScheme
         {
             KeyboardMouse,
