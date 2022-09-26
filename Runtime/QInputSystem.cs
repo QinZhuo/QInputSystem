@@ -4,20 +4,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using System;
+using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem.Utilities;
+using static UnityEngine.InputSystem.InputControlScheme;
+
 namespace QTool.InputSystem
 {
     public static class QInputSystem
     {
-        static QInputSystem()
-        {
-            if (UnityEngine.InputSystem.InputSystem.devices.Count > 0)
-            {
-                foreach (var device in UnityEngine.InputSystem.InputSystem.devices)
-                {
-                    SetDevice(device);
-                }
-            }
-        }
+      
         static InputActionAsset _inputSetting;
         public static InputActionAsset InputSetting
         {
@@ -35,108 +30,66 @@ namespace QTool.InputSystem
                 }
                 return _inputSetting;
             }
+         
         }
 
-        public static bool IsGamepad => DeviceType == QDeviceType.XInputController || DeviceType == QDeviceType.DualShockGamepad;
-        public static QDeviceType DeviceType { get; private set; } = QDeviceType.None;
-        public static event Action OnDeviceTypeChange;
+        public static bool IsGamepad => ControlScheme.Value.bindingGroup=="";
+        public static InputControlScheme? ControlScheme { get; private set; } = null;
+        public static event Action OnControlSchemeChange;
+
+        
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
         {
-            UnityEngine.InputSystem.InputSystem.onActionChange += (obj, type) =>
+            UnityEngine.InputSystem.InputSystem.onActionChange += (obj, change) =>
             {
-                if (obj is  InputAction action &&action.activeControl!=null)
+                if (change == InputActionChange.BoundControlsChanged || ControlScheme == null)
                 {
-                    SetDevice(action.activeControl.device);
+                    if (obj is InputAction action)
+                    {
+                        if (action.activeControl != null)
+                        {
+                            ControlScheme = FindControlSchemeForDevice(action.activeControl.device, action.actionMap.asset.controlSchemes);
+                            Debug.LogError(ControlScheme.Value.bindingGroup);
+                        }
+                    }
+                    else if(obj is InputActionAsset asset)
+                    {
+                        ControlScheme = null;
+                    }
                 }
             };
         }
-        private static void SetDevice(InputDevice device)
+        public static InputControlScheme? FindControlSchemeForDevice<TSchemes>(InputDevice device, TSchemes schemes)
+         where TSchemes : IEnumerable<InputControlScheme>
         {
-            var newDeviceType = ParseDeviceType(device.displayName, device);
-            if (newDeviceType != DeviceType)
-            {
-                DeviceType = newDeviceType;
-                OnDeviceTypeChange?.Invoke();
-                QEventManager.Trigger("输入设备类型", DeviceType.ToString());
-            }
+            if (schemes == null)
+                throw new ArgumentNullException(nameof(schemes));
+            if (device == null)
+                throw new ArgumentNullException(nameof(device));
+
+            return FindControlSchemeForDevices( new ReadOnlyArray<InputDevice>(new InputDevice[] {device}), schemes,null,true);
         }
 
-        public static QDeviceType ParseDeviceType(string key,InputDevice device=null)
+
+        private static void SetDevice(InputDevice device)
         {
-            var typeStr = key.TrimStart('/').TrimStart('<').SplitStartString("/").TrimEnd('>');
-            if (typeStr.Length > 0 && char.IsNumber(typeStr[typeStr.Length - 1]))
-            {
-                typeStr = typeStr.Substring(0, typeStr.Length - 1);
-            }
-            var type = QDeviceType.MouseKeyboard;
-            switch (typeStr)
-            {
-                case "XInputController":
-                case "XInputControllerWindows":
-                    type = QDeviceType.XInputController;
-                    break;
-                case "Wireless Controller":
-                case "DualShockGamepad":
-                case "DualSenseGamepadHID":
-                    type = QDeviceType.DualShockGamepad;
-                    break;
-                case "Mouse":
-                case "Keyboard":
-                    type = QDeviceType.MouseKeyboard;
-                    break;
-                case "Touchscreen":
-                    type = QDeviceType.Touchscreen;
-                    break; 
-                case "VirtualMouse":
-                    break;
-                default:
-                    if (device != null)
-                    {
-                        if (device is Gamepad)
-                        {
-                            type = QDeviceType.XInputController;
-                        }
-                        else if (device is Mouse || device is Keyboard)
-                        {
-                            type = QDeviceType.MouseKeyboard;
-                        }
-                        else if (device is Touchscreen)
-                        {
-                            type = QDeviceType.Touchscreen;
-                        }
-                        else
-                        {
-                            Debug.LogError("不支持设备检测[" + device + "]");
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogError("不支持设备检测[" + typeStr + "]");
-                    }
-                    break;
-            }
-            return type;
+            //var newControlScheme= InputControlScheme.FindControlSchemeForDevice(device, InputSetting.controlSchemes);
+            //if (!newControlScheme.Equals( ControlScheme))
+            //{
+            //    ControlScheme = newControlScheme;
+            //    OnControlSchemeChange?.Invoke();
+            //    Debug.LogError(ControlScheme.ToQData());
+            //    QEventManager.Trigger("输入设备类型", ControlScheme.ToString());
+            //}
         }
-        public static int GetDeviceIndex(this InputAction action)
+
+        public enum QControlScheme
         {
-            for (int i = 0; i < action.bindings.Count; i++)
-            {
-                var bind = action.bindings[i];
-                if (QInputSystem.ParseDeviceType(bind.effectivePath) == QInputSystem.DeviceType)
-                {
-                    return i;
-                }
-            }
-            return 0;
-        }
-        public enum QDeviceType
-        {
-            None,
-            MouseKeyboard,
-            XInputController,
-            DualShockGamepad,
+            KeyboardMouse,
+            Gamepad,
             Touchscreen,
         }
+
     }
 }

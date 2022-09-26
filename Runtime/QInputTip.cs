@@ -19,7 +19,7 @@ namespace QTool.InputSystem {
         {
             get
             {
-                return action.action?.GetBindingDisplayString(action.action.GetDeviceIndex(),InputBinding.DisplayStringOptions.DontUseShortDisplayNames);
+                return action.action?.GetBindingDisplayString();
             }
         }
         public string TipInfo
@@ -87,12 +87,12 @@ namespace QTool.InputSystem {
         {
             OnChange();
             QInputSet.OnChangeKey += OnChangeKey;
-            QInputSystem.OnDeviceTypeChange += OnChange;
+            QInputSystem.OnControlSchemeChange += OnChange;
         }
         protected virtual void OnDisable()
         {
             QInputSet.OnChangeKey -= OnChangeKey;
-            QInputSystem.OnDeviceTypeChange -= OnChange;
+            QInputSystem.OnControlSchemeChange -= OnChange;
         }
         void OnChangeKey(QInputSet keySetting, bool start)
         {

@@ -21,7 +21,7 @@ namespace QTool.InputSystem
         {
             ChangeOperation?.Cancel(); 
 
-            ChangeOperation = action.PerformInteractiveRebinding(action.GetDeviceIndex())
+            ChangeOperation = action.PerformInteractiveRebinding(action.GetBindingIndex())
                 .OnCancel(
                     operation =>
                     {
