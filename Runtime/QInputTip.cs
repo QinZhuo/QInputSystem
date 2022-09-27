@@ -42,37 +42,37 @@ namespace QTool.InputSystem {
                 return action!=null&&action.action != null;
             }
         }
-        public virtual string TipKeyReplce(string key)
-        {
-            var keyCode = KeyCode.None;
-            if (System.Enum.TryParse(key, out keyCode))
-            {
-                switch (keyCode)
-                {
-                    case KeyCode.KeypadEnter: return "Enter";
-                    case KeyCode.Return: return "Enter";
-                    case KeyCode.LeftAlt: return "Alt";
-                    case KeyCode.RightAlt: return "Alt";
-                    case KeyCode.Escape: return "Esc";
-                    case KeyCode.LeftControl: return "Ctrl";
-                    case KeyCode.RightControl: return "Ctrl";
-                    case KeyCode.Backspace: return "Back";
-                    case KeyCode.LeftShift: return "Shift";
-                    case KeyCode.RightShift: return "Shift";
-                    case KeyCode.UpArrow: return "↑";
-                    case KeyCode.DownArrow: return "↓";
-                    case KeyCode.LeftArrow: return "←";
-                    case KeyCode.RightArrow: return "→";
-                }
-            }
-            return key;
-        }
+        //public virtual string TipKeyReplce(string key)
+        //{
+        //    var keyCode = KeyCode.None;
+        //    if (System.Enum.TryParse(key, out keyCode))
+        //    {
+        //        switch (keyCode)
+        //        {
+        //            case KeyCode.KeypadEnter: return "Enter";
+        //            case KeyCode.Return: return "Enter";
+        //            case KeyCode.LeftAlt: return "Alt";
+        //            case KeyCode.RightAlt: return "Alt";
+        //            case KeyCode.Escape: return "Esc";
+        //            case KeyCode.LeftControl: return "Ctrl";
+        //            case KeyCode.RightControl: return "Ctrl";
+        //            case KeyCode.Backspace: return "Back";
+        //            case KeyCode.LeftShift: return "Shift";
+        //            case KeyCode.RightShift: return "Shift";
+        //            case KeyCode.UpArrow: return "↑";
+        //            case KeyCode.DownArrow: return "↓";
+        //            case KeyCode.LeftArrow: return "←";
+        //            case KeyCode.RightArrow: return "→";
+        //        }
+        //    }
+        //    return key;
+        //}
 
         protected void OnChange()
         {
             if (!Active) return;
             string tip = "";
-            tip = tipInfo.Replace("{Key}", TipKeyReplce(ViewKey));
+            tip = tipInfo.Replace("{Key}", ViewKey);
             OnValueChange?.Invoke(tip);
         }
 
