@@ -54,10 +54,13 @@ namespace QTool.InputSystem
                         }
                     }
                 }
-                else if (newScheme != ControlScheme&& obj is InputAction action&& action.activeControl!=null&&! action.activeControl.device.description.empty)
+                else if (newScheme != ControlScheme&& obj is InputAction action&& action.activeControl!=null)
                 {
-                    ControlScheme = newScheme;
-                    OnControlSchemeChange?.Invoke();
+                    if(!(action.activeControl.device.name==nameof(Mouse) && action.activeControl.device.description.empty))
+                    {
+                        newScheme = QControlScheme.Touchscreen;
+                        OnControlSchemeChange?.Invoke();
+                    }
                 }
             };
         }
