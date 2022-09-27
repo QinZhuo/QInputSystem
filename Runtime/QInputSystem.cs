@@ -38,7 +38,7 @@ namespace QTool.InputSystem
             {
                 if (PlayerInput.all.Count == 0)
                 {
-                    if (obj is InputAction action&&action.actionMap.asset.name!=nameof(DefaultInputActions))
+                    if (obj is InputAction action&&action.actionMap.asset.name!="DefaultInputActions")
                     {
                         Player.actions = action.actionMap.asset;
                         OnControlSchemeChange?.Invoke();
