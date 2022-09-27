@@ -10,6 +10,7 @@ namespace QTool.InputSystem
     {
         public static bool IsGamepad => ControlScheme == QControlScheme.Gamepad;
         public static QControlScheme ControlScheme { get; private set; } = QControlScheme.None;
+        static QControlScheme newScheme;
         public static event Action OnControlSchemeChange;
         static PlayerInput _playerInput=null;
         public static PlayerInput Player
@@ -47,19 +48,16 @@ namespace QTool.InputSystem
                 {
                     if(obj is InputActionAsset asset)
                     {
-                        if (Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out var newScheme))
-                        {
-                            if (newScheme != ControlScheme)
-                            {
-                                ControlScheme = newScheme;
-                                OnControlSchemeChange?.Invoke();
-                            }
-                        }
-                        else
+                        if (!Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
                         {
                             Debug.LogError("不支持环境 " + Player.currentControlScheme);
                         }
                     }
+                }
+                else if (newScheme != ControlScheme&& obj is InputAction action&& action.activeControl!=null&&! action.activeControl.device.description.empty)
+                {
+                    ControlScheme = newScheme;
+                    OnControlSchemeChange?.Invoke();
                 }
             };
         }
