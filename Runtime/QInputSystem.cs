@@ -48,7 +48,7 @@ namespace QTool.InputSystem
                 {
                     if(obj is InputActionAsset asset)
                     {
-                        if (!Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
+                        if ( !Player.currentControlScheme.IsNullOrEmpty()&& !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
                         {
                             Debug.LogError("不支持环境 " + Player.currentControlScheme);
                         }
