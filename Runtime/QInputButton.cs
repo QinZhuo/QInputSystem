@@ -9,10 +9,10 @@ using UnityEngine.InputSystem;
 using System;
 namespace QTool.InputSystem
 {
-   
+
     public class QInputButton : MonoBehaviour
     {
-        public InputActionProperty inputAction;
+        public InputActionReference inputAction;
 
         UIEventTrigger trigger = new UIEventTrigger();
         public Selectable Selectable;
@@ -32,49 +32,57 @@ namespace QTool.InputSystem
         {
             get
             {
-                return Selectable.IsInteractable()&&Selectable.IsActive() &&(parenGroup==null?true:parenGroup.interactable);
+                return Selectable.IsInteractable() && Selectable.IsActive() && (parenGroup == null ? true : parenGroup.interactable);
             }
         }
         CanvasGroup parenGroup;
+        public void InputStarted(InputAction.CallbackContext context)
+        {
+            if (ActiveAndInteractable && KeyActive && !press)
+            {
+                press = true;
+                trigger.enter.Invoke();
+                trigger.donw.Invoke();
+            }
+        }
+        public void InputPerformed(InputAction.CallbackContext context)
+        {
+            if (press && ActiveAndInteractable && KeyActive)
+            {
+                trigger.click.Invoke();
+            }
+        }
+        public void InputCanceled(InputAction.CallbackContext context)
+        {
+            if (KeyActive && press)
+            {
+                press = false;
+                trigger.up.Invoke();
+                trigger.exit.Invoke();
+            }
+        }
         private void Awake()
         {
-            if (Selectable == null)
+            if (inputAction?.action != null)
             {
-                Selectable = GetComponent<Selectable>();
-            }
-            parenGroup = GetComponentInParent<CanvasGroup>();
-            trigger.Init(this);
-            if (inputAction!=null&& inputAction.action != null)
-            {
-                inputAction.action.Enable();
-                inputAction.action.started += content =>
+                if (Selectable == null)
                 {
-                    if (ActiveAndInteractable && KeyActive && !press)
-                    {
-                        press = true;
-                        trigger.enter.Invoke();
-                        trigger.donw.Invoke();
-                    }
-                };
-                inputAction.action.performed += content =>
-                {
+                    Selectable = GetComponent<Selectable>();
+                }
+                parenGroup = GetComponentInParent<CanvasGroup>();
 
-                    if (press && ActiveAndInteractable && KeyActive )
-                    {
-                        trigger.click.Invoke();
-                    }
-                };
-                inputAction.action.canceled += content =>
-                {
-                 
-                    if ( KeyActive&& press)
-                    {
-                        press = false;
-                        trigger.up.Invoke();
-                        trigger.exit.Invoke();
-                    }
-                };
+                trigger.Init(this);
+                inputAction.action.Enable();
+                inputAction.action.started += InputStarted;
+                inputAction.action.performed += InputPerformed;
+                inputAction.action.canceled += InputCanceled;
             }
+        }
+        private void OnDestroy()
+        {
+            inputAction.action.started -= InputStarted;
+            inputAction.action.performed -= InputPerformed;
+            inputAction.action.canceled -= InputCanceled;
         }
     }
 

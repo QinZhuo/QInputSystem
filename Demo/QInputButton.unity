@@ -359,20 +359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c616d043c2101754e8b0e23ed6013012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Input
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 37208c6e-b4e7-4e3e-be04-92adab462df6
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
+  inputAction: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
   Selectable: {fileID: 990115937}
-  minInterval: 0
 --- !u!114 &990115937
 MonoBehaviour:
   m_ObjectHideFlags: 0
