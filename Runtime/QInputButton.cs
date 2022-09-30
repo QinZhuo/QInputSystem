@@ -44,7 +44,7 @@ namespace QTool.InputSystem
             }
             parenGroup = GetComponentInParent<CanvasGroup>();
             trigger.Init(this);
-            if (inputAction.action != null)
+            if (inputAction!=null&& inputAction.action != null)
             {
                 inputAction.action.Enable();
                 inputAction.action.started += content =>
