@@ -80,9 +80,12 @@ namespace QTool.InputSystem
         }
         private void OnDestroy()
         {
-            inputAction.action.started -= InputStarted;
-            inputAction.action.performed -= InputPerformed;
-            inputAction.action.canceled -= InputCanceled;
+            if (inputAction?.action != null)
+            {
+                inputAction.action.started -= InputStarted;
+                inputAction.action.performed -= InputPerformed;
+                inputAction.action.canceled -= InputCanceled;
+            }
         }
     }
 
