@@ -12,7 +12,20 @@ namespace QTool.InputSystem
 
     public class QInputButton : MonoBehaviour
     {
-        public InputActionReference inputAction;
+        [SerializeField]
+        private InputActionReference inputAction;
+        public InputActionReference Action
+        {
+            get => inputAction;
+            set
+            {
+                if (inputAction != value)
+                {
+                    inputAction = value;
+                    InitAction();
+                }
+            }
+        }
 
         UIEventTrigger trigger = new UIEventTrigger();
         public Selectable Selectable;
@@ -61,7 +74,7 @@ namespace QTool.InputSystem
                 trigger.exit.Invoke();
             }
         }
-        private void Awake()
+        private void InitAction()
         {
             if (inputAction?.action != null)
             {
@@ -77,6 +90,10 @@ namespace QTool.InputSystem
                 inputAction.action.performed += InputPerformed;
                 inputAction.action.canceled += InputCanceled;
             }
+        }
+        private void Awake()
+        {
+            InitAction();
         }
         private void OnDestroy()
         {
