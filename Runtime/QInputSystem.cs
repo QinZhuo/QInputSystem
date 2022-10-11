@@ -9,7 +9,6 @@ namespace QTool.InputSystem
 {
     public static class QInputSystem
     {
-        public static Mouse QVirtualMouse { get; private set; }
         public static bool IsGamepad => ControlScheme == QControlScheme.Gamepad;
         public static QControlScheme ControlScheme { get; private set; } = QControlScheme.None;
         static QControlScheme newScheme;
@@ -36,23 +35,6 @@ namespace QTool.InputSystem
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
         {
-            QVirtualMouse = UnityEngine.InputSystem.InputSystem.GetDevice(nameof(QVirtualMouse)) as Mouse;
-            if (QVirtualMouse == null)
-            {
-                QVirtualMouse = UnityEngine.InputSystem.InputSystem.AddDevice<Mouse>(nameof(QVirtualMouse));
-
-            }
-            QToolManager.Instance.OnUpdate += () =>
-            {
-                if(Pointer.current!= QVirtualMouse)
-                {
-                    var pos = Pointer.current.position.ReadValue();
-                    InputState.Change(QVirtualMouse.position, pos);
-                    InputState.Change(Pointer.current.delta, Pointer.current.delta.ReadValue());
-                    QVirtualMouse.WarpCursorPosition(pos);
-                }
-                
-            };
             UnityEngine.InputSystem.InputSystem.onActionChange += (obj, change) =>
             {
                 if (PlayerInput.all.Count == 0)

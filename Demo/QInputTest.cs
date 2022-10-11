@@ -4,16 +4,44 @@ using UnityEngine;
 using QTool.InputSystem;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.EventSystems;
 
 namespace QTool
 {
 
-    public class QInputTest : MonoBehaviour
+    public class QInputTest : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IPointerClickHandler
     {
         public InputActionReference input;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Debug.LogError(nameof(OnPointerClick));
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Debug.LogError(nameof(OnPointerDown));
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Debug.LogError(nameof(OnPointerEnter));
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            Debug.LogError(nameof(OnPointerExit));
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            Debug.LogError(nameof(OnPointerUp));
+        }
+
         // Start is called before the first frame update
         void Start()
         {
+            Debug.LogError("InputTest");
             input.action.Enable();
             input.action.started += (info) =>
             {
