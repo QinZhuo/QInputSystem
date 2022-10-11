@@ -60,6 +60,7 @@ namespace QTool
         // Update is called once per frame
         void Update()
         {
+            if (Gamepad.current == null) return;
             if (Gamepad.current.xButton.wasPressedThisFrame)
             {
                 Debug.LogError(Gamepad.current.xButton);

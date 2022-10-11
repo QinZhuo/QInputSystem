@@ -70,13 +70,15 @@ namespace QTool.InputSystem
             };
         }
         
-        public enum QControlScheme
-        {
-            None,
-            KeyboardMouse,
-            Gamepad,
-            Touchscreen,
-        }
-
+        
     }
+    [System.Flags]
+    public enum QControlScheme
+    {
+        None=0,
+        KeyboardMouse=1<<1,
+        Gamepad=1<<2,
+        Touchscreen=1<<3,
+    }
+
 }
