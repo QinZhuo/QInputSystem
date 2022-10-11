@@ -75,7 +75,7 @@ namespace QTool.InputSystem
                 }
                 else if (newScheme != ControlScheme&& obj is InputAction action&& action.activeControl!=null)
                 {
-                    if(!(action.activeControl.device.name==nameof(Mouse) && action.activeControl.device.description.empty))
+                    if (!(action.activeControl.device.description.empty && action.activeControl.device.name == nameof(QVirtualMouse)))
                     {
                         newScheme = QControlScheme.Touchscreen;
                         OnControlSchemeChange?.Invoke();
