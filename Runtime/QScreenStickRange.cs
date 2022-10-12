@@ -11,20 +11,21 @@ namespace QTool.InputSystem
     /// 虚拟摇杆
     /// </summary>
     [RequireComponent(typeof(RectTransform))]
-    public class QScreenStickBackgroud : MonoBehaviour,IDragHandler,IPointerDownHandler,IPointerUpHandler
+    public class QScreenStickRange : MonoBehaviour,IDragHandler,IPointerDownHandler,IPointerUpHandler
     {
         public RectTransform rectTransform => transform as RectTransform;
+        public RectTransform Back => stick.transform.parent as RectTransform;
         public OnScreenStick stick;
         Vector2 startPos = Vector2.zero;
         float raudis=0;
         private void OnEnable()
         {
-            rectTransform.pivot = Vector2.one * 0.5f;
-            startPos = transform.position;
+            Back.pivot = Vector2.one * 0.5f;
+            startPos = Back.position;
         }
         public void OnPointerDown(PointerEventData eventData)
         {
-            rectTransform.anchoredPosition = eventData.position;
+            Back.transform.position= eventData.position;
             stick.OnPointerDown(eventData);
         }
         public void OnDrag(PointerEventData eventData)
@@ -35,8 +36,8 @@ namespace QTool.InputSystem
         }
         public void OnPointerUp(PointerEventData eventData)
         {
-            transform.position = startPos;
-            stick.OnPointerUp(eventData);
+           Back.transform.position = startPos;
+           stick.OnPointerUp(eventData);
         }
     }
 }
