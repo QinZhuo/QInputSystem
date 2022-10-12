@@ -39,7 +39,7 @@ namespace QTool.InputSystem
             {
                 if (Application.isPlaying)
                 {
-                    if (PlayerInput.all.Count == 0)
+                    if (Player.actions==null)
                     {
                         if (obj is InputAction action && action.actionMap.asset.name != "DefaultInputActions")
                         {
