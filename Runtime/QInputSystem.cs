@@ -18,7 +18,7 @@ namespace QTool.InputSystem
         {
             get
             {
-                if (_playerInput == null)
+                if (_playerInput == null&&Application.isPlaying)
                 {
                     if (PlayerInput.all.Count == 0)
                     {
@@ -37,35 +37,38 @@ namespace QTool.InputSystem
         {
             UnityEngine.InputSystem.InputSystem.onActionChange += (obj, change) =>
             {
-                if (PlayerInput.all.Count == 0)
+                if (Application.isPlaying)
                 {
-                    if (obj is InputAction action&&action.actionMap.asset.name!="DefaultInputActions")
+                    if (PlayerInput.all.Count == 0)
                     {
-                        Player.actions = action.actionMap.asset;
+                        if (obj is InputAction action && action.actionMap.asset.name != "DefaultInputActions")
+                        {
+                            Player.actions = action.actionMap.asset;
+                            OnControlSchemeChange?.Invoke();
+                        }
+                    }
+                    if (change == InputActionChange.BoundControlsChanged)
+                    {
+                        if (obj is InputActionAsset asset)
+                        {
+                            if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
+                            {
+                                Debug.LogError("不支持环境 " + Player.currentControlScheme);
+                            }
+                        }
+                    }
+                    else if (newScheme != ControlScheme && obj is InputAction action && action.activeControl != null)
+                    {
+                        if (action.activeControl.device.description.empty)
+                        {
+                            if (action.activeControl.device.name != "QSwitchGamepad")
+                            {
+                                return;
+                            }
+                        }
+                        ControlScheme = newScheme;
                         OnControlSchemeChange?.Invoke();
                     }
-                }
-                if (change == InputActionChange.BoundControlsChanged)
-                {
-                    if (obj is InputActionAsset asset)
-                    {
-                        if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
-                        {
-                            Debug.LogError("不支持环境 " + Player.currentControlScheme);
-                        }
-                    }
-                }
-                else if (newScheme != ControlScheme && obj is InputAction action && action.activeControl != null)
-                {
-                    if (action.activeControl.device.description.empty)
-                    {
-                        if(action.activeControl.device.name!="QSwitchGamepad")
-                        {
-                            return;
-                        }
-                    }
-                    ControlScheme = newScheme;
-                    OnControlSchemeChange?.Invoke();
                 }
             };
         }
