@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 1178134313}
   - component: {fileID: 1178134312}
   - component: {fileID: 1178134311}
-  - component: {fileID: 1178134314}
+  - component: {fileID: 1178134310}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -553,6 +553,35 @@ RectTransform:
   m_AnchoredPosition: {x: 370, y: 0}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1178134310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178134308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ebd50ec3569cae4386750fe59b6116d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
+  tipInfo: '{Key}'
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1416932412}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1178134311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,8 +626,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1178134314}
-        m_TargetAssemblyTypeName: QTool.InputSystem.QInputKeySet, QInputSystem
+      - m_Target: {fileID: 1178134310}
+        m_TargetAssemblyTypeName: QTool.InputSystem.QInputSetting, QInputSystem
         m_MethodName: StartChange
         m_Mode: 1
         m_Arguments:
@@ -659,35 +688,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178134308}
   m_CullTransparentMesh: 1
---- !u!114 &1178134314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178134308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 315e19a5d190268408435f24460d8a11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action: {fileID: -6439210992204581202, guid: 126d1c860bfbfa24c86c8b2dc66800c1, type: 3}
-  tipInfo: "\u6539\u952E{Key}"
-  OnValueChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1416932412}
-        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1416932410
 GameObject:
   m_ObjectHideFlags: 0
