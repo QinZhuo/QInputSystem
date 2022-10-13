@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.InputSystem.LowLevel;
-
+using UnityEngine.EventSystems;
 namespace QTool.InputSystem
 {
     public static class QInputSystem
@@ -46,6 +46,10 @@ namespace QTool.InputSystem
                             Player.actions = action.actionMap.asset;
                             OnControlSchemeChange?.Invoke();
                         }
+                    }
+                    if (Player.uiInputModule == null&&EventSystem.current?.currentInputModule is UnityEngine.InputSystem.UI.InputSystemUIInputModule)
+                    {
+                        Player.uiInputModule =EventSystem.current.currentInputModule as UnityEngine.InputSystem.UI.InputSystemUIInputModule;
                     }
                     if (change == InputActionChange.BoundControlsChanged)
                     {
