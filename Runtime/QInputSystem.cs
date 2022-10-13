@@ -47,10 +47,6 @@ namespace QTool.InputSystem
                             OnControlSchemeChange?.Invoke();
                         }
                     }
-                    if (Player.uiInputModule == null&&EventSystem.current?.currentInputModule is UnityEngine.InputSystem.UI.InputSystemUIInputModule)
-                    {
-                        Player.uiInputModule =EventSystem.current.currentInputModule as UnityEngine.InputSystem.UI.InputSystemUIInputModule;
-                    }
                     if (change == InputActionChange.BoundControlsChanged)
                     {
                         if (obj is InputActionAsset asset)
