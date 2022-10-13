@@ -44,6 +44,7 @@ namespace QTool.InputSystem
                         if (obj is InputAction action && action.actionMap.asset.name != "DefaultInputActions")
                         {
                             Player.actions = action.actionMap.asset;
+                            Player.defaultActionMap = "UI";
                             OnControlSchemeChange?.Invoke();
                         }
                     }
