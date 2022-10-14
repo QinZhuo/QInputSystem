@@ -6,12 +6,12 @@
             "id": "66e6c2d9-1d88-4ccc-a9f4-b5fd2049f30d",
             "actions": [
                 {
-                    "name": "回车",
+                    "name": "按钮",
                     "type": "Button",
                     "id": "7fead196-2bfb-4083-887e-4438eb2ff057",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "initialStateCheck": false
                 },
                 {
@@ -50,7 +50,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "回车",
+                    "action": "按钮",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -61,7 +61,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "回车",
+                    "action": "按钮",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
