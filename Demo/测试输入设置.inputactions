@@ -100,14 +100,69 @@
                 },
                 {
                     "name": "",
-                    "id": "7a14dd1b-7c63-4dff-9a0a-4a717bcdfcf5",
-                    "path": "",
+                    "id": "dc0433a6-6e58-46d0-b0ac-fb4f8a233b15",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "摇杆",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "18fdc08f-39d9-4215-bf0d-6337677fa098",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "摇杆",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "7beaeae7-e62a-4aad-9e99-a1c73b306515",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "摇杆",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "cf8f6704-c39c-4e25-be08-e1deab3309fe",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "摇杆",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "8e587101-8fe6-47ae-b64d-0c6a830cb87f",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "摇杆",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "b1d19e44-25ef-40a2-99f5-253fc9a235b1",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "摇杆",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
