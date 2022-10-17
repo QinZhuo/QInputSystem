@@ -93,8 +93,8 @@ namespace QTool.InputSystem {
         private void PerformInteractiveRebind(InputAction action)
         {
             ChangeOperation?.Cancel();
-
-            ChangeOperation = action.PerformInteractiveRebinding(action.GetBindingIndex())
+            var bind= action.GetBindingIndexForControl(QInputSystem.ActiveControl);
+            ChangeOperation = action.PerformInteractiveRebinding(bind)
                 .OnCancel(
                     operation =>
                     {

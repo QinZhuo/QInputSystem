@@ -32,6 +32,7 @@ namespace QTool.InputSystem
                 return _playerInput;
             }
         }
+        public static InputControl ActiveControl  { get; private set; }
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
         {
@@ -41,10 +42,17 @@ namespace QTool.InputSystem
                 {
                     if (Player.actions==null)
                     {
-                        if (obj is InputAction action && action.actionMap.asset.name != "DefaultInputActions")
+                        if (obj is InputAction action )
                         {
-                            Player.actions = action.actionMap.asset;
-                            OnControlSchemeChange?.Invoke();
+                            if( action.actionMap.asset.name != "DefaultInputActions")
+                            {
+                                Player.actions = action.actionMap.asset;
+                                OnControlSchemeChange?.Invoke();
+                            }
+                            if (action.activeControl != null)
+                            {
+                                ActiveControl =action.activeControl;
+                            }
                         }
                     }
                     if (change == InputActionChange.BoundControlsChanged)
