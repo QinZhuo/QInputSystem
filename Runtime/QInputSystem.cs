@@ -24,6 +24,10 @@ namespace QTool.InputSystem
                     {
                         _playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
                         _playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
+                        foreach (var action in _playerInput.actions)
+                        {
+                            action.Enable();
+                        }
                         OnControlSchemeChange?.Invoke();
                     }
                     else
@@ -85,5 +89,6 @@ namespace QTool.InputSystem
         Gamepad=1<<2,
         Touchscreen=1<<3,
     }
+
 
 }
