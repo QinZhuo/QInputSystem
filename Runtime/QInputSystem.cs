@@ -23,15 +23,19 @@ namespace QTool.InputSystem
                     if (PlayerInput.all.Count == 0)
                     {
                         _playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
+                        _playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
+                        OnControlSchemeChange?.Invoke();
                     }
                     else
                     {
                         _playerInput = PlayerInput.all[0];
                     }
+                
                 }
                 return _playerInput;
             }
         }
+        public static InputActionAsset QInputSetting => Player.actions;
         public static InputControl ActiveControl  { get; private set; }
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
@@ -40,18 +44,6 @@ namespace QTool.InputSystem
             {
                 if (Application.isPlaying)
                 {
-                    if (Player.actions==null)
-                    {
-                        if (obj is InputAction action )
-                        {
-                            if( action.actionMap.asset.name != "DefaultInputActions")
-                            {
-                                Player.actions = action.actionMap.asset;
-                                OnControlSchemeChange?.Invoke();
-                            }
-                         
-                        }
-                    }
                     if (change == InputActionChange.BoundControlsChanged)
                     {
                         if (obj is InputActionAsset asset)
