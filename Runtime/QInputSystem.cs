@@ -49,10 +49,7 @@ namespace QTool.InputSystem
                                 Player.actions = action.actionMap.asset;
                                 OnControlSchemeChange?.Invoke();
                             }
-                            if (action.activeControl != null)
-                            {
-                                ActiveControl =action.activeControl;
-                            }
+                         
                         }
                     }
                     if (change == InputActionChange.BoundControlsChanged)
@@ -64,19 +61,24 @@ namespace QTool.InputSystem
                                 Debug.LogError("不支持环境 " + Player.currentControlScheme);
                             }
                         }
-                    }
-                    else if (newScheme != ControlScheme && obj is InputAction action && action.activeControl != null)
+                    }else if(obj is InputAction action && action.activeControl != null)
                     {
-                        if (action.activeControl.device.description.empty)
+                        ActiveControl = action.activeControl;
+                        if (newScheme != ControlScheme  )
                         {
-                            if (action.activeControl.device.name != "QSwitchGamepad")
+                            ActiveControl = action.activeControl;
+                            if (action.activeControl.device.description.empty)
                             {
-                                return;
+                                if (action.activeControl.device.name != "QSwitchGamepad")
+                                {
+                                    return;
+                                }
                             }
+                            ControlScheme = newScheme;
+                            OnControlSchemeChange?.Invoke();
                         }
-                        ControlScheme = newScheme;
-                        OnControlSchemeChange?.Invoke();
                     }
+                   
                 }
             };
         }
