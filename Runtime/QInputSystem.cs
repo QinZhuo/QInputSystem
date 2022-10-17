@@ -9,7 +9,6 @@ namespace QTool.InputSystem
 {
     public static class QInputSystem
     {
-        public static bool IsGamepad => ControlScheme == QControlScheme.Gamepad;
         public static QControlScheme ControlScheme { get; private set; } = QControlScheme.None;
         static QControlScheme newScheme;
         public static event Action OnControlSchemeChange;
