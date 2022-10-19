@@ -79,18 +79,7 @@ namespace QTool.InputSystem
 
         public static Action<InputAction> OnRebindingOver;
 
-    }
-    [System.Flags]
-    public enum QControlScheme
-    {
-        None=0,
-        KeyboardMouse=1<<1,
-        Gamepad=1<<2,
-        Touchscreen=1<<3,
-    }
 
-    public static partial class Tool
-    {
         public static InputBinding GetActiveBindingMask(this InputAction inputAction)
         {
             if (inputAction.bindingMask.HasValue)
@@ -99,7 +88,7 @@ namespace QTool.InputSystem
             if (inputAction.actionMap?.bindingMask != null)
                 return inputAction.actionMap.bindingMask.Value;
 
-            if(inputAction.actionMap?.asset?.bindingMask != null)
+            if (inputAction.actionMap?.asset?.bindingMask != null)
             {
                 return inputAction.actionMap.asset.bindingMask.Value;
             }
@@ -107,14 +96,14 @@ namespace QTool.InputSystem
         }
 
         static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
-        
-        public static async Task<bool> RebindingAsync(this InputAction action,int bindIndex)
+
+        public static async Task<bool> RebindingAsync(this InputAction action, int bindIndex)
         {
             if (ActiveRebinding != null)
             {
                 ActiveRebinding.Cancel();
             }
-            var enable= action.enabled ;
+            var enable = action.enabled;
             if (enable)
             {
                 action.Disable();
@@ -138,6 +127,15 @@ namespace QTool.InputSystem
             }
             return rebinding.completed;
         }
+
+    }
+    [System.Flags]
+    public enum QControlScheme
+    {
+        None=0,
+        KeyboardMouse=1<<1,
+        Gamepad=1<<2,
+        Touchscreen=1<<3,
     }
 
 }
