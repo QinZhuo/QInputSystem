@@ -92,7 +92,7 @@ namespace QTool.InputSystem {
             QInputSystem.OnRebindingOver -= OnRebindingOver;
             QInputSystem.OnControlSchemeChange -= OnChange;
         }
-        void OnRebindingOver(InputAction inputAction)
+        void OnRebindingOver(InputAction inputAction,int bindIndex)
         {
             if (inputAction == action.action)
             {

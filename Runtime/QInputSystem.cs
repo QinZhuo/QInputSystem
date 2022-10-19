@@ -76,8 +76,8 @@ namespace QTool.InputSystem
                 }
             };
         }
-
-        public static Action<InputAction> OnRebindingOver;
+        public static event Action<InputAction, int> OnRebindingStart;
+        public static event Action<InputAction,int> OnRebindingOver;
 
 
         public static InputBinding GetActiveBindingMask(this InputAction inputAction)
@@ -108,6 +108,7 @@ namespace QTool.InputSystem
             {
                 action.Disable();
             }
+            OnRebindingStart?.Invoke(action, bindIndex);
             var rebinding = action.PerformInteractiveRebinding(bindIndex);
             ActiveRebinding = rebinding;
             rebinding.Start();
@@ -117,10 +118,7 @@ namespace QTool.InputSystem
             {
                 action.Enable();
             }
-            if (rebinding.completed)
-            {
-                QInputSystem.OnRebindingOver?.Invoke(action);
-            }
+            OnRebindingOver?.Invoke(action, bindIndex);
             if (rebinding == ActiveRebinding)
             {
                 ActiveRebinding = null;
@@ -129,7 +127,7 @@ namespace QTool.InputSystem
         }
 
     }
-    [System.Flags]
+    [Flags]
     public enum QControlScheme
     {
         None=0,
