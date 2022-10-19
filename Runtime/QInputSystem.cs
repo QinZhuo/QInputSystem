@@ -76,8 +76,8 @@ namespace QTool.InputSystem
                 }
             };
         }
-        public static event Action<InputAction, int> OnRebindingStart;
-        public static event Action<InputAction,int> OnRebindingOver;
+        public static Action<InputAction, int> OnRebindingStart;
+        public static Action<InputAction,int> OnRebindingOver;
 
 
         public static InputBinding GetActiveBindingMask(this InputAction inputAction)

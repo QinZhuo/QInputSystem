@@ -122,7 +122,6 @@ namespace QTool.InputSystem {
                     await QTask.Wait(0.2f);
                 }
             }
-
         }
         public void StartChange()
         {
