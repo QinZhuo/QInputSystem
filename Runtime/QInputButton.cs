@@ -28,11 +28,11 @@ namespace QTool.InputSystem
         }
 
         UIEventTrigger trigger = new UIEventTrigger();
-        public Selectable Selectable;
+        Selectable _selectable;
+        public Selectable Selectable => _selectable??= GetComponent<Selectable>();
         public static string onlyInput = "";
         private void Reset()
         {
-            Selectable = GetComponent<Selectable>();
             Selectable.navigation = new Navigation
             {
                 mode = Navigation.Mode.None
@@ -78,10 +78,6 @@ namespace QTool.InputSystem
         {
             if (inputAction?.action != null)
             {
-                if (Selectable == null)
-                {
-                    Selectable = GetComponent<Selectable>();
-                }
                 parenGroup = GetComponentInParent<CanvasGroup>();
 
                 trigger.Init(this);

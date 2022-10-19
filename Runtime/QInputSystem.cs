@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 using System;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.EventSystems;
+using System.Threading.Tasks;
+
 namespace QTool.InputSystem
 {
     public static class QInputSystem
@@ -39,7 +41,6 @@ namespace QTool.InputSystem
             }
         }
         public static InputActionAsset QInputSetting => Player.actions;
-        public static InputControl ActiveControl  { get; private set; }
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
         {
@@ -58,10 +59,8 @@ namespace QTool.InputSystem
                         }
                     }else if(obj is InputAction action && action.activeControl != null)
                     {
-                        ActiveControl = action.activeControl;
                         if (newScheme != ControlScheme  )
                         {
-                            ActiveControl = action.activeControl;
                             if (action.activeControl.device.description.empty)
                             {
                                 if (action.activeControl.device.name != "QSwitchGamepad")
@@ -77,8 +76,9 @@ namespace QTool.InputSystem
                 }
             };
         }
-        
-        
+
+        public static Action<InputAction> OnRebindingOver;
+
     }
     [System.Flags]
     public enum QControlScheme
@@ -89,5 +89,55 @@ namespace QTool.InputSystem
         Touchscreen=1<<3,
     }
 
+    public static partial class Tool
+    {
+        public static InputBinding GetActiveBindingMask(this InputAction inputAction)
+        {
+            if (inputAction.bindingMask.HasValue)
+                return inputAction.bindingMask.Value;
+
+            if (inputAction.actionMap?.bindingMask != null)
+                return inputAction.actionMap.bindingMask.Value;
+
+            if(inputAction.actionMap?.asset?.bindingMask != null)
+            {
+                return inputAction.actionMap.asset.bindingMask.Value;
+            }
+            return default;
+        }
+
+        static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
+        
+        public static async Task<bool> RebindingAsync(this InputAction action,int bindIndex)
+        {
+            if (ActiveRebinding != null)
+            {
+                ActiveRebinding.Cancel();
+            }
+            var enable= action.enabled ;
+            if (enable)
+            {
+                action.Disable();
+            }
+            var rebinding = action.PerformInteractiveRebinding(bindIndex);
+            ActiveRebinding = rebinding;
+            rebinding.Start();
+            await QTask.Wait(() => rebinding.completed || rebinding.canceled);
+            rebinding.Dispose();
+            if (enable)
+            {
+                action.Enable();
+            }
+            if (rebinding.completed)
+            {
+                QInputSystem.OnRebindingOver?.Invoke(action);
+            }
+            if (rebinding == ActiveRebinding)
+            {
+                ActiveRebinding = null;
+            }
+            return rebinding.completed;
+        }
+    }
 
 }

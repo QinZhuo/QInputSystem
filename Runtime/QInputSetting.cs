@@ -15,13 +15,34 @@ namespace QTool.InputSystem {
     public class QInputSetting : MonoBehaviour
     {
         public InputActionReference action;
+        public int bindIndex = -1;
         [SerializeField]
         private string tipInfo = "按下{Key}触发";
         protected string ViewKey
         {
             get
             {
-                return action.action?.GetBindingDisplayString();
+                if (action.action == null) return "";
+                if (bindIndex < 0)
+                {
+                    if (action.action.controls.Count <= 1)
+                    {
+                        return action.action.GetBindingDisplayString(action.action.GetActiveBindingMask());
+                    }
+                    else
+                    {
+                        var view = "";
+                        foreach (var control in action.action.controls)
+                        {
+                            view += control.displayName;
+                        }
+                        return view;
+                    }
+                }
+                else
+                {
+                    return action.action.bindings[bindIndex].ToDisplayString();
+                }
             }
         }
         public string TipInfo
@@ -63,65 +84,49 @@ namespace QTool.InputSystem {
         protected virtual void OnEnable()
         {
             OnChange();
-            OnChangeKey += OnChangeKeyCallBack;
+            QInputSystem.OnRebindingOver += OnRebindingOver;
             QInputSystem.OnControlSchemeChange += OnChange;
         }
         protected virtual void OnDisable()
         {
-            OnChangeKey -= OnChangeKeyCallBack;
+            QInputSystem.OnRebindingOver -= OnRebindingOver;
             QInputSystem.OnControlSchemeChange -= OnChange;
-            CleanUp();
         }
-        void OnChangeKeyCallBack(QInputSetting keySetting, bool start)
+        void OnRebindingOver(InputAction inputAction)
         {
-            if (!start)
+            if (inputAction == action.action)
             {
-                if (keySetting.action == action)
-                {
-                    OnChange();
-                }
+                OnChange();
             }
         }
         #region 改键逻辑
-        public static Action<QInputSetting, bool> OnChangeKey;
-        private InputActionRebindingExtensions.RebindingOperation ChangeOperation;
-        void CleanUp()
+        private async void PerformInteractiveRebind(InputAction action)
         {
-            ChangeOperation?.Dispose();
-            ChangeOperation = null;
-        }
-        private void PerformInteractiveRebind(InputAction action)
-        {
-            ChangeOperation?.Cancel();
-            var bind= action.GetBindingIndexForControl(QInputSystem.ActiveControl);
-            ChangeOperation = action.PerformInteractiveRebinding(bind)
-                .OnCancel(
-                    operation =>
-                    {
-                        OnChange();
-                        CleanUp();
-                        OnChangeKey?.Invoke(this, false);
-                        action?.Enable();
-                    })
-                .OnComplete(
-                    operation =>
-                    {
+            var index = bindIndex;
+            if (action.controls.Count <= 1|| index >= 0)
+            {
+                OnValueChange?.Invoke("?");
+                if (index < 0)
+                {
+                    index = action.GetBindingIndex(action.GetActiveBindingMask());
+                }
+                await action.RebindingAsync(index);
+            }
+            else
+            {
+                foreach (var control in action.controls)
+                {
+                    OnValueChange?.Invoke(ViewKey.Replace(control.displayName,"?"));
+                    index = action.GetBindingIndexForControl(control);
+                    await action.RebindingAsync(index);
+                    await QTask.Wait(0.2f);
+                }
+            }
 
-                        OnChange();
-                        CleanUp();
-                        OnChangeKey?.Invoke(this, false);
-                        action?.Enable();
-
-                    });
-
-
-            OnChangeKey?.Invoke(this, true);
-            ChangeOperation.Start();
         }
         public void StartChange()
         {
             if (!Active) return;
-            action.action.Disable();
             PerformInteractiveRebind(action);
         }
 
