@@ -153,6 +153,7 @@ namespace QTool.InputSystem
                 {
                     lastState = gampadState;
                     UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
+                    QInputSystem.Player.SwitchCurrentControlScheme(this);
                 }
               
             }
