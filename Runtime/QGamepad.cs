@@ -86,6 +86,7 @@ namespace QTool.InputSystem
             }
         }
         private NpadState npadState = new NpadState();
+        private GamepadState lastState = new GamepadState();
         public void OnUpdate()
         {
             if(Application.platform== RuntimePlatform.Switch)
@@ -148,7 +149,12 @@ namespace QTool.InputSystem
                     gampadState.rightStick = new Vector2(npadState.analogStickR.fx, npadState.analogStickR.fy);
                     MakeCurrent();
                 }
-                UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
+                if(!lastState.Equals(gampadState))
+                {
+                    lastState = gampadState;
+                    UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
+                }
+              
             }
 
         }
