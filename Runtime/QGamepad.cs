@@ -136,11 +136,11 @@ namespace QTool.InputSystem
                 {
                     if (npadState.GetButton(NpadButton.A))
                     {
-                        gampadState.WithButton(GamepadButton.B);
+                        gampadState.WithButton(GamepadButton.A);
                     }
                     if (npadState.GetButton(NpadButton.B))
                     {
-                        gampadState.WithButton(GamepadButton.A);
+                        gampadState.WithButton(GamepadButton.B);
                     }
                     if (npadState.GetButton(NpadButton.X))
                     {
