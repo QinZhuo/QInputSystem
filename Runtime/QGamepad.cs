@@ -63,8 +63,7 @@ namespace QTool.InputSystem
         [InputControl(name = "rightTrigger", displayName = "ZR", shortDisplayName = "ZR")]
         [InputControl(name = "start", displayName = "Plus")]
         [InputControl(name = "select", displayName = "Minus")]
-        public ButtonControl Plus => base.startButton;
-        public ButtonControl Minus => base.selectButton;
+        public ButtonControl A => base.aButton;
 #if UNITY_SWITCH
 #if UNITY_EDITOR
         static QSwitchGamepad()
@@ -189,8 +188,8 @@ namespace QTool.InputSystem
                 if(!GamepdState.Equals(gampadState))
                 {
                     GamepdState = gampadState;
-                    QInputSystem.Player.SwitchCurrentControlScheme(this);
                     UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
+                    QInputSystem.Player.SwitchCurrentControlScheme(this);
                 }
               
             }
