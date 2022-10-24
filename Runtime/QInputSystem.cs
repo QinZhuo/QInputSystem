@@ -25,6 +25,11 @@ namespace QTool.InputSystem
                     {
                         _playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
                         _playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
+                        if (_playerInput.actions == null)
+                        {
+                            Debug.LogWarning("Resources下不存在" + nameof(QInputSetting));
+                            _playerInput.actions = new InputActionAsset();
+                        }
                         foreach (var action in _playerInput.actions)
                         {
                             action.Enable();
@@ -54,10 +59,10 @@ namespace QTool.InputSystem
                         {
                             if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
                             {
-                                Debug.LogError("不支持环境 " + Player.currentControlScheme);
+                                Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
                             }
                         }
-                    }else if(obj is InputAction action && action.activeControl != null)
+                    }else if(obj is InputAction action && action.activeControl != null&& action.activeControl.device!=null)
                     {
                         if (newScheme != ControlScheme  )
                         {
