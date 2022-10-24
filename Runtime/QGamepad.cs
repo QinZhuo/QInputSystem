@@ -81,8 +81,8 @@ namespace QTool.InputSystem
             {
                 var device = Instance;
                 Npad.Initialize();
-                Npad.SetSupportedIdType(new NpadId[] { NpadId.Handheld });
-                Npad.SetSupportedStyleSet(NpadStyle.FullKey | NpadStyle.Handheld | NpadStyle.JoyDual);
+                Npad.SetSupportedStyleSet( NpadStyle.Handheld | NpadStyle.JoyDual| NpadStyle.FullKey );
+                Npad.SetSupportedIdType(new NpadId[] { NpadId.Handheld, NpadId.No1 });
             }
         }
         private NpadState npadState = new NpadState();
