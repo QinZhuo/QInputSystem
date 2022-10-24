@@ -57,7 +57,7 @@
                 {
                     "name": "",
                     "id": "331caa3c-6685-4d88-b7e5-5335c5c6dd63",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<XInputController>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",

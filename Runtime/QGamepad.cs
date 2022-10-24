@@ -53,18 +53,18 @@ namespace QTool.InputSystem
 
     {
 
-        [InputControl(name = "buttonNorth", displayName = "X", shortDisplayName = "X")]
-        [InputControl(name = "buttonSouth", displayName = "B", shortDisplayName = "B")]
-        [InputControl(name = "buttonWest", displayName = "Y", shortDisplayName = "Y")]
-        [InputControl(name = "buttonEast", displayName = "A", shortDisplayName = "A")]
+        [InputControl(name = "buttonNorth", displayName = "Y", shortDisplayName = "Y")]
+        [InputControl(name = "buttonSouth", displayName = "A", shortDisplayName = "A")]
+        [InputControl(name = "buttonWest", displayName = "X", shortDisplayName = "X")]
+        [InputControl(name = "buttonEast", displayName = "B", shortDisplayName = "B")]
         [InputControl(name = "leftShoulder", displayName = "L", shortDisplayName = "L")]
         [InputControl(name = "rightShoulder", displayName = "R", shortDisplayName = "R")]
         [InputControl(name = "leftTrigger", displayName = "ZL", shortDisplayName = "ZL")]
         [InputControl(name = "rightTrigger", displayName = "ZR", shortDisplayName = "ZR")]
         [InputControl(name = "start", displayName = "Plus")]
         [InputControl(name = "select", displayName = "Minus")]
-        public new ButtonControl aButton =>base.bButton;
-        public new ButtonControl bButton =>base.aButton;
+        public ButtonControl Plus => base.startButton;
+        public ButtonControl Minus => base.selectButton;
 #if UNITY_SWITCH
 #if UNITY_EDITOR
         static QSwitchGamepad()
