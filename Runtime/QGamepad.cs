@@ -86,16 +86,53 @@ namespace QTool.InputSystem
             }
         }
         private NpadState npadState = new NpadState();
-        private GamepadState lastState = new GamepadState();
+        public GamepadState GamepdState { get; private set; } = new GamepadState();
+        private VibrationValue vibrationValue = VibrationValue.Make();
+        static VibrationDeviceHandle[] Deveics = new VibrationDeviceHandle[2];
+        static int DeveicsCount = 0; 
+        public override void SetMotorSpeeds(float lowFrequency, float highFrequency)
+        {
+            base.SetMotorSpeeds(lowFrequency, highFrequency);
+            vibrationValue.Clear();
+            vibrationValue.amplitudeLow = lowFrequency;
+            vibrationValue.amplitudeHigh = highFrequency;
+            for (int i = 0; i < DeveicsCount; i++)
+            {
+                Vibration.SendValue(Deveics[i], vibrationValue);
+            }
+        }
+        public NpadStyle NpadStyle { get; private set; }
+        public bool GetState(params NpadId[] npadId)
+        {
+            foreach (var id in npadId)
+            {
+                var newStyle = Npad.GetStyleSet(id);
+                Npad.GetState(ref npadState, id, NpadStyle);
+                if (newStyle != NpadStyle.None)
+                {
+                    if (npadState.buttons != NpadButton.None)
+                    {
+                        if (newStyle != NpadStyle)
+                        {
+                            NpadStyle = newStyle;
+                            DeveicsCount = Vibration.GetDeviceHandles(Deveics, Deveics.Length, id, NpadStyle);
+                            for (int i = 0; i < DeveicsCount; i++)
+                            {
+                                Vibration.InitializeDevice(Deveics[i]);
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         public void OnUpdate()
         {
             if(Application.platform== RuntimePlatform.Switch)
             {
-                var style = Npad.GetStyleSet(NpadId.Handheld);
-                Npad.GetState(ref npadState, NpadId.Handheld, style);
-             
                 var gampadState = new GamepadState();
-                if (style != NpadStyle.Invalid)
+                if (GetState(NpadId.Handheld, NpadId.No1))
                 {
                     if (npadState.GetButton(NpadButton.A))
                     {
@@ -149,9 +186,9 @@ namespace QTool.InputSystem
                     gampadState.rightStick = new Vector2(npadState.analogStickR.fx, npadState.analogStickR.fy);
                     MakeCurrent();
                 }
-                if(!lastState.Equals(gampadState))
+                if(!GamepdState.Equals(gampadState))
                 {
-                    lastState = gampadState;
+                    GamepdState = gampadState;
                     QInputSystem.Player.SwitchCurrentControlScheme(this);
                     UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
                 }
