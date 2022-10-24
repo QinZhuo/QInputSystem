@@ -20,7 +20,7 @@ namespace QTool.InputSystem
     {
         protected static void RegisterLayout()
         {
-            UnityEngine.InputSystem.InputSystem.RegisterLayout<T>(matches: new InputDeviceMatcher().WithDeviceClass(nameof(Gamepad)));
+            UnityEngine.InputSystem.InputSystem.RegisterLayout<T>();
         }
         private static T _instance;
         public static T Instance
@@ -152,6 +152,7 @@ namespace QTool.InputSystem
                 if(!lastState.Equals(gampadState))
                 {
                     lastState = gampadState;
+                    QInputSystem.Player.SwitchCurrentControlScheme(this);
                     UnityEngine.InputSystem.InputSystem.QueueStateEvent(this, gampadState);
                 }
               
