@@ -115,7 +115,6 @@ namespace QTool.InputSystem
                         if (newStyle != NpadStyle)
                         {
                             NpadStyle = newStyle;
-                            Debug.LogError("type " + newStyle);
                             DeveicsCount = Vibration.GetDeviceHandles(Deveics, Deveics.Length, id, NpadStyle);
                             for (int i = 0; i < DeveicsCount; i++)
                             {
