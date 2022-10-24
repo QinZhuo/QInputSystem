@@ -81,7 +81,7 @@ namespace QTool.InputSystem
             {
                 var device = Instance;
                 Npad.Initialize();
-                Npad.SetSupportedStyleSet( NpadStyle.Handheld | NpadStyle.JoyDual );
+                Npad.SetSupportedStyleSet( NpadStyle.Handheld | NpadStyle.JoyDual| NpadStyle.FullKey );
                 Npad.SetSupportedIdType(new NpadId[] { NpadId.Handheld, NpadId.No1 });
             }
         }
@@ -115,6 +115,7 @@ namespace QTool.InputSystem
                         if (newStyle != NpadStyle)
                         {
                             NpadStyle = newStyle;
+                            Debug.LogError("type " + newStyle);
                             DeveicsCount = Vibration.GetDeviceHandles(Deveics, Deveics.Length, id, NpadStyle);
                             for (int i = 0; i < DeveicsCount; i++)
                             {
