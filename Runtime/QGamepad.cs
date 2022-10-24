@@ -107,7 +107,7 @@ namespace QTool.InputSystem
             foreach (var id in npadId)
             {
                 var newStyle = Npad.GetStyleSet(id);
-                Npad.GetState(ref npadState, id, NpadStyle);
+                Npad.GetState(ref npadState, id, newStyle);
                 if (newStyle != NpadStyle.None)
                 {
                     if (npadState.buttons != NpadButton.None)
@@ -132,7 +132,7 @@ namespace QTool.InputSystem
             if(Application.platform== RuntimePlatform.Switch)
             {
                 var gampadState = new GamepadState();
-                if (GetState(NpadId.Handheld, NpadId.No1))
+                if (GetState(NpadId.Handheld,NpadId.No1))
                 {
                     if (npadState.GetButton(NpadButton.A))
                     {
