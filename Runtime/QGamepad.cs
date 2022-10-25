@@ -9,9 +9,6 @@ using UnityEngine.InputSystem.Utilities;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-#if UNITY_SWITCH
-using nn.hid;
-#endif
 
 namespace QTool.InputSystem
 {
