@@ -64,6 +64,10 @@ namespace QTool.InputSystem
                         }
                     }else if(obj is InputAction action && action.activeControl != null&& action.activeControl.device!=null)
                     {
+                        if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
+                        {
+                            Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
+                        }
                         if (newScheme != ControlScheme  )
                         {
                             if (action.activeControl.device.description.empty)
