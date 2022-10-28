@@ -74,7 +74,7 @@ namespace QTool.InputSystem
                                 }
                             }
                             ControlScheme = newScheme;
-                            Debug.LogError(nameof(ControlScheme) + " " + ControlScheme);
+                            Debug.Log(nameof(ControlScheme) + " " + ControlScheme);
                             OnControlSchemeChange?.Invoke();
                         }
                     }
