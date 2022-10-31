@@ -1,5 +1,5 @@
 {
-    "name": "测试输入设置",
+    "name": "QInputSetting",
     "maps": [
         {
             "name": "测试",
@@ -163,6 +163,17 @@
                     "action": "摇杆",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8e7f29bb-e6f2-451f-8be8-d9c8306c4fb8",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "摇杆",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

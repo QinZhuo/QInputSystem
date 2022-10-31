@@ -66,10 +66,6 @@ namespace QTool.InputSystem {
         {
             if (!Active) return;
             string tip = "";
-            if (Application.isPlaying)
-            {
-                Debug.LogError(action.action.GetActiveBindingMask());
-            }
             tip = tipInfo.Replace("{Key}", ViewKey);
             OnValueChange?.Invoke(tip);
         }

@@ -102,6 +102,10 @@ namespace QTool.InputSystem
             {
                 return inputAction.actionMap.asset.bindingMask.Value;
             }
+            if(ControlScheme!= QControlScheme.None)
+            {
+                return new InputBinding() { groups =ControlScheme.ToString() };
+            }
             return default;
         }
 
