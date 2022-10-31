@@ -56,17 +56,6 @@
                 },
                 {
                     "name": "",
-                    "id": "331caa3c-6685-4d88-b7e5-5335c5c6dd63",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "按钮",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9d9c169c-d63b-4cb3-8c39-5afbc5a88367",
                     "path": "<Keyboard>/escape",
                     "interactions": "",

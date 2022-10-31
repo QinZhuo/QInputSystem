@@ -25,15 +25,23 @@ namespace QTool.InputSystem {
                 if (!Active) return "";
                 if (bindIndex < 0)
                 {
-                    var view = action.action.GetBindingDisplayString(action.action.GetActiveBindingMask());
-                    if (view.IsNullOrEmpty())
+                    if (action.action.controls.Count <= 1)
                     {
-                        foreach (var control in action.action.controls)
-                        {
-                            view += control.displayName;
-                        }
+                        return action.action.GetBindingDisplayString(QInputSystem.ActiveBindingMask); ;
                     }
-                    return view;
+                    else
+                    {
+                        var view = "";
+                        if (view.IsNullOrEmpty())
+                        {
+                            foreach (var control in action.action.controls)
+                            {
+                                view += control.displayName;
+                            }
+                        }
+                        return view;
+                    }
+                  
                 }
                 else
                 {
@@ -104,7 +112,13 @@ namespace QTool.InputSystem {
                 OnValueChange?.Invoke("?");
                 if (index < 0)
                 {
-                    index = action.GetBindingIndex(action.GetActiveBindingMask());
+                    index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+                    if (index < 0)
+                    {
+                        action.AddBinding(QInputSystem.ActiveBindingMask);
+                        index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+                        Debug.LogError("new Bind " + index);
+                    }
                 }
                 await action.RebindingAsync(index);
             }

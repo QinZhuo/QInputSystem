@@ -89,25 +89,7 @@ namespace QTool.InputSystem
         public static Action<InputAction, int> OnRebindingStart;
         public static Action<InputAction,int> OnRebindingOver;
 
-
-        public static InputBinding GetActiveBindingMask(this InputAction inputAction)
-        {
-            if (inputAction.bindingMask.HasValue)
-                return inputAction.bindingMask.Value;
-
-            if (inputAction.actionMap?.bindingMask != null)
-                return inputAction.actionMap.bindingMask.Value;
-
-            if (inputAction.actionMap?.asset?.bindingMask != null)
-            {
-                return inputAction.actionMap.asset.bindingMask.Value;
-            }
-            if(ControlScheme!= QControlScheme.None)
-            {
-                return new InputBinding() { groups =ControlScheme.ToString() };
-            }
-            return default;
-        }
+        public static InputBinding ActiveBindingMask => ControlScheme== QControlScheme.None?default : new InputBinding() { groups =ControlScheme.ToString() };
 
         static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
 
