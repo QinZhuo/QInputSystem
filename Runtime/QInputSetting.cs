@@ -22,22 +22,18 @@ namespace QTool.InputSystem {
         {
             get
             {
-                if (action.action == null) return "";
+                if (!Active) return "";
                 if (bindIndex < 0)
                 {
-                    if (action.action.controls.Count <= 1)
+                    var view = action.action.GetBindingDisplayString(action.action.GetActiveBindingMask());
+                    if (view.IsNullOrEmpty())
                     {
-                        return action.action.GetBindingDisplayString(action.action.GetActiveBindingMask());
-                    }
-                    else
-                    {
-                        var view = "";
                         foreach (var control in action.action.controls)
                         {
                             view += control.displayName;
                         }
-                        return view;
                     }
+                    return view;
                 }
                 else
                 {
