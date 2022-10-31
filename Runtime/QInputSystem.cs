@@ -93,8 +93,23 @@ namespace QTool.InputSystem
 
         static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
 
+        public static InputBinding GetActiveBindingMask(this InputAction inputAction)
+        {
+            if (inputAction.bindingMask.HasValue)
+                return inputAction.bindingMask.Value;
+
+            if (inputAction.actionMap?.bindingMask != null)
+                return inputAction.actionMap.bindingMask.Value;
+
+            if (inputAction.actionMap?.asset?.bindingMask != null)
+            {
+                return inputAction.actionMap.asset.bindingMask.Value;
+            }
+            return default;
+        }
         public static async Task<bool> RebindingAsync(this InputAction action, int bindIndex)
         {
+            if (ControlScheme == QControlScheme.Touchscreen||ControlScheme== QControlScheme.None) return false;
             if (ActiveRebinding != null)
             {
                 ActiveRebinding.Cancel();
