@@ -98,7 +98,7 @@ namespace QTool.InputSystem {
         }
         void OnRebindingOver(InputAction inputAction,int bindIndex)
         {
-            if (inputAction == action.action)
+            if (inputAction == action?.action)
             {
                 OnChange();
             }
@@ -117,7 +117,6 @@ namespace QTool.InputSystem {
                     {
                         action.AddBinding(QInputSystem.ActiveBindingMask);
                         index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
-                        Debug.LogError("new Bind " + index);
                     }
                 }
                 await action.RebindingAsync(index);
