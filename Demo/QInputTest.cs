@@ -5,14 +5,14 @@ using QTool.InputSystem;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.EventSystems;
-
+using UnityEngine.UI;
 namespace QTool
 {
 
     public class QInputTest : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IPointerClickHandler
     {
         public InputActionReference input;
-
+        public Text text;
         public void OnPointerClick(PointerEventData eventData)
         {
             Debug.LogError(nameof(OnPointerClick));
@@ -45,55 +45,18 @@ namespace QTool
             input.action.Enable();
             input.action.started += (info) =>
             {
-                Debug.LogError("started " + info.ReadValue<Vector2>());
+                text.text=("started " + info.ReadValue<Vector2>());
             };
             input.action.performed += (info) =>
             {
-                Debug.LogError("performed "+info.ReadValue<Vector2>());
+                text.text = ("performed "+info.ReadValue<Vector2>());
             };
             input.action.canceled += (info) =>
             {
-                Debug.LogError("canceled " + info.ReadValue<Vector2>());
+                text.text = ("canceled " + info.ReadValue<Vector2>());
             };
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            if (Gamepad.current == null) return;
-            if (Gamepad.current.xButton.wasPressedThisFrame)
-            {
-                Debug.LogError(Gamepad.current.xButton);
-            }
-            if (Gamepad.current.aButton.wasPressedThisFrame)
-            {
-                Debug.LogError(Gamepad.current.aButton);
-            }
-            if (Gamepad.current.bButton.wasPressedThisFrame)
-            {
-                Debug.LogError(Gamepad.current.bButton);
-            }
-            if (Gamepad.current.yButton.wasPressedThisFrame)
-            {
-                Debug.LogError(Gamepad.current.yButton);
-            }
-            if (Gamepad.current.leftTrigger.wasPressedThisFrame)
-            {
-                Debug.LogError(Gamepad.current.leftTrigger);
-            }
-            if (Gamepad.current.rightTrigger.wasPressedThisFrame)
-            {
-                Debug.LogError(Gamepad.current.rightTrigger);
-            }
-
-            //Debug.LogError(input.action.ReadValue<Vector2>());
-            //获取移动摇杆输入方向
-            //var moveDir = QInput.Actions["移动"].Vector2 * 100 * Time.deltaTime;
-            //transform.localPosition +=new Vector3(moveDir.x, moveDir.y,0);
-
-
-            ////限制移动范围
-            //transform.localPosition = Vector3.ClampMagnitude(transform.localPosition, 300);
-        }
+       
     }
 }

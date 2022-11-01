@@ -56,17 +56,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8d0040d0-345c-4457-8ab2-dfca31a5576f",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "按钮",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9d9c169c-d63b-4cb3-8c39-5afbc5a88367",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
@@ -166,8 +155,8 @@
                 },
                 {
                     "name": "",
-                    "id": "8e7f29bb-e6f2-451f-8be8-d9c8306c4fb8",
-                    "path": "<Joystick>/stick",
+                    "id": "c16f0233-6edb-4633-87ac-19a180ffd387",
+                    "path": "<Touchscreen>/touch9/radius",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

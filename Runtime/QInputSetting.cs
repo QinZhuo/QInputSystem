@@ -25,23 +25,26 @@ namespace QTool.InputSystem {
                 if (!Active) return "";
                 if (bindIndex < 0)
                 {
-                    if (action.action.controls.Count <= 1)
+                    var index= action.action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+                    if (index >= 0)
                     {
-                        return action.action.GetBindingDisplayString(QInputSystem.ActiveBindingMask); ;
-                    }
-                    else
-                    {
-                        var view = "";
-                        if (view.IsNullOrEmpty())
+                        var bind= action.action.bindings[index];
+                        if (!bind.isPartOfComposite)
                         {
-                            foreach (var control in action.action.controls)
-                            {
-                                view += control.displayName;
-                            }
+                           return bind.ToDisplayString();
+                        }
+                        var view = "";
+                        while (bind.isPartOfComposite)
+                        {
+                            view += bind.ToDisplayString();
+                            index++;
+                            bind = action.action.bindings[index];
                         }
                         return view;
+
                     }
-                  
+                    return "";
+
                 }
                 else
                 {
@@ -107,29 +110,35 @@ namespace QTool.InputSystem {
         private async void PerformInteractiveRebind(InputAction action)
         {
             var index = bindIndex;
-            if (action.controls.Count <= 1|| index >= 0)
+            if (bindIndex >=0)
             {
                 OnValueChange?.Invoke("?");
-                if (index < 0)
-                {
-                    index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
-                    if (index < 0)
-                    {
-                        action.AddBinding(QInputSystem.ActiveBindingMask);
-                        index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
-                    }
-                }
                 await action.RebindingAsync(index);
+                return;
             }
-            else
+            if (index < 0)
             {
-                foreach (var control in action.controls)
-                {
-                    OnValueChange?.Invoke(ViewKey.Replace(control.displayName,"?"));
-                    index = action.GetBindingIndexForControl(control);
-                    await action.RebindingAsync(index);
-                    await QTask.Wait(0.2f);
-                }
+                index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+            }
+            if (index < 0)
+            {
+                action.AddBinding(QInputSystem.ActiveBindingMask);
+                index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+            }
+            var bind = action.bindings[index];
+            if (!bind.isPartOfComposite)
+            {
+                OnValueChange?.Invoke("?");
+                await action.RebindingAsync(index);
+                return;
+            }
+            while (bind.isPartOfComposite)
+            {
+                OnValueChange?.Invoke(ViewKey.Replace(bind.ToDisplayString(), "?"));
+                await action.RebindingAsync(index);
+                await QTask.Wait(0.2f);
+                index++;
+                bind = action.bindings[index];
             }
         }
         public void StartChange()
