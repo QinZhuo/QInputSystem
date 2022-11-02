@@ -92,7 +92,23 @@ namespace QTool.InputSystem
         public static InputBinding ActiveBindingMask => ControlScheme== QControlScheme.None?default : new InputBinding() { groups =ControlScheme.ToString() };
 
         static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
-
+        public static string ToQString(this InputBinding bind)
+        {
+            var view = bind.ToDisplayString();
+            if(Application.platform== RuntimePlatform.Switch)
+            {
+                switch (view)
+                {
+                    case "X":view = "Y";break;
+                    case "Y": view = "X"; break;
+                    case "A": view = "B"; break;
+                    case "B": view = "A"; break;
+                    default:
+                        break;
+                }
+            }
+            return view;
+        }
         public static InputBinding GetActiveBindingMask(this InputAction inputAction)
         {
             if (inputAction.bindingMask.HasValue)

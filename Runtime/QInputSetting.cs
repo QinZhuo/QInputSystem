@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 using System;
 
 namespace QTool.InputSystem {
-
     using InputSystem = UnityEngine.InputSystem.InputSystem;
     /// <summary>
     /// 快捷键提示脚本
@@ -31,12 +30,12 @@ namespace QTool.InputSystem {
                         var bind= action.action.bindings[index];
                         if (!bind.isPartOfComposite)
                         {
-                           return bind.ToDisplayString();
+                           return bind.ToQString();
                         }
                         var view = "";
                         while (bind.isPartOfComposite)
                         {
-                            view += bind.ToDisplayString();
+                            view += bind.ToQString();
                             index++;
                             bind = action.action.bindings[index];
                         }
@@ -48,7 +47,7 @@ namespace QTool.InputSystem {
                 }
                 else
                 {
-                    return action.action.bindings[bindIndex].ToDisplayString();
+                    return action.action.bindings[bindIndex].ToQString();
                 }
             }
         }
@@ -134,7 +133,7 @@ namespace QTool.InputSystem {
             }
             while (bind.isPartOfComposite)
             {
-                OnValueChange?.Invoke(ViewKey.Replace(bind.ToDisplayString(), "?"));
+                OnValueChange?.Invoke(ViewKey.Replace(bind.ToQString(), "?"));
                 await action.RebindingAsync(index);
                 await QTask.Wait(0.2f);
                 index++;
