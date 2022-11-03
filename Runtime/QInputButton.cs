@@ -98,7 +98,7 @@ namespace QTool.InputSystem
         {
             if (Action == null)
             {
-                _action = defaultAction?.action;
+                Action = defaultAction?.action;
             }
         }
         public void ClearAction()
