@@ -13,7 +13,19 @@ namespace QTool.InputSystem {
     /// </summary>
     public class QInputSetting : MonoBehaviour
     {
-        public InputActionReference action;
+        [UnityEngine.Serialization.FormerlySerializedAs("action")]
+        [SerializeField]
+        private InputActionReference defaultAction;
+        private InputAction _action;
+        public InputAction Action
+        {
+            get => _action;
+            set
+            {
+                _action = value;
+                OnChange();
+            }
+        }
         public int bindIndex = -1;
         [SerializeField]
         private string tipInfo = "按下{Key}触发";
@@ -24,10 +36,10 @@ namespace QTool.InputSystem {
                 if (!Active) return "";
                 if (bindIndex < 0)
                 {
-                    var index= action.action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+                    var index= Action.GetBindingIndex(QInputSystem.ActiveBindingMask);
                     if (index >= 0)
                     {
-                        var bind= action.action.bindings[index];
+                        var bind= Action.bindings[index];
                         if (!bind.isPartOfComposite)
                         {
                            return bind.ToQString();
@@ -37,7 +49,7 @@ namespace QTool.InputSystem {
                         {
                             view += bind.ToQString();
                             index++;
-                            bind = action.action.bindings[index];
+                            bind = Action.bindings[index];
                         }
                         return view;
 
@@ -47,7 +59,7 @@ namespace QTool.InputSystem {
                 }
                 else
                 {
-                    return action.action.bindings[bindIndex].ToQString();
+                    return Action.bindings[bindIndex].ToQString();
                 }
             }
         }
@@ -68,7 +80,7 @@ namespace QTool.InputSystem {
         {
             get
             {
-                return action!=null&&action.action != null;
+                return Action!=null;
             }
         }
 
@@ -87,6 +99,10 @@ namespace QTool.InputSystem {
             OnChange();
         }
 # endif
+        private void Awake()
+        {
+            Action = defaultAction?.action;
+        }
         protected virtual void OnEnable()
         {
             OnChange();
@@ -100,50 +116,46 @@ namespace QTool.InputSystem {
         }
         void OnRebindingOver(InputAction inputAction,int bindIndex)
         {
-            if (inputAction == action?.action)
+            if (inputAction == Action)
             {
                 OnChange();
             }
         }
         #region 改键逻辑
-        private async void PerformInteractiveRebind(InputAction action)
+        public async void StartChange()
         {
+            if (!Active) return;
             var index = bindIndex;
-            if (bindIndex >=0)
+            if (bindIndex >= 0)
             {
                 OnValueChange?.Invoke("?");
-                await action.RebindingAsync(index);
+                await Action.RebindingAsync(index);
                 return;
             }
             if (index < 0)
             {
-                index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+                index = Action.GetBindingIndex(QInputSystem.ActiveBindingMask);
             }
             if (index < 0)
             {
-                action.AddBinding(QInputSystem.ActiveBindingMask);
-                index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+                Action.AddBinding(QInputSystem.ActiveBindingMask);
+                index = Action.GetBindingIndex(QInputSystem.ActiveBindingMask);
             }
-            var bind = action.bindings[index];
+            var bind = Action.bindings[index];
             if (!bind.isPartOfComposite)
             {
                 OnValueChange?.Invoke("?");
-                await action.RebindingAsync(index);
+                await Action.RebindingAsync(index);
                 return;
             }
             while (bind.isPartOfComposite)
             {
                 OnValueChange?.Invoke(ViewKey.Replace(bind.ToQString(), "?"));
-                await action.RebindingAsync(index);
+                await Action.RebindingAsync(index);
                 await QTask.Wait(0.2f);
                 index++;
-                bind = action.bindings[index];
+                bind = Action.bindings[index];
             }
-        }
-        public void StartChange()
-        {
-            if (!Active) return;
-            PerformInteractiveRebind(action);
         }
 
         #endregion
