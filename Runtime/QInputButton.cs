@@ -13,18 +13,25 @@ namespace QTool.InputSystem
     public class QInputButton : MonoBehaviour
     {
         [SerializeField]
-        private InputActionReference inputAction;
-        public InputActionReference Action
+        [UnityEngine.Serialization.FormerlySerializedAs("inputAction")]
+        private InputActionReference defaultAction;
+        private InputAction _action;
+        public InputAction Action
         {
-            get => inputAction;
+            get => _action;
             set
             {
-                if (inputAction != value)
+                if (_action != value)
                 {
-                    inputAction = value;
+                    ClearAction();
+                    _action = value;
                     InitAction();
                 }
             }
+        }
+        public void SetAction(string key)
+        {
+            Action=QInputSystem.QInputSetting.FindAction(key);
         }
 
         UIEventTrigger trigger = new UIEventTrigger();
@@ -76,29 +83,36 @@ namespace QTool.InputSystem
         }
         private void InitAction()
         {
-            if (inputAction?.action != null)
+            if (Action != null)
             {
                 parenGroup = GetComponentInParent<CanvasGroup>();
 
                 trigger.Init(this);
-                inputAction.action.Enable();
-                inputAction.action.started += InputStarted;
-                inputAction.action.performed += InputPerformed;
-                inputAction.action.canceled += InputCanceled;
+                Action.Enable();
+                Action.started += InputStarted;
+                Action.performed += InputPerformed;
+                Action.canceled += InputCanceled;
             }
         }
         private void Awake()
         {
-            InitAction();
+            if (Action == null)
+            {
+                _action = defaultAction?.action;
+            }
+        }
+        public void ClearAction()
+        {
+            if (Action != null)
+            {
+                Action.started -= InputStarted;
+                Action.performed -= InputPerformed;
+                Action.canceled -= InputCanceled;
+            }
         }
         private void OnDestroy()
         {
-            if (inputAction?.action != null)
-            {
-                inputAction.action.started -= InputStarted;
-                inputAction.action.performed -= InputPerformed;
-                inputAction.action.canceled -= InputCanceled;
-            }
+            ClearAction();
         }
     }
 
