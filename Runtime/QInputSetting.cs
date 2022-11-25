@@ -29,40 +29,6 @@ namespace QTool.InputSystem {
         public int bindIndex = -1;
         [SerializeField]
         private string tipInfo = "按下{Key}触发";
-        protected string ViewKey
-        {
-            get
-            {
-                if (!Active) return "";
-                if (bindIndex < 0)
-                {
-                    var index= Action.GetBindingIndex(QInputSystem.ActiveBindingMask);
-                    if (index >= 0)
-                    {
-                        var bind= Action.bindings[index];
-                        if (!bind.isPartOfComposite)
-                        {
-                           return bind.ToQString();
-                        }
-                        var view = "";
-                        while (bind.isPartOfComposite)
-                        {
-                            view += bind.ToQString();
-                            index++;
-                            bind = Action.bindings[index];
-                        }
-                        return view;
-
-                    }
-                    return "";
-
-                }
-                else
-                {
-                    return Action.bindings[bindIndex].ToQString();
-                }
-            }
-        }
         public string TipInfo
         {
             get
@@ -88,7 +54,7 @@ namespace QTool.InputSystem {
         {
             if (!Active) return;
             string tip = "";
-            tip = tipInfo.Replace("{Key}", ViewKey);
+            tip = tipInfo.Replace("{Key}", Action.ToViewString());
             OnValueChange?.Invoke(tip);
         }
 
@@ -150,7 +116,7 @@ namespace QTool.InputSystem {
             }
             while (bind.isPartOfComposite)
             {
-                OnValueChange?.Invoke(ViewKey.Replace(bind.ToQString(), "?"));
+                OnValueChange?.Invoke(Action.ToViewString().Replace(bind.ToQString(), "?"));
                 await Action.RebindingAsync(index);
                 await QTask.Wait(0.2f);
                 index++;

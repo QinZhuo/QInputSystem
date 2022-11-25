@@ -78,7 +78,7 @@ namespace QTool.InputSystem
                                 }
                             }
                             ControlScheme = newScheme;
-                            Debug.Log(nameof(ControlScheme) + " " + ControlScheme);
+                            QDebug.Log("操作方式更改 " + ControlScheme);
                             OnControlSchemeChange?.Invoke();
                         }
                     }
@@ -108,6 +108,36 @@ namespace QTool.InputSystem
                 }
             }
             return view;
+        }
+        public static string ToViewString(this InputAction action,int bindIndex=-1)
+        {
+            if (action == null) return "";
+            if (bindIndex < 0)
+            {
+                var index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+                if (index >= 0)
+                {
+                    var bind = action.bindings[index];
+                    if (!bind.isPartOfComposite)
+                    {
+                        return bind.ToQString();
+                    }
+                    var view = "";
+                    while (bind.isPartOfComposite)
+                    {
+                        view += bind.ToQString();
+                        index++;
+                        bind = action.bindings[index];
+                    }
+                    return view;
+                }
+                return "";
+            }
+            else
+            {
+                return action.bindings[bindIndex].ToQString();
+            }
+           
         }
         public static InputBinding GetActiveBindingMask(this InputAction inputAction)
         {
