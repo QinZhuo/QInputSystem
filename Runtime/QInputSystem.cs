@@ -131,10 +131,6 @@ namespace QTool.InputSystem
                     }
                     return view;
                 }
-                else
-                {
-					Debug.LogError("未找到 " + action + "在" + QInputSystem.ActiveBindingMask + "操作模式下的快捷键");
-                }
                 return "";
             }
             else

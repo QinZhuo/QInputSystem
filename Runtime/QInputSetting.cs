@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QTool;
@@ -66,8 +66,20 @@ namespace QTool.InputSystem {
         }
 # endif
         private void Awake()
-        {
-            Action = defaultAction?.action;
+		{
+			if (defaultAction == null)
+			{
+				Action = defaultAction?.action;
+			}
+			else
+			{
+				var button = GetComponent<QInputButton>();
+				if (button != null)
+                {
+					Action = button.Action;
+                }
+            }
+           
         }
         protected virtual void OnEnable()
         {
