@@ -13,9 +13,6 @@ namespace QTool.InputSystem {
     /// </summary>
     public class QInputSetting : MonoBehaviour
     {
-        [UnityEngine.Serialization.FormerlySerializedAs("action")]
-        [SerializeField]
-        private InputActionReference defaultAction;
         private InputAction _action;
         public InputAction Action
         {
@@ -65,10 +62,6 @@ namespace QTool.InputSystem {
             OnChange();
         }
 # endif
-        private void Awake()
-        {
-            Action = defaultAction?.action;
-        }
         protected virtual void OnEnable()
         {
             OnChange();

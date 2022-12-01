@@ -95,7 +95,7 @@ namespace QTool.InputSystem
                 Action.canceled += InputCanceled;
 				if (Setting != null)
 				{
-					Action = Action;
+					Setting.Action = Action;
 				}
 			}
         }
@@ -117,7 +117,7 @@ namespace QTool.InputSystem
                 Action.canceled -= InputCanceled;
                 if (Setting != null)
                 {
-					Action = null;
+					Setting.Action = null;
                 }
             }
         }
