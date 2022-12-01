@@ -27,7 +27,7 @@ namespace QTool.InputSystem
                         _playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
                         if (_playerInput.actions == null)
                         {
-                            Debug.LogWarning("ResourcesÏÂ²»´æÔÚ" + nameof(QInputSetting));
+                            Debug.LogWarning("Resourcesä¸‹ä¸å­˜åœ¨" + nameof(QInputSetting));
                             _playerInput.actions = new InputActionAsset();
                         }
                         foreach (var action in _playerInput.actions)
@@ -59,14 +59,14 @@ namespace QTool.InputSystem
                         {
                             if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
                             {
-                                Debug.LogWarning("²»Ö§³Ö»·¾³ " + Player.currentControlScheme);
+                                Debug.LogWarning("ä¸æ”¯æŒç¯å¢ƒ " + Player.currentControlScheme);
                             }
                         }
                     }else if(obj is InputAction action && action.activeControl != null&& action.activeControl.device!=null)
                     {
                         if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
                         {
-                            Debug.LogWarning("²»Ö§³Ö»·¾³ " + Player.currentControlScheme);
+                            Debug.LogWarning("ä¸æ”¯æŒç¯å¢ƒ " + Player.currentControlScheme);
                         }
                         if (newScheme != ControlScheme  )
                         {
@@ -78,7 +78,7 @@ namespace QTool.InputSystem
                                 }
                             }
                             ControlScheme = newScheme;
-                            QDebug.Log("²Ù×÷·½Ê½¸ü¸Ä " + ControlScheme);
+                            QDebug.Log("æ“ä½œæ–¹å¼æ›´æ”¹ " + ControlScheme);
                             OnControlSchemeChange?.Invoke();
                         }
                     }
@@ -130,6 +130,10 @@ namespace QTool.InputSystem
                         bind = action.bindings[index];
                     }
                     return view;
+                }
+                else
+                {
+					Debug.LogError("æœªæ‰¾åˆ° " + action + "åœ¨" + QInputSystem.ActiveBindingMask + "æ“ä½œæ¨¡å¼ä¸‹çš„å¿«æ·é”®");
                 }
                 return "";
             }
