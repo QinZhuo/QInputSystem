@@ -66,20 +66,8 @@ namespace QTool.InputSystem {
         }
 # endif
         private void Awake()
-		{
-			if (defaultAction == null)
-			{
-				Action = defaultAction?.action;
-			}
-			else
-			{
-				var button = GetComponent<QInputButton>();
-				if (button != null)
-                {
-					Action = button.Action;
-                }
-            }
-           
+        {
+            Action = defaultAction?.action;
         }
         protected virtual void OnEnable()
         {

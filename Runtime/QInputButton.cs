@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -29,6 +29,7 @@ namespace QTool.InputSystem
                 }
             }
         }
+		public QInputSetting Setting { get; private set; }
         public void SetAction(string key)
         {
             Action=QInputSystem.QInputSetting.FindAction(key);
@@ -92,11 +93,17 @@ namespace QTool.InputSystem
                 Action.started += InputStarted;
                 Action.performed += InputPerformed;
                 Action.canceled += InputCanceled;
-            }
+				if (Setting != null)
+				{
+					Action = Action;
+				}
+			}
         }
         private void Awake()
         {
-            if (Action == null)
+			Setting = GetComponent<QInputSetting>();
+
+			if (Action == null)
             {
                 Action = defaultAction?.action;
             }
@@ -108,6 +115,10 @@ namespace QTool.InputSystem
                 Action.started -= InputStarted;
                 Action.performed -= InputPerformed;
                 Action.canceled -= InputCanceled;
+                if (Setting != null)
+                {
+					Action = null;
+                }
             }
         }
         private void OnDestroy()
