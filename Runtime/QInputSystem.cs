@@ -53,35 +53,45 @@ namespace QTool.InputSystem
             {
                 if (Application.isPlaying)
                 {
-                    if (change == InputActionChange.BoundControlsChanged)
+                    switch (change)
                     {
-                        if (obj is InputActionAsset asset)
-                        {
-                            if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
+                        case InputActionChange.ActionDisabled:
+                            break;
+                        case InputActionChange.BoundControlsChanged:
                             {
-                                Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
-                            }
-                        }
-                    }else if(obj is InputAction action && action.activeControl != null&& action.activeControl.device!=null)
-                    {
-                        if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
-                        {
-                            Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
-                        }
-                        if (newScheme != ControlScheme  )
-                        {
-                            if (action.activeControl.device.description.empty)
-                            {
-                                if (action.activeControl.device.name != "QSwitchGamepad")
+                                if (obj is InputActionAsset asset)
                                 {
-                                    return;
+                                    if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
+                                    {
+                                        Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
+                                    }
                                 }
                             }
-                            ControlScheme = newScheme;
-                            QDebug.Log("操作方式更改 " + ControlScheme);
-                            OnControlSchemeChange?.Invoke();
-                        }
+                            break;
+                        default:
+                            if (obj is InputAction action && action.activeControl != null && action.activeControl.device != null)
+                            {
+                                if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
+                                {
+                                    Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
+                                }
+                                if (newScheme != ControlScheme)
+                                {
+                                    if (action.activeControl.device.description.empty)
+                                    {
+                                        if (action.activeControl.device.name != "QSwitchGamepad")
+                                        {
+                                            return;
+                                        }
+                                    }
+                                    ControlScheme = newScheme;
+                                    QDebug.Log("操作方式更改 " + ControlScheme);
+                                    OnControlSchemeChange?.Invoke();
+                                }
+                            }
+                            break;
                     }
+                  
                    
                 }
             };
