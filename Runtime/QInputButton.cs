@@ -88,10 +88,10 @@ namespace QTool.InputSystem
         public void InputCanceled(InputAction.CallbackContext context)
         {
             if (KeyActive && press)
-            {
+			{
+				press = false;
 				if (TriggerUIEvent)
 				{
-					press = false;
 					trigger.up.Invoke();
 					trigger.exit.Invoke();
 				}
