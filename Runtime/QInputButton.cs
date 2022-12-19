@@ -83,7 +83,11 @@ namespace QTool.InputSystem
 				{
 					button.onClick.Invoke();
 				}
-            }
+				else if (Selectable is Toggle toggle)
+				{
+					toggle.isOn = !toggle.isOn;
+				}
+			}
         }
         public void InputCanceled(InputAction.CallbackContext context)
         {
