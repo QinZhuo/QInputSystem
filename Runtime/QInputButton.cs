@@ -29,6 +29,8 @@ namespace QTool.InputSystem
                 }
             }
         }
+		[QName("触发UI事件")]
+		public bool TriggerUIEvent = false;
 		public QInputSetting Setting { get; private set; }
         public void SetAction(string key)
         {
@@ -62,24 +64,37 @@ namespace QTool.InputSystem
             if (ActiveAndInteractable && KeyActive && !press)
             {
                 press = true;
-                trigger.enter.Invoke();
-                trigger.donw.Invoke();
+				if (TriggerUIEvent)
+				{
+					trigger.enter.Invoke();
+					trigger.donw.Invoke();
+				}
             }
         }
         public void InputPerformed(InputAction.CallbackContext context)
         {
             if (press && ActiveAndInteractable && KeyActive)
             {
-                trigger.click.Invoke();
+				if (TriggerUIEvent)
+				{
+					trigger.click.Invoke();
+				}
+				else if(Selectable is Button button)
+				{
+					button.onClick.Invoke();
+				}
             }
         }
         public void InputCanceled(InputAction.CallbackContext context)
         {
             if (KeyActive && press)
             {
-                press = false;
-                trigger.up.Invoke();
-                trigger.exit.Invoke();
+				if (TriggerUIEvent)
+				{
+					press = false;
+					trigger.up.Invoke();
+					trigger.exit.Invoke();
+				}
             }
         }
         private void InitAction()
@@ -127,127 +142,125 @@ namespace QTool.InputSystem
         }
     }
 
+	#region UI事件处理工具
 
+	class UIEventTrigger
+	{
+		public ClickList click = new ClickList();
+		public DonwList donw = new DonwList();
+		public UpList up = new UpList();
+		public EnterList enter = new EnterList();
+		public ExitList exit = new ExitList();
 
-    #region UI事件处理工具
+		internal void Init(MonoBehaviour baseMono)
+		{
+			var monos = new List<MonoBehaviour>(baseMono.GetComponents<MonoBehaviour>());
+			monos.Remove(baseMono);
+			click.Init(monos);
+			donw.Init(monos);
+			up.Init(monos);
+			enter.Init(monos);
+			exit.Init(monos);
+		}
+	}
+	abstract class TempHandlerList<T> where T : class
+	{
+		protected abstract void Action(T handler);
+		public void Init(List<MonoBehaviour> monos)
+		{
+			HandlerList = new List<T>();
+			foreach (var mono in monos)
+			{
+				if (mono is T)
+				{
+					HandlerList.Add(mono as T);
+				}
+			}
+		}
+		List<T> HandlerList;
+		public void Invoke()
+		{
+			if (HandlerList == null)
+			{
+				Debug.LogError("未初始化" + GetType());
+				return;
+			}
+			foreach (var handler in HandlerList)
+			{
+				Action(handler);
+			}
+		}
+	}
+	class EnterList : TempHandlerList<IPointerEnterHandler>
+	{
+		protected override void Action(IPointerEnterHandler handler)
+		{
+			handler.OnPointerEnter(EventCreater.TempEventData);
+		}
+	}
+	class ExitList : TempHandlerList<IPointerExitHandler>
+	{
+		protected override void Action(IPointerExitHandler handler)
+		{
+			handler.OnPointerExit(EventCreater.TempEventData);
+		}
+	}
 
-    class UIEventTrigger
-    {
-        public ClickList click = new ClickList();
-        public DonwList donw = new DonwList();
-        public UpList up = new UpList();
-        public EnterList enter = new EnterList();
-        public ExitList exit = new ExitList();
+	class SelectList : TempHandlerList<ISelectHandler>
+	{
+		protected override void Action(ISelectHandler handler)
+		{
+			handler.OnSelect(EventCreater.TempEventData);
+		}
+	}
+	class DeselectList : TempHandlerList<IDeselectHandler>
+	{
+		protected override void Action(IDeselectHandler handler)
+		{
+			handler.OnDeselect(EventCreater.TempEventData);
+		}
+	}
+	class ClickList : TempHandlerList<IPointerClickHandler>
+	{
+		protected override void Action(IPointerClickHandler handler)
+		{
+			handler.OnPointerClick(EventCreater.TempEventData);
+		}
+	}
 
-        internal void Init(MonoBehaviour baseMono)
-        {
-            var monos = new List<MonoBehaviour>(baseMono.GetComponents<MonoBehaviour>());
-            monos.Remove(baseMono);
-            click.Init(monos);
-            donw.Init(monos);
-            up.Init(monos);
-            enter.Init(monos);
-            exit.Init(monos);
-        }
-    }
-    abstract class TempHandlerList<T> where T : class
-    {
-        protected abstract void Action(T handler);
-        public void Init(List<MonoBehaviour> monos)
-        {
-            HandlerList = new List<T>();
-            foreach (var mono in monos)
-            {
-                if (mono is T)
-                {
-                    HandlerList.Add(mono as T);
-                }
-            }
-        }
-        List<T> HandlerList;
-        public void Invoke()
-        {
-            if (HandlerList == null)
-            {
-                Debug.LogError("未初始化" + GetType());
-                return;
-            }
-            foreach (var handler in HandlerList)
-            {
-                Action(handler);
-            }
-        }
-    }
-    class EnterList : TempHandlerList<IPointerEnterHandler>
-    {
-        protected override void Action(IPointerEnterHandler handler)
-        {
-            handler.OnPointerEnter(EventCreater.TempEventData);
-        }
-    }
-    class ExitList : TempHandlerList<IPointerExitHandler>
-    {
-        protected override void Action(IPointerExitHandler handler)
-        {
-            handler.OnPointerExit(EventCreater.TempEventData);
-        }
-    }
+	class DonwList : TempHandlerList<IPointerDownHandler>
+	{
+		protected override void Action(IPointerDownHandler handler)
+		{
+			handler.OnPointerDown(EventCreater.TempEventData);
+		}
+	}
+	class UpList : TempHandlerList<IPointerUpHandler>
+	{
+		protected override void Action(IPointerUpHandler handler)
+		{
+			handler.OnPointerUp(EventCreater.TempEventData);
+		}
+	}
+	static class EventCreater
+	{
+		static PointerEventData _eventData;
+		public static PointerEventData TempEventData
+		{
+			get
+			{
+				if (_eventData == null)
+				{
+					_eventData = new PointerEventData(EventSystem.current);
+					_eventData.Reset();
+					_eventData.button = PointerEventData.InputButton.Left;
+					_eventData.clickCount = 1;
+					_eventData.pointerId = 123;
+				}
+				return _eventData;
+			}
+		}
+	}
 
-    class SelectList : TempHandlerList<ISelectHandler>
-    {
-        protected override void Action(ISelectHandler handler)
-        {
-            handler.OnSelect(EventCreater.TempEventData);
-        }
-    }
-    class DeselectList : TempHandlerList<IDeselectHandler>
-    {
-        protected override void Action(IDeselectHandler handler)
-        {
-            handler.OnDeselect(EventCreater.TempEventData);
-        }
-    }
-    class ClickList : TempHandlerList<IPointerClickHandler>
-    {
-        protected override void Action(IPointerClickHandler handler)
-        {
-            handler.OnPointerClick(EventCreater.TempEventData);
-        }
-    }
-
-    class DonwList : TempHandlerList<IPointerDownHandler>
-    {
-        protected override void Action(IPointerDownHandler handler)
-        {
-            handler.OnPointerDown(EventCreater.TempEventData);
-        }
-    }
-    class UpList : TempHandlerList<IPointerUpHandler>
-    {
-        protected override void Action(IPointerUpHandler handler)
-        {
-            handler.OnPointerUp(EventCreater.TempEventData);
-        }
-    }
-    static class EventCreater
-    {
-        static PointerEventData _eventData;
-        public static PointerEventData TempEventData
-        {
-            get
-            {
-                if (_eventData == null)
-                {
-                    _eventData = new PointerEventData(EventSystem.current);
-                    _eventData.Reset();
-                    _eventData.button = PointerEventData.InputButton.Left;
-                    _eventData.clickCount = 1;
-                    _eventData.pointerId = 123;
-                }
-                return _eventData;
-            }
-        }
-    }
-
-    #endregion
+	#endregion
 }
