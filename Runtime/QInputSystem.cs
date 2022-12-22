@@ -55,23 +55,12 @@ namespace QTool.InputSystem
                 {
                     switch (change)
                     {
-                        case InputActionChange.ActionDisabled:
-                            break;
-                        case InputActionChange.BoundControlsChanged:
-                            {
-                                if (obj is InputActionAsset asset)
-                                {
-                                    if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
-                                    {
-                                        Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
-                                    }
-                                }
-                            }
-                            break;
-                        default:
+                        case InputActionChange.ActionEnabled:
+                        case InputActionChange.ActionStarted:
+                        case InputActionChange.ActionPerformed:
                             if (obj is InputAction action && action.activeControl != null && action.activeControl.device != null)
                             {
-                                if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse<QControlScheme>(Player.currentControlScheme.RemveChars('&'), out newScheme))
+                                if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
                                 {
                                     Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
                                 }
@@ -89,6 +78,19 @@ namespace QTool.InputSystem
                                     OnControlSchemeChange?.Invoke();
                                 }
                             }
+                            break;
+                        case InputActionChange.BoundControlsChanged:
+                            {
+                                if (obj is InputActionAsset asset)
+                                {
+                                    if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
+                                    {
+                                        Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
+                                    }
+                                }
+                            }
+                            break;
+                        default:
                             break;
                     }
                   
