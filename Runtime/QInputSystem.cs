@@ -21,7 +21,7 @@ namespace QTool.InputSystem
             {
                 if (_playerInput == null&&Application.isPlaying)
                 {
-                    if (PlayerInput.all.Count == 0)
+                    if (PlayerInput.all.Count == 0 && QToolManager.Instance != null)
                     {
                         _playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
                         _playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
