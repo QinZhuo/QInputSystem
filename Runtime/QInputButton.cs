@@ -24,10 +24,10 @@ namespace QTool.InputSystem
                 if (_action != value)
                 {
                     ClearAction();
-                    _action = value;
-                    InitAction();
-                }
-            }
+				}
+				_action = value;
+				InitAction();
+			}
         }
 		[QName("触发UI事件")]
 		public bool TriggerUIEvent = false;
