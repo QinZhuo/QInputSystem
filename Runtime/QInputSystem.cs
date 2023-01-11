@@ -30,10 +30,14 @@ namespace QTool.InputSystem
                             Debug.LogWarning("Resources下不存在" + nameof(QInputSetting));
                             _playerInput.actions = new InputActionAsset();
                         }
-                        foreach (var action in _playerInput.actions)
-                        {
-                            action.Enable();
-                        }
+						foreach (var map in _playerInput.actions.actionMaps)
+						{
+							map.Enable();
+							foreach (var action in map.actions)
+							{
+								action.Enable();
+							}
+						}
                         OnControlSchemeChange?.Invoke();
                     }
                     else
@@ -46,7 +50,7 @@ namespace QTool.InputSystem
             }
         }
         public static InputActionAsset QInputSetting => Player.actions;
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
         {
 			var player = Player;
