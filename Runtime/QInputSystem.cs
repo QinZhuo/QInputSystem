@@ -24,10 +24,10 @@ namespace QTool.InputSystem
 					if (PlayerInput.all.Count == 0)
 					{
 						_playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
-						_playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
+						_playerInput.actions = QToolSetting.GetSetting<InputActionAsset>(nameof(QInputSetting));
 						if (_playerInput.actions == null)
 						{
-							Debug.LogWarning("Resources下不存在" + nameof(QInputSetting));
+							Debug.LogWarning("QToolSetting找不到设置文件" + nameof(QInputSetting));
 							_playerInput.actions = new InputActionAsset();
 						}
 						foreach (var map in _playerInput.actions.actionMaps)
@@ -125,12 +125,6 @@ namespace QTool.InputSystem
 				}
 			}
 			return view;
-		}
-		public static InputAction CheckSetting(this InputAction action)
-		{
-			if (action == null) return null;
-			var settingAction= QInputSetting.FindAction(action.name);
-			return settingAction == null ? action : settingAction;
 		}
         public static string ToViewString(this InputAction action,int bindIndex=-1)
         {
