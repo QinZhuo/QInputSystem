@@ -49,6 +49,7 @@ namespace QTool.InputSystem
         [RuntimeInitializeOnLoadMethod]
         private static void DeviceTypeCheck()
         {
+			var player = Player;
             UnityEngine.InputSystem.InputSystem.onActionChange += (obj, change) =>
             {
                 if (Application.isPlaying)

@@ -21,14 +21,13 @@ namespace QTool.InputSystem
             get => _action;
             set
             {
-				if (_action == value) return;
                 if (_action != value)
                 {
                     ClearAction();
-				}
-				_action = value;
-				InitAction();
-			}
+                    _action = value;
+                    InitAction();
+                }
+            }
         }
 		[QName("触发UI事件")]
 		public bool TriggerUIEvent = false;
@@ -40,7 +39,7 @@ namespace QTool.InputSystem
 
         UIEventTrigger trigger = new UIEventTrigger();
         Selectable _selectable;
-        public Selectable Selectable => _selectable==null?_selectable= GetComponent<Selectable>():_selectable;
+        public Selectable Selectable => _selectable??= GetComponent<Selectable>();
         public static string onlyInput = "";
         private void Reset()
         {
@@ -107,7 +106,6 @@ namespace QTool.InputSystem
             if (Action != null)
             {
                 parenGroup = GetComponentInParent<CanvasGroup>();
-
                 trigger.Init(this);
                 Action.started += InputStarted;
                 Action.performed += InputPerformed;
