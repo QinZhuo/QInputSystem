@@ -67,7 +67,7 @@ namespace QTool.InputSystem {
 # endif
         private void Awake()
         {
-			Action = defaultAction?.action.CheckSetting();
+			Action = defaultAction?.action;
         }
         protected virtual void OnEnable()
         {

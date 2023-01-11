@@ -126,12 +126,6 @@ namespace QTool.InputSystem
 			}
 			return view;
 		}
-		public static InputAction CheckSetting(this InputAction action)
-		{
-			if (action == null) return null;
-			var settingAction = QInputSetting.FindAction(action.name);
-			return settingAction == null ? action : settingAction;
-		}
 		public static string ToViewString(this InputAction action,int bindIndex=-1)
         {
             if (action == null) return "";
