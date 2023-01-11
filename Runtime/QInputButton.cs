@@ -24,7 +24,7 @@ namespace QTool.InputSystem
                 if (_action != value)
                 {
                     ClearAction();
-                    _action = value;
+					_action = value;
                     InitAction();
                 }
             }
@@ -122,8 +122,8 @@ namespace QTool.InputSystem
 
 			if (Action == null)
             {
-                Action = defaultAction?.action;
-            }
+				Action = defaultAction?.action?.CheckSetting();
+			}
         }
         public void ClearAction()
         {

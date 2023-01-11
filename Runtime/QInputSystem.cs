@@ -9,27 +9,27 @@ using System.Threading.Tasks;
 
 namespace QTool.InputSystem
 {
-    public static class QInputSystem
-    {
-        public static QControlScheme ControlScheme { get; private set; } = QControlScheme.None;
-        static QControlScheme newScheme;
-        public static event Action OnControlSchemeChange;
-        static PlayerInput _playerInput=null;
-        public static PlayerInput Player
-        {
-            get
-            {
-                if (_playerInput == null&&Application.isPlaying && QToolManager.Instance!=null)
-                {
-                    if (PlayerInput.all.Count == 0)
-                    {
-                        _playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
-                        _playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
-                        if (_playerInput.actions == null)
-                        {
-                            Debug.LogWarning("Resources下不存在" + nameof(QInputSetting));
-                            _playerInput.actions = new InputActionAsset();
-                        }
+	public static class QInputSystem
+	{
+		public static QControlScheme ControlScheme { get; private set; } = QControlScheme.None;
+		static QControlScheme newScheme;
+		public static event Action OnControlSchemeChange;
+		static PlayerInput _playerInput = null;
+		public static PlayerInput Player
+		{
+			get
+			{
+				if (_playerInput == null && Application.isPlaying && QToolManager.Instance != null)
+				{
+					if (PlayerInput.all.Count == 0)
+					{
+						_playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
+						_playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
+						if (_playerInput.actions == null)
+						{
+							Debug.LogWarning("Resources下不存在" + nameof(QInputSetting));
+							_playerInput.actions = new InputActionAsset();
+						}
 						foreach (var map in _playerInput.actions.actionMaps)
 						{
 							map.Enable();
@@ -38,94 +38,100 @@ namespace QTool.InputSystem
 								action.Enable();
 							}
 						}
-                        OnControlSchemeChange?.Invoke();
-                    }
-                    else
-                    {
-                        _playerInput = PlayerInput.all[0];
-                    }
-                
-                }
-                return _playerInput;
-            }
-        }
-        public static InputActionAsset QInputSetting => Player.actions;
-        [RuntimeInitializeOnLoadMethod]
-        private static void DeviceTypeCheck()
-        {
+						OnControlSchemeChange?.Invoke();
+					}
+					else
+					{
+						_playerInput = PlayerInput.all[0];
+					}
+
+				}
+				return _playerInput;
+			}
+		}
+		public static InputActionAsset QInputSetting => Player.actions;
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+		private static void DeviceTypeCheck()
+		{
 			var player = Player;
-            UnityEngine.InputSystem.InputSystem.onActionChange += (obj, change) =>
-            {
-                if (Application.isPlaying)
-                {
-                    switch (change)
-                    {
-                        case InputActionChange.ActionEnabled:
-                        case InputActionChange.ActionStarted:
-                        case InputActionChange.ActionPerformed:
-                            if (obj is InputAction action && action.activeControl != null && action.activeControl.device != null)
-                            {
-                                if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
-                                {
-                                    Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
-                                }
-                                if (newScheme != ControlScheme)
-                                {
-                                    if (action.activeControl.device.description.empty)
-                                    {
-                                        if (action.activeControl.device.name != "QSwitchGamepad")
-                                        {
-                                            return;
-                                        }
-                                    }
-                                    ControlScheme = newScheme;
-                                    QDebug.Log("操作方式更改 " + ControlScheme);
-                                    OnControlSchemeChange?.Invoke();
-                                }
-                            }
-                            break;
-                        case InputActionChange.BoundControlsChanged:
-                            {
-                                if (obj is InputActionAsset asset)
-                                {
-                                    if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
-                                    {
-                                        Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
-                                    }
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                  
-                   
-                }
-            };
-        }
-        public static Action<InputAction, int> OnRebindingStart;
-        public static Action<InputAction,int> OnRebindingOver;
+			UnityEngine.InputSystem.InputSystem.onActionChange += (obj, change) =>
+			{
+				if (Application.isPlaying)
+				{
+					switch (change)
+					{
+						case InputActionChange.ActionEnabled:
+						case InputActionChange.ActionStarted:
+						case InputActionChange.ActionPerformed:
+							if (obj is InputAction action && action.activeControl != null && action.activeControl.device != null)
+							{
+								if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
+								{
+									Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
+								}
+								if (newScheme != ControlScheme)
+								{
+									if (action.activeControl.device.description.empty)
+									{
+										if (action.activeControl.device.name != "QSwitchGamepad")
+										{
+											return;
+										}
+									}
+									ControlScheme = newScheme;
+									QDebug.Log("操作方式更改 " + ControlScheme);
+									OnControlSchemeChange?.Invoke();
+								}
+							}
+							break;
+						case InputActionChange.BoundControlsChanged:
+							{
+								if (obj is InputActionAsset asset)
+								{
+									if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
+									{
+										Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
+									}
+								}
+							}
+							break;
+						default:
+							break;
+					}
 
-        public static InputBinding ActiveBindingMask => ControlScheme== QControlScheme.None?default : new InputBinding() { groups =ControlScheme.ToString() };
 
-        static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
-        public static string ToQString(this InputBinding bind)
-        {
-            var view = bind.ToDisplayString();
-            if(Application.platform== RuntimePlatform.Switch)
-            {
-                switch (view)
-                {
-                    case "X":view = "Y";break;
-                    case "Y": view = "X"; break;
-                    case "A": view = "B"; break;
-                    case "B": view = "A"; break;
-                    default:
-                        break;
-                }
-            }
-            return view;
-        }
+				}
+			};
+		}
+		public static Action<InputAction, int> OnRebindingStart;
+		public static Action<InputAction, int> OnRebindingOver;
+
+		public static InputBinding ActiveBindingMask => ControlScheme == QControlScheme.None ? default : new InputBinding() { groups = ControlScheme.ToString() };
+
+		static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
+		public static string ToQString(this InputBinding bind)
+		{
+			var view = bind.ToDisplayString();
+			if (Application.platform == RuntimePlatform.Switch)
+			{
+				switch (view)
+				{
+					case "X": view = "Y"; break;
+					case "Y": view = "X"; break;
+					case "A": view = "B"; break;
+					case "B": view = "A"; break;
+					default:
+						break;
+				}
+			}
+			return view;
+		}
+		public static InputAction CheckSetting(this InputAction action)
+		{
+			if (action == null) return null;
+			var settingAction= QInputSetting.FindAction(action.name);
+			return settingAction == null ? action : settingAction;
+		}
         public static string ToViewString(this InputAction action,int bindIndex=-1)
         {
             if (action == null) return "";
