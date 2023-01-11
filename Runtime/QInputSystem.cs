@@ -46,7 +46,7 @@ namespace QTool.InputSystem
             }
         }
         public static InputActionAsset QInputSetting => Player.actions;
-        [RuntimeInitializeOnLoadMethod]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void DeviceTypeCheck()
         {
 			var player = Player;
