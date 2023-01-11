@@ -21,6 +21,7 @@ namespace QTool.InputSystem
             get => _action;
             set
             {
+				if (_action == value) return;
                 if (_action != value)
                 {
                     ClearAction();
@@ -39,7 +40,7 @@ namespace QTool.InputSystem
 
         UIEventTrigger trigger = new UIEventTrigger();
         Selectable _selectable;
-        public Selectable Selectable => _selectable??= GetComponent<Selectable>();
+        public Selectable Selectable => _selectable==null?_selectable= GetComponent<Selectable>():_selectable;
         public static string onlyInput = "";
         private void Reset()
         {
@@ -108,7 +109,6 @@ namespace QTool.InputSystem
                 parenGroup = GetComponentInParent<CanvasGroup>();
 
                 trigger.Init(this);
-                Action.Enable();
                 Action.started += InputStarted;
                 Action.performed += InputPerformed;
                 Action.canceled += InputCanceled;
