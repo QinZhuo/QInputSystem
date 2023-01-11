@@ -122,7 +122,7 @@ namespace QTool.InputSystem
 
 			if (Action == null)
             {
-				Action = defaultAction?.action;
+				Action = defaultAction?.action?.CheckSetting();
 			}
         }
         public void ClearAction()
