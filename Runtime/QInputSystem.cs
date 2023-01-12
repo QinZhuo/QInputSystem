@@ -24,10 +24,10 @@ namespace QTool.InputSystem
 					if (PlayerInput.all.Count == 0)
 					{
 						_playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
-						_playerInput.actions = QToolSetting.GetSetting<InputActionAsset>(nameof(QInputSetting));
+						_playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
 						if (_playerInput.actions == null)
 						{
-							Debug.LogWarning("QToolSetting找不到设置文件" + nameof(QInputSetting));
+							Debug.LogWarning(nameof(Resources)+ "找不到设置文件" + nameof(QInputSetting));
 							_playerInput.actions = new InputActionAsset();
 						}
 						foreach (var map in _playerInput.actions.actionMaps)
