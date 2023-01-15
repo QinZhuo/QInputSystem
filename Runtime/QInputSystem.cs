@@ -65,7 +65,7 @@ namespace QTool.InputSystem
 						case InputActionChange.ActionPerformed:
 							if (obj is InputAction action && action.activeControl != null && action.activeControl.device != null)
 							{
-								if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
+								if (!Player.currentControlScheme.IsNull() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
 								{
 									Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
 								}
@@ -88,7 +88,7 @@ namespace QTool.InputSystem
 							{
 								if (obj is InputActionAsset asset)
 								{
-									if (!Player.currentControlScheme.IsNullOrEmpty() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
+									if (!Player.currentControlScheme.IsNull() && !Enum.TryParse(Player.currentControlScheme.RemveChars('&'), out newScheme))
 									{
 										Debug.LogWarning("不支持环境 " + Player.currentControlScheme);
 									}
