@@ -54,7 +54,7 @@ namespace QTool.InputSystem {
         {
             if (!Active) return;
             string tip = "";
-            tip = tipInfo.Replace("{Key}", Action.ToViewString());
+            tip = tipInfo.Replace("{Key}", Action.ToViewString(bindIndex));
             OnValueChange?.Invoke(tip);
         }
 
