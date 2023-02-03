@@ -64,24 +64,18 @@ namespace QTool.InputSystem
             }
         }
         CanvasGroup parenGroup;
-        public void InputStarted(InputAction.CallbackContext context)
-        {
-            if (ActiveAndInteractable && KeyActive && !press)
-            {
-                press = true;
+      
+        public void InputPerformed(InputAction.CallbackContext context)
+		{
+			if (ActiveAndInteractable && KeyActive && !press)
+			{
+				press = true;
 				longTouchTimer.Clear();
 				if (triggerUIEvent)
 				{
 					trigger.enter.Invoke();
 					trigger.donw.Invoke();
 				}
-            }
-        }
-        public void InputPerformed(InputAction.CallbackContext context)
-        {
-            if (press && ActiveAndInteractable && KeyActive)
-            {
-				Click();
 			}
         }
 		public void Click()
@@ -103,6 +97,7 @@ namespace QTool.InputSystem
         {
             if (KeyActive && press)
 			{
+				Click();
 				press = false;
 				if (triggerUIEvent)
 				{
@@ -117,7 +112,6 @@ namespace QTool.InputSystem
             {
                 parenGroup = GetComponentInParent<CanvasGroup>();
                 trigger.Init(this);
-                Action.started += InputStarted;
                 Action.performed += InputPerformed;
                 Action.canceled += InputCanceled;
 				if (Setting != null)
@@ -139,7 +133,6 @@ namespace QTool.InputSystem
         {
             if (Action != null)
             {
-                Action.started -= InputStarted;
                 Action.performed -= InputPerformed;
                 Action.canceled -= InputCanceled;
                 if (Setting != null)
