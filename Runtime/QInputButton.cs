@@ -12,7 +12,7 @@ namespace QTool.InputSystem
 
     public class QInputButton : MonoBehaviour
 	{
-		public static float LongTouchTime { get; set; } = 0.25f;
+		public static float LongTouchTime { get; set; } = 0.3f;
 		[SerializeField]
         [UnityEngine.Serialization.FormerlySerializedAs("inputAction")]
         private InputActionReference defaultAction;
