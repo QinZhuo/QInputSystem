@@ -11,8 +11,9 @@ namespace QTool.InputSystem
 {
 
     public class QInputButton : MonoBehaviour
-    {
-        [SerializeField]
+	{
+		public static float LongTouchTime { get; set; } = 2.5f;
+		[SerializeField]
         [UnityEngine.Serialization.FormerlySerializedAs("inputAction")]
         private InputActionReference defaultAction;
         private InputAction _action;
@@ -29,8 +30,11 @@ namespace QTool.InputSystem
                 }
             }
         }
-		[QName("触发UI事件")]
-		public bool TriggerUIEvent = false;
+		[QName("触发UI事件"),SerializeField]
+		private bool triggerUIEvent = false;
+		[QName("长按切换开关")]
+		private bool longTouchSwitch = false;
+		QTimer longTouchTimer = new QTimer(LongTouchTime);
 		public QInputSetting Setting { get; private set; }
         public void SetAction(string key)
         {
@@ -64,7 +68,8 @@ namespace QTool.InputSystem
             if (ActiveAndInteractable && KeyActive && !press)
             {
                 press = true;
-				if (TriggerUIEvent)
+				longTouchTimer.Clear();
+				if (triggerUIEvent)
 				{
 					trigger.enter.Invoke();
 					trigger.donw.Invoke();
@@ -75,26 +80,30 @@ namespace QTool.InputSystem
         {
             if (press && ActiveAndInteractable && KeyActive)
             {
-				if (TriggerUIEvent)
-				{
-					trigger.click.Invoke();
-				}
-				else if(Selectable is Button button)
-				{
-					button.onClick.Invoke();
-				}
-				else if (Selectable is Toggle toggle)
-				{
-					toggle.isOn = !toggle.isOn;
-				}
+				Click();
 			}
         }
+		public void Click()
+		{
+			if (triggerUIEvent)
+			{
+				trigger.click.Invoke();
+			}
+			else if (Selectable is Button button)
+			{
+				button.onClick.Invoke();
+			}
+			else if (Selectable is Toggle toggle)
+			{
+				toggle.isOn = !toggle.isOn;
+			}
+		}
         public void InputCanceled(InputAction.CallbackContext context)
         {
             if (KeyActive && press)
 			{
 				press = false;
-				if (TriggerUIEvent)
+				if (triggerUIEvent)
 				{
 					trigger.up.Invoke();
 					trigger.exit.Invoke();
@@ -138,7 +147,17 @@ namespace QTool.InputSystem
                 }
             }
         }
-        private void OnDestroy()
+		private void Update()
+		{
+			if (longTouchSwitch&&press&&!longTouchTimer.IsOver)
+			{
+				if(longTouchTimer.Check(Time.unscaledDeltaTime, false))
+				{
+					Click();
+				}
+			}
+		}
+		private void OnDestroy()
         {
             ClearAction();
         }
