@@ -32,9 +32,10 @@ namespace QTool.InputSystem
         }
 		[QName("触发UI事件"),SerializeField]
 		private bool triggerUIEvent = false;
-		[QName("长按切换开关")]
+		[QName("长按切换",nameof(IsToggle)),SerializeField]
 		private bool longTouchSwitch = false;
 		QTimer longTouchTimer = new QTimer(LongTouchTime);
+		public bool IsToggle => Selectable is Toggle;
 		public QInputSetting Setting { get; private set; }
         public void SetAction(string key)
         {
