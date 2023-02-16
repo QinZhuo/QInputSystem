@@ -71,14 +71,12 @@ namespace QTool.InputSystem
 								}
 								if (newScheme != ControlScheme)
 								{
-									if (action.activeControl.device.description.empty)
-									{
-										if (action.activeControl.device.name != "QSwitchGamepad")
-										{
-											return;
-										}
-									}
 									ControlScheme = newScheme;
+									if(ControlScheme!=QControlScheme.Gamepad)
+									{
+										var virtualMouse= UnityEngine.InputSystem.InputSystem.GetDevice("VirtualMouse");
+										UnityEngine.InputSystem.InputSystem.RemoveDevice(virtualMouse) ;
+									}
 									QDebug.Log("操作方式更改 " + ControlScheme);
 									OnControlSchemeChange?.Invoke();
 								}
