@@ -28,7 +28,7 @@ namespace QTool.InputSystem
 						if (_playerInput.actions == null)
 						{
 							Debug.LogWarning(nameof(Resources)+ "找不到设置文件" + nameof(QInputSetting));
-							_playerInput.actions = new InputActionAsset();
+							_playerInput.actions = ScriptableObject.CreateInstance<InputActionAsset>();
 						}
 						foreach (var map in _playerInput.actions.actionMaps)
 						{
