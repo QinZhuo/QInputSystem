@@ -128,6 +128,10 @@ namespace QTool.InputSystem
             {
 				Action = defaultAction?.action;
 			}
+			if (Selectable == null)
+			{
+				Debug.LogError(transform.GetPath() + " 缺少可点击组件");
+			}
         }
         public void ClearAction()
         {
