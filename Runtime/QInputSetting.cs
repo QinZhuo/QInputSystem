@@ -53,15 +53,12 @@ namespace QTool.InputSystem {
         protected void OnChange()
         {
             if (!Active) return;
-            string tip = "";
-            tip = tipInfo.Replace("{Key}", Action.ToViewString(bindIndex));
-            OnValueChange?.Invoke(tip);
+            OnValueChange?.Invoke(tipInfo.Replace("{Key}", Action.ToViewString(bindIndex)));
         }
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-           
             OnChange();
         }
 # endif

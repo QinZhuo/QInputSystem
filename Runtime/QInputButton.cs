@@ -36,8 +36,10 @@ namespace QTool.InputSystem
 		private bool longTouchSwitch = false;
 		QTimer longTouchTimer = new QTimer(LongTouchTime);
 		public bool IsToggle => Selectable is Toggle;
-		public QInputSetting Setting { get; private set; }
-        public void SetAction(string key)
+		private QInputSetting _Setting = null;
+		public QInputSetting Setting => _Setting ??= GetComponent<QInputSetting>();
+
+		public void SetAction(string key)
         {
             Action=QInputSystem.QInputSetting.FindAction(key);
         }
@@ -122,8 +124,6 @@ namespace QTool.InputSystem
         }
         private void Awake()
         {
-			Setting = GetComponent<QInputSetting>();
-
 			if (Action == null)
             {
 				Action = defaultAction?.action;
