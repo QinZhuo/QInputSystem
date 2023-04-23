@@ -61,14 +61,13 @@ namespace QTool.InputSystem {
         {
             OnChange();
         }
-# endif
-        private void Awake()
+#endif
+		private void Awake()
         {
 			Action = defaultAction?.action;
         }
         protected virtual void OnEnable()
         {
-            OnChange();
             QInputSystem.OnRebindingOver += OnRebindingOver;
             QInputSystem.OnControlSchemeChange += OnChange;
         }
