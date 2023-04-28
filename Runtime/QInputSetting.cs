@@ -62,20 +62,17 @@ namespace QTool.InputSystem {
             OnChange();
         }
 #endif
-		private void Awake()
+		protected virtual void Awake()
         {
 			Action = defaultAction?.action;
-        }
-        protected virtual void OnEnable()
-        {
-            QInputSystem.OnRebindingOver += OnRebindingOver;
-            QInputSystem.OnControlSchemeChange += OnChange;
-        }
-        protected virtual void OnDisable()
-        {
-            QInputSystem.OnRebindingOver -= OnRebindingOver;
-            QInputSystem.OnControlSchemeChange -= OnChange;
-        }
+			QInputSystem.OnRebindingOver += OnRebindingOver;
+			QInputSystem.OnControlSchemeChange += OnChange;
+		}
+		protected virtual void OnDestroy()
+		{
+			QInputSystem.OnRebindingOver -= OnRebindingOver;
+			QInputSystem.OnControlSchemeChange -= OnChange;
+		}
         void OnRebindingOver(InputAction inputAction,int bindIndex)
         {
             if (inputAction == Action)
