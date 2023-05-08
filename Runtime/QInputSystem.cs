@@ -11,6 +11,24 @@ namespace QTool.InputSystem
 {
 	public static class QInputSystem
 	{
+		static QInputSystem()
+		{
+			Application.focusChanged += OnFocus;
+		}
+		static void OnFocus(bool value)
+		{
+			if (value != QInputSetting.enabled)
+			{
+				if (value)
+				{
+					QInputSetting.Enable();
+				}
+				else
+				{
+					QInputSetting.Disable();
+				}
+			}
+		}
 		public static QControlScheme ControlScheme { get; private set; } = QControlScheme.None;
 		static QControlScheme newScheme;
 		public static event Action OnControlSchemeChange;
