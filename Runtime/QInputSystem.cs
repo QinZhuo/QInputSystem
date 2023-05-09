@@ -29,7 +29,26 @@ namespace QTool.InputSystem
 				}
 			}
 		}
-		public static QControlScheme ControlScheme { get; private set; } = QControlScheme.None;
+		static QControlScheme _ControlScheme = QControlScheme.None;
+		public static QControlScheme ControlScheme
+		{
+			get => _ControlScheme;
+			set
+			{
+				if (_ControlScheme != value)
+				{
+					_ControlScheme = value;
+					if (_ControlScheme != QControlScheme.Touchscreen)
+					{
+						ActiveBindingMask = new InputBinding() { groups = ControlScheme.ToString() };
+					}
+					QDebug.Log("操作方式更改 " + ControlScheme);
+					OnControlSchemeChange?.Invoke();
+				}
+			}
+		}
+		public static InputBinding ActiveBindingMask { get; private set; } = default;
+
 		static QControlScheme newScheme;
 		public static event Action OnControlSchemeChange;
 		static PlayerInput _playerInput = null;
@@ -90,8 +109,6 @@ namespace QTool.InputSystem
 								if (newScheme != ControlScheme)
 								{
 									ControlScheme = newScheme;
-									QDebug.Log("操作方式更改 " + ControlScheme);
-									OnControlSchemeChange?.Invoke();
 								}
 							}
 							break;
@@ -117,8 +134,7 @@ namespace QTool.InputSystem
 		public static Action<InputAction, int> OnRebindingStart;
 		public static Action<InputAction, int> OnRebindingOver;
 
-		public static InputBinding ActiveBindingMask => ControlScheme == QControlScheme.None ? default : new InputBinding() { groups = ControlScheme.ToString() };
-
+	
 		static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
 		public static string ToQString(this InputBinding bind)
 		{
