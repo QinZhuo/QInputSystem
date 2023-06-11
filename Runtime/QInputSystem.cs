@@ -17,7 +17,7 @@ namespace QTool.InputSystem
 		}
 		static void OnFocus(bool value)
 		{
-			if (_playerInput != null && value != QInputSetting.enabled)
+			if (!Application.isEditor && _playerInput != null && value != QInputSetting.enabled)
 			{
 				if (value)
 				{
