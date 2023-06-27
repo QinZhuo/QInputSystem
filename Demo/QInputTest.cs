@@ -54,7 +54,7 @@ namespace QTool
             input.action.canceled += (info) =>
             {
                 text.text = ("canceled " + info.ReadValue<Vector2>());
-            };
+            }; input.action.Disable();
         }
 
        

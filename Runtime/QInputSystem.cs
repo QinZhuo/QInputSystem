@@ -13,26 +13,42 @@ namespace QTool.InputSystem
 	{
 		static QInputSystem()
 		{
-			Application.focusChanged += OnFocus;
-		}
-		static void OnFocus(bool value)
-		{
+            if (Application.isEditor) return;
             switch (Application.platform)
             {
                 case RuntimePlatform.WindowsPlayer:
                     break;
                 default:
-					return;
+                    return;
             }
+            Application.focusChanged += OnFocus;
+		}
+		static QDictionary<InputAction, bool> ActionEnableCache = new QDictionary<InputAction, bool>();
+		static void OnFocus(bool value)
+		{
 			if (_playerInput != null && value != QInputSetting.enabled)
 			{
 				if (value)
 				{
-					QInputSetting.Enable();
+                    foreach (var action in ActionEnableCache)
+                    {
+                        if (action.Value)
+                        {
+							action.Key.Enable();
+                        }
+                    }
 				}
 				else
 				{
-					QInputSetting.Disable();
+					ActionEnableCache.Clear();
+					foreach (var actionMap in QInputSetting.actionMaps)
+					{
+                        foreach (var action in actionMap.actions)
+                        {
+							ActionEnableCache[action] = action.enabled;
+							action.Disable();
+						}
+					}
 				}
 			}
 		}
