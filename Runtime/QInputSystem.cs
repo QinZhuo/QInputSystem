@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.EventSystems;
 using System.Threading.Tasks;
-
+#if InputSystem
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 namespace QTool.InputSystem
 {
 	public static class QInputSystem
@@ -46,7 +46,7 @@ namespace QTool.InputSystem
 						_playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
 						if (_playerInput.actions == null)
 						{
-							Debug.LogWarning(nameof(Resources)+ "找不到设置文件" + nameof(QInputSetting));
+							QDebug.LogWarning(nameof(Resources)+ "找不到设置文件" + nameof(QInputSetting));
 							_playerInput.actions = ScriptableObject.CreateInstance<InputActionAsset>();
 						}
 						foreach (var map in _playerInput.actions.actionMaps)
@@ -220,3 +220,4 @@ namespace QTool.InputSystem
     }
 
 }
+#endif

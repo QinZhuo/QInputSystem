@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if InputSystem
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -56,3 +57,4 @@ namespace QTool.InputSystem
         }
     }
 }
+#endif

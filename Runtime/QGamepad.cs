@@ -1,14 +1,15 @@
 using UnityEngine;
 using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+#if InputSystem
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Utilities;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace QTool.InputSystem
 {
@@ -196,3 +197,4 @@ namespace QTool.InputSystem
 //    }
 //    #endregion
 }
+#endif

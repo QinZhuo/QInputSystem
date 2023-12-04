@@ -5,8 +5,9 @@ using UnityEngine.EventSystems;
 using static UnityEngine.UI.Button;
 using static UnityEngine.UI.Selectable;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System;
+#if InputSystem
+using UnityEngine.InputSystem;
 namespace QTool.InputSystem
 {
 
@@ -164,7 +165,7 @@ namespace QTool.InputSystem
         }
     }
 
-	#region UI事件处理工具
+#region UI事件处理工具
 
 	class UIEventTrigger
 	{
@@ -284,5 +285,6 @@ namespace QTool.InputSystem
 		}
 	}
 
-	#endregion
+#endregion
 }
+#endif

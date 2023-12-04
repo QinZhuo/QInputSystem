@@ -1,3 +1,4 @@
+#if InputSystem
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,3 +24,4 @@ namespace QTool.InputSystem
     }
 }
 
+#endif

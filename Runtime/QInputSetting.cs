@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using QTool;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using System;
-
+#if InputSystem
+using UnityEngine.InputSystem;
 namespace QTool.InputSystem {
     using InputSystem = UnityEngine.InputSystem.InputSystem;
     /// <summary>
@@ -80,7 +80,7 @@ namespace QTool.InputSystem {
                 OnChange();
             }
         }
-        #region 改键逻辑
+#region 改键逻辑
         public async void StartChange()
         {
             if (!Active) return;
@@ -117,6 +117,7 @@ namespace QTool.InputSystem {
             }
         }
 
-        #endregion
+#endregion
     }
 }
+#endif

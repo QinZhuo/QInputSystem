@@ -1,3 +1,4 @@
+#if InputSystem
 using System.Collections;
 using System.Collections.Generic;
 #if UNITY_EDITOR
@@ -63,3 +64,4 @@ namespace QTool.InputSystem
         }
     }
 }
+#endif
