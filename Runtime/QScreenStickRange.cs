@@ -1,5 +1,6 @@
 ﻿#if InputSystem
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -27,7 +28,7 @@ namespace QTool.InputSystem
         public RectTransform rectTransform => transform as RectTransform;
         public RectTransform Back => stick.transform.parent as RectTransform;
         public OnScreenStick stick;
-        public BoolEvent OnActive;
+        public UnityEvent<bool> OnActive;
         Vector2 startPos = Vector2.zero;
         float raudis=0;
         private void OnEnable()

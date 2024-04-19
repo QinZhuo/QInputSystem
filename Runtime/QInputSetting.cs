@@ -41,7 +41,7 @@ namespace QTool.InputSystem {
                 OnChange();
             }
         }
-        public StringEvent OnValueChange;
+        public UnityEvent<string> OnValueChange;
         public bool Active
         {
             get

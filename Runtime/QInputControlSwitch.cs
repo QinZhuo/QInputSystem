@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 namespace QTool.InputSystem
 {
     public class QInputControlSwitch : MonoBehaviour
     {
         public QControlScheme controlScheme;
-        public BoolEvent OnActive;
+        public UnityEvent<bool> OnActive;
         private void Awake()
         {
             Fresh();
