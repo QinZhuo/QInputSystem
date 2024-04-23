@@ -20,7 +20,7 @@ namespace QTool.InputSystem
 				if (_ControlScheme != value)
 				{
 					_ControlScheme = value;
-					if (_ControlScheme != QControlScheme.Touchscreen)
+					if (_ControlScheme != QControlScheme.Touch)
 					{
 						ActiveBindingMask = new InputBinding() { groups = ControlScheme.ToString() };
 					}
@@ -43,10 +43,10 @@ namespace QTool.InputSystem
 					if (PlayerInput.all.Count == 0)
 					{
 						_playerInput = QToolManager.Instance.gameObject.AddComponent<PlayerInput>();
-						_playerInput.actions = Resources.Load<InputActionAsset>(nameof(QInputSetting));
+						_playerInput.actions = Resources.Load<InputActionAsset>("Settings/" + nameof(InputActions));
 						if (_playerInput.actions == null)
 						{
-							QDebug.LogWarning(nameof(Resources)+ "找不到设置文件" + nameof(QInputSetting));
+							QDebug.LogWarning(nameof(Resources) + "找不到设置文件Settings/" + nameof(InputActions));
 							_playerInput.actions = ScriptableObject.CreateInstance<InputActionAsset>();
 						}
 						foreach (var map in _playerInput.actions.actionMaps)
@@ -68,7 +68,7 @@ namespace QTool.InputSystem
 				return _playerInput;
 			}
 		}
-		public static InputActionAsset QInputSetting => Player.actions;
+		public static InputActionAsset InputActions => Player.actions;
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
 		private static void DeviceTypeCheck()
 		{
@@ -116,7 +116,7 @@ namespace QTool.InputSystem
 		public static Action<InputAction, int> OnRebindingStart;
 		public static Action<InputAction, int> OnRebindingOver;
 
-	
+
 		static InputActionRebindingExtensions.RebindingOperation ActiveRebinding;
 		public static string ToQString(this InputBinding bind)
 		{
@@ -135,89 +135,88 @@ namespace QTool.InputSystem
 			}
 			return view;
 		}
-		public static string ToViewString(this InputAction action,int bindIndex=-1)
-        {
-            if (action == null) return "";
-            if (bindIndex < 0)
-            {
-                var index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
-                if (index >= 0)
-                {
-                    var bind = action.bindings[index];
-                    if (!bind.isPartOfComposite)
-                    {
-                        return bind.ToQString();
-                    }
-                    var view = "";
-                    while (bind.isPartOfComposite)
-                    {
-                        view += bind.ToQString();
-                        index++;
-                        bind = action.bindings[index];
-                    }
-                    return view;
-                }
-                return "";
-            }
-            else
-            {
-                return action.bindings[bindIndex].ToQString();
-            }
-           
-        }
-        public static InputBinding GetActiveBindingMask(this InputAction inputAction)
-        {
-            if (inputAction.bindingMask.HasValue)
-                return inputAction.bindingMask.Value;
+		public static string ToViewString(this InputAction action, int bindIndex = -1)
+		{
+			if (action == null) return "";
+			if (bindIndex < 0)
+			{
+				var index = action.GetBindingIndex(QInputSystem.ActiveBindingMask);
+				if (index >= 0)
+				{
+					var bind = action.bindings[index];
+					if (!bind.isPartOfComposite)
+					{
+						return bind.ToQString();
+					}
+					var view = "";
+					while (bind.isPartOfComposite)
+					{
+						view += bind.ToQString();
+						index++;
+						bind = action.bindings[index];
+					}
+					return view;
+				}
+				return "";
+			}
+			else
+			{
+				return action.bindings[bindIndex].ToQString();
+			}
 
-            if (inputAction.actionMap?.bindingMask != null)
-                return inputAction.actionMap.bindingMask.Value;
+		}
+		public static InputBinding GetActiveBindingMask(this InputAction inputAction)
+		{
+			if (inputAction.bindingMask.HasValue)
+				return inputAction.bindingMask.Value;
 
-            if (inputAction.actionMap?.asset?.bindingMask != null)
-            {
-                return inputAction.actionMap.asset.bindingMask.Value;
-            }
-            return default;
-        }
-        public static async Task<bool> RebindingAsync(this InputAction action, int bindIndex)
-        {
-            if (ControlScheme == QControlScheme.Touchscreen||ControlScheme== QControlScheme.None) return false;
-            if (ActiveRebinding != null)
-            {
-                ActiveRebinding.Cancel();
-            }
-            var enable = action.enabled;
-            if (enable)
-            {
-                action.Disable();
-            }
-            OnRebindingStart?.Invoke(action, bindIndex);
-            var rebinding = action.PerformInteractiveRebinding(bindIndex);
-            ActiveRebinding = rebinding;
-            rebinding.Start();
-            await QTask.Wait(() => rebinding.completed || rebinding.canceled);
-            rebinding.Dispose();
-            if (enable)
-            {
-                action.Enable();
-            }
-            OnRebindingOver?.Invoke(action, bindIndex);
-            if (rebinding == ActiveRebinding)
-            {
-                ActiveRebinding = null;
-            }
-            return rebinding.completed;
-        }
+			if (inputAction.actionMap?.bindingMask != null)
+				return inputAction.actionMap.bindingMask.Value;
 
-    }
-    [Flags]
-    public enum QControlScheme
-    {
-        None=0,
-        KeyboardMouse=1<<1,
-        Gamepad=1<<2,
-        Touchscreen=1<<3,
-    }
-
+			if (inputAction.actionMap?.asset?.bindingMask != null)
+			{
+				return inputAction.actionMap.asset.bindingMask.Value;
+			}
+			return default;
+		}
+		public static async Task<bool> RebindingAsync(this InputAction action, int bindIndex)
+		{
+			if (ControlScheme == QControlScheme.Touch || ControlScheme == QControlScheme.None) return false;
+			if (ActiveRebinding != null)
+			{
+				ActiveRebinding.Cancel();
+			}
+			var enable = action.enabled;
+			if (enable)
+			{
+				action.Disable();
+			}
+			OnRebindingStart?.Invoke(action, bindIndex);
+			var rebinding = action.PerformInteractiveRebinding(bindIndex);
+			ActiveRebinding = rebinding;
+			rebinding.Start();
+			await QTask.Wait(() => rebinding.completed || rebinding.canceled);
+			rebinding.Dispose();
+			if (enable)
+			{
+				action.Enable();
+			}
+			OnRebindingOver?.Invoke(action, bindIndex);
+			if (rebinding == ActiveRebinding)
+			{
+				ActiveRebinding = null;
+			}
+			return rebinding.completed;
+		}
+	}
+	[Flags]
+	public enum QControlScheme
+	{
+		None = 0,
+		Gamepad = 1 << 1,
+		Joystick = 1 << 2,
+		KeyboardMouse = 1 << 3,
+		Touch = 1 << 4,
+	}
 }
 #endif

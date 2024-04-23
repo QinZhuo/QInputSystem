@@ -40,11 +40,6 @@ namespace QTool.InputSystem
 		private QInputSetting _Setting = null;
 		public QInputSetting Setting => _Setting ??= GetComponent<QInputSetting>();
 
-		public void SetAction(string key)
-        {
-            Action=QInputSystem.QInputSetting.FindAction(key);
-        }
-
         UIEventTrigger trigger = new UIEventTrigger();
         Selectable _selectable;
         public Selectable Selectable => _selectable??= GetComponent<Selectable>();
