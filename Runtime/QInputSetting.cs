@@ -4,6 +4,8 @@ using UnityEngine;
 using QTool;
 using UnityEngine.Events;
 using System;
+using System.Threading.Tasks;
+
 #if InputSystem
 using UnityEngine.InputSystem;
 namespace QTool.InputSystem {
@@ -111,7 +113,7 @@ namespace QTool.InputSystem {
             {
                 OnValueChange?.Invoke(Action.ToViewString().Replace(bind.ToQString(), "?"));
                 await Action.RebindingAsync(index);
-                await QTask.Wait(0.2f);
+                await Task.Delay(200);
                 index++;
                 bind = Action.bindings[index];
             }

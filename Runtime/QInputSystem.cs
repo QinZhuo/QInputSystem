@@ -195,7 +195,10 @@ namespace QTool.InputSystem
 			var rebinding = action.PerformInteractiveRebinding(bindIndex);
 			ActiveRebinding = rebinding;
 			rebinding.Start();
-			await QTask.Wait(() => rebinding.completed || rebinding.canceled);
+			while (!(rebinding.completed || rebinding.canceled))
+			{
+				await Task.Yield();
+			}
 			rebinding.Dispose();
 			if (enable)
 			{
